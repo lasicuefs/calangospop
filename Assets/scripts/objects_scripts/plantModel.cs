@@ -11,11 +11,6 @@ public class plantModel : MonoBehaviour {
 	protected registryController registry;
 	protected MapGenerator mapGenerator;
 
-	// Use this for initialization
-	void Start () {
-		registry = GameObject.Find ("MapController").GetComponent<registryController> ();
-	}
-
 	public void initialize(registryController registry, MapGenerator mapGenerator){
 		this.registry = registry;
 		this.mapGenerator = mapGenerator;

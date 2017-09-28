@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameMapGenerator : MapGenerator {
 	
 	public int initialPopulationSize = 10;
+	cameraScript camera;
 
 	// Use this for initialization
 	void Start () {
@@ -12,6 +13,11 @@ public class GameMapGenerator : MapGenerator {
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
 		initialize_map ();
+
+
+		camera = GameObject.Find ("Main Camera").GetComponent<cameraScript>();
+		if (camera != null)
+			camera.setCameraPos(0, -(mapSize/4)*tileSize);
 	}
 
 	protected void initialize_map(){

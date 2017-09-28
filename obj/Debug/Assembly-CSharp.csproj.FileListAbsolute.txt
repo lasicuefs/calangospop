@@ -31,3 +31,6 @@ C:\Users\mnmat\Documents\teste isometrico\Temp\bin\Debug\UnityEngine.VR.xml
 C:\Users\mnmat\Documents\teste isometrico\obj\Debug\Assembly-CSharp.dll
 C:\Users\mnmat\Documents\teste isometrico\obj\Debug\Assembly-CSharp.pdb
 C:\Users\mnmat\Documents\teste isometrico\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+C:\Users\mnmat\Documents\Calangos\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+C:\Users\mnmat\Documents\Calangos\obj\Debug\Assembly-CSharp.dll
+C:\Users\mnmat\Documents\Calangos\obj\Debug\Assembly-CSharp.pdb

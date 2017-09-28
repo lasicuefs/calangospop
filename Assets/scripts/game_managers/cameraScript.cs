@@ -38,7 +38,6 @@ public class cameraScript : MonoBehaviour {
 
 		if(Input.GetKey(KeyCode.Q)||Input.GetKey(KeyCode.Plus)) 
 		{
-			Debug.Log (viewingCamera.orthographicSize);
 			viewingCamera.orthographicSize = viewingCamera.orthographicSize + zoomVelocity*Time.deltaTime;
 			if(viewingCamera.orthographicSize > maxScreenSize)
 			{
@@ -55,5 +54,9 @@ public class cameraScript : MonoBehaviour {
 				viewingCamera.orthographicSize = minScreenSize; // Min size 
 			}
 		}
+	}
+
+	public void setCameraPos(float x, float y){
+		viewingCamera.transform.position = new Vector3 (x, y, viewingCamera.transform.position.z);
 	}
 }
