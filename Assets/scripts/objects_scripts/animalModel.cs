@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 abstract public class animalModel : MonoBehaviour {
@@ -21,7 +22,7 @@ abstract public class animalModel : MonoBehaviour {
 	public float energyWhenConsumed = 50;
 	public float hidrationWhenConsumed = 50;
 
-	public float defaultBasalExpense = 10; // Per second;
+	public float defaultBasalExpense = 2; // Per second;
 
 	public float lineOfSight = 1.2f;
 
@@ -41,9 +42,14 @@ abstract public class animalModel : MonoBehaviour {
 
 	public string currState = "iddle";
 
-	// Use this for initialization
-	protected void Start () {
-		energy = Random.Range (maxEnergy/2, maxEnergy);
+    public string[] predators;
+    protected List<GameObject> predatorList;
+    protected GameObject focusedPredator;
+
+    // Use this for initialization
+    protected void Start () {
+        predatorList = new List<GameObject>();
+        energy = Random.Range (maxEnergy/2, maxEnergy);
 		hidration = Random.Range (maxHidration/2, maxHidration);
 
 		animator = GetComponent<Animator> ();
@@ -51,6 +57,7 @@ abstract public class animalModel : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
+        check_events();
 		plan_action ();
 	}
 
@@ -73,12 +80,27 @@ abstract public class animalModel : MonoBehaviour {
 		starving = true;
 	}
 
-	abstract protected void plan_action ();
+    abstract protected void check_events();
+    abstract protected void plan_action ();
 
-	public void get_eaten(){
+	public virtual void get_eaten(){		
+		Destroy(this.gameObject);
 	}
 
 	protected void eat_animal(animalModel animal){
+
+		energy = energy + animal.energyWhenConsumed;
+		hidration = hidration + animal.hidrationWhenConsumed;
+		if (energy > maxEnergy) {
+			energy = maxEnergy;
+		}
+		if (hidration > maxHidration){
+			hidration = maxHidration;
+		}
+
+		animal.get_eaten ();
+		hungry = false;
+		starving = false;
 	}
 
 	protected void eat_plant(GameObject plant){
@@ -115,6 +137,7 @@ abstract public class animalModel : MonoBehaviour {
 		walk_towards(transform.position + new Vector3 (directionX* 100, directionY *100 , 0));
 
 		animator.SetBool("iddle", false );
+		animator.SetBool("running", false);
 		energy -= Time.deltaTime * defaultBasalExpense;
 	}
 
@@ -127,6 +150,20 @@ abstract public class animalModel : MonoBehaviour {
 
 		animator.SetBool("right", transform.position.x < destinationPos.x);
 		animator.SetBool("up", transform.position.y < destinationPos.y);
+		animator.SetBool("running", false);
+
+		animator.SetBool("iddle", false );
+		energy -= Time.deltaTime * defaultBasalExpense;
+	}
+
+	protected void run_towards(Vector3 destinationPos){
+		// já que o eixo y é duas vezes menor que o x em um mapa isométrico...
+		transform.position = Vector3.MoveTowards (transform.position, new Vector3(destinationPos.x, transform.position.y, transform.position.z), Time.deltaTime * maxVelocity);
+		transform.position = Vector3.MoveTowards (transform.position, new Vector3(transform.position.x, destinationPos.y, transform.position.z), Time.deltaTime * maxVelocity/2); 
+
+		animator.SetBool("right", transform.position.x < destinationPos.x);
+		animator.SetBool("up", transform.position.y < destinationPos.y);
+		animator.SetBool("running", true);
 
 		animator.SetBool("iddle", false );
 		energy -= Time.deltaTime * defaultBasalExpense;
@@ -176,4 +213,67 @@ abstract public class animalModel : MonoBehaviour {
 			hourTimer = 0;
 		}
 	}
+
+    /*protected void findPredators()
+    {
+        focusedPredator = null;
+
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, lineOfSight);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (predators.Contains(collider.gameObject.tag))
+            {
+                Vector3 diff = collider.gameObject.transform.position - position;
+                float curDistance = diff.sqrMagnitude;
+                if (curDistance < distance)
+                {
+                    focusedPredator = collider.gameObject;
+                    distance = curDistance;
+                }
+            }
+        }
+
+    }*/
+
+    protected void findClosestPredatorsInSight()
+    {
+        focusedPredator = null;
+
+        float distance = lineOfSight;
+        Vector3 position = transform.position;
+        
+        foreach (GameObject predator in predatorList)
+        {
+            Vector3 diff = predator.gameObject.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+                         
+            if (curDistance < distance)
+            {
+                focusedPredator = predator;
+                distance = curDistance;
+            }
+            
+        }
+
+    }
+
+    protected bool check_for_predators()
+    {
+        findClosestPredatorsInSight();
+        return focusedPredator != null;
+    }
+
+    public void getHunted(GameObject predator)
+    {
+        predatorList.Add(predator);
+    }
+
+    public void stopHunting(GameObject predator)
+    {
+        predatorList.Remove(predator);
+    }
 }

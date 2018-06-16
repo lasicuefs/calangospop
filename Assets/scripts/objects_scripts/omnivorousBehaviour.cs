@@ -17,25 +17,69 @@ public class omnivorousBehaviour : animalModel {
 		base.Update();
 	}
 
-	protected override void plan_action (){	
-		if (energy <= 0) {
-			die ();	
-		}if (!hungry && energy/maxEnergy < lowNutritionBoundery/100) {
-			Get_Hungry ();
-		} else if (hungry) {
-			if (noCloseFoodSource) {
-				walk_randomly ();
-			} else {
-				tryEating ();
-			}
-		} else {
-			iddle();
-		}
+    protected override void check_events()
+    {
+        if (energy <= 0)
+        {
+            this.die();
+        }
 
-		energy -= Time.deltaTime * defaultBasalExpense;
-	}
+        if (check_for_predators())
+        {
+            currState = "runningFromPredator";
+        }
+        else
+        {
+            if (currState == "runningFromPredator") currState = "iddle";
 
-	protected void tryEating(){
+            if (!starving && energy / maxEnergy < lowNutritionBoundery / 100)
+            {
+                starving = true;
+                currState = "searchingFood";
+            }
+            else
+            {
+                if (!hungry && energy / maxEnergy < maxNutritionBoundery / 100)
+                {
+                    hungry = true;
+                    currState = "searchingFood";
+                }
+            }
+        }
+    }
+
+    protected override void plan_action()
+    {
+
+        switch (currState)
+        {
+
+            case "iddle":
+                iddle();
+                break;
+            case "searchingFood":
+                searchFood();
+                break;
+        }
+
+        energy -= Time.deltaTime * defaultBasalExpense;
+    }
+
+    protected void searchFood()
+    {
+        findClosestEdible();
+        if (noCloseFoodSource)
+        {
+            walk_randomly();
+        }
+        else
+        {
+            tryEating();
+            currState = "tryingToEat";
+        }
+    }
+
+    protected void tryEating(){
 
 		if (closestEdible != null) {
 			Vector3 diff = closestEdible.transform.position - transform.position;

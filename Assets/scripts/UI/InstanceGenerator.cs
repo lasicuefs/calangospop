@@ -9,6 +9,7 @@ public class InstanceGenerator : MonoBehaviour {
 	GameObject selectedPrefab;
 	float selectedSize = 1;
 	int selectedAmount = 10;
+	int selectedType = 0;
 
 	GameMapGenerator mapGenerator;
 
@@ -31,7 +32,15 @@ public class InstanceGenerator : MonoBehaviour {
 					float xOffset = Mathf.Sin (angle) * radius;
 					float yOffset = Mathf.Cos (angle) * radius / 2f;
 					//Vector3 offSet = Random.insideUnitCircle * selectedSize;
-					mapGenerator.generateCustomPlant (selectedPrefab, mousePosition.x - xOffset, mousePosition.y - yOffset);
+					switch (selectedType) {
+					case 0:
+						mapGenerator.generateCustomPlant (selectedPrefab, mousePosition.x - xOffset, mousePosition.y - yOffset);
+						break;
+					case 1:
+						mapGenerator.generateCustomAnimal (selectedPrefab, mousePosition.x - xOffset, mousePosition.y - yOffset);
+						break;
+					}
+
 				}
 				selected = false;
 				GetComponent<SpriteRenderer>().enabled = false;
@@ -40,10 +49,11 @@ public class InstanceGenerator : MonoBehaviour {
 		
 	}
 
-	public void select(GameObject prefab, int amount, float radius){
+	public void select(GameObject prefab, int amount, float radius, int type){
 		selectedAmount = amount;
 		selectedSize = radius;
 		selectedPrefab = prefab;
+		selectedType = type;
 		selected = true;
 
 		GetComponent<SpriteRenderer>().enabled = true;

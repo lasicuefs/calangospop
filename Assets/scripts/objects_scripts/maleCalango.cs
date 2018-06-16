@@ -10,21 +10,7 @@ public class maleCalango : CalangoBehaviour {
 	public float mateDuration = 2.0f;
 
 	protected override void plan_action (){	
-		if (energy <= 0) {
-			this.die ();	
-		}
-
-		if (!starving && energy / maxEnergy < lowNutritionBoundery / 100) {
-			starving = true;
-			looser = false;
-			mating = false; // if it is starving it stops running from other animals or mating and start looking for food
-			currState = "searchingFood";
-		} else {
-			if (!hungry && energy / maxEnergy < maxNutritionBoundery / 100) {
-				hungry = true;
-			}
-		}
-
+		
 		switch (currState) {
 
 		case "iddle":
@@ -51,8 +37,12 @@ public class maleCalango : CalangoBehaviour {
 			actionIcon.sprite = eatSprite;
 			tryEating();
 			break;
+        case "runningFromPredator":
+            actionIcon.sprite = losingSprite;
+            walk_away(focusedPredator.transform.position);
+            break;
 
-		}
+        }
 
 		energy -= Time.deltaTime * defaultBasalExpense;
 	}

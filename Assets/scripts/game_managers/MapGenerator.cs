@@ -22,12 +22,14 @@ public class MapGenerator : MonoBehaviour {
 	protected registryController registry;
 	protected GameObject calangosParentObject;
 	protected GameObject plantsParentObject;
+	protected GameObject animalsParentObject;
 
 	// Use this for initialization
 	void Start () {
 		registry = GetComponentInParent<registryController> ();
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
+		animalsParentObject = GameObject.Find ("Animals");
 		initialize_map ();
 	}
 

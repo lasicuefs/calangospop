@@ -32,7 +32,6 @@ public class instance_button : MonoBehaviour
 	
 	// Update is called once per frame
 	protected  void Update () {
-		Debug.Log ("biomassa "+resControl.getBiomass());
 		Button button = GetComponent<Button>();
 		if (price > resControl.getBiomass ()) {			
 			button.interactable = false;
@@ -41,9 +40,9 @@ public class instance_button : MonoBehaviour
 		}
 	}
 
-	public void select_instance(){
+	public virtual void select_instance(){
 		resControl.decreaseBiomass (price);
-		generator.select (prefab, amount, radius);
+		generator.select (prefab, amount, radius, 0);
 	}
 
 	public virtual void OnPointerEnter(PointerEventData eventData)

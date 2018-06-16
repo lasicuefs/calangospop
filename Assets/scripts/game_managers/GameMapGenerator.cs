@@ -12,6 +12,7 @@ public class GameMapGenerator : MapGenerator {
 		registry = GetComponentInParent<registryController> ();
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
+		animalsParentObject = GameObject.Find ("Animals");
 		initialize_map ();
 
 
@@ -55,5 +56,14 @@ public class GameMapGenerator : MapGenerator {
 		registry.registerEdiblePlant (edible);
 
 		edible.transform.parent = plantsParentObject.transform;
+	}
+
+	public void generateCustomAnimal(GameObject prefab, float positionX, float positionY){	
+
+		float randomOffsetx = Random.Range(-10,11)/10*tileSize;
+		float randomOffsety = Random.Range(-10,11)/10*tileSize;
+
+		GameObject animal = Instantiate (prefab, new Vector3 (positionX, positionY, 0), new Quaternion (0, 0, 0 ,0));
+		animal.transform.parent = animalsParentObject.transform;
 	}
 }

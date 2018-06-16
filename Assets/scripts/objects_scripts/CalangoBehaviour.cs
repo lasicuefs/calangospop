@@ -32,21 +32,39 @@ abstract public class CalangoBehaviour : omnivorousBehaviour {
 		base.Update();
 	}
 
-	protected override void plan_action (){	
-		if (energy <= 0) {
-			this.die ();	
-		}
+    protected override void check_events()
+    {
+        if (energy <= 0)
+        {
+            this.die();
+        }
 
-		if (!starving && energy / maxEnergy < lowNutritionBoundery / 100) {
-			starving = true;
-			looser = false;
-			mating = false; // if it is starving it stops running from other animals or mating and start looking for food
-			currState = "searchingFood";
-		} else {
-			if (!hungry && energy / maxEnergy < maxNutritionBoundery / 100) {
-				hungry = true;
-			}
-		}
+        if (check_for_predators())
+        {
+            currState = "runningFromPredator";
+        }
+        else
+        {
+            if (currState == "runningFromPredator") currState = "iddle";
+
+            if (!starving && energy / maxEnergy < lowNutritionBoundery / 100)
+            {
+                starving = true;
+                looser = false;
+                mating = false; // if it is starving it stops running from other animals or mating and start looking for food
+                currState = "searchingFood";
+            }
+            else
+            {
+                if (!hungry && energy / maxEnergy < maxNutritionBoundery / 100)
+                {
+                    hungry = true;
+                }
+            }
+        }
+    }
+
+    protected override void plan_action (){			
 
 		switch (currState) {
 
@@ -66,8 +84,12 @@ abstract public class CalangoBehaviour : omnivorousBehaviour {
 			actionIcon.sprite = eatSprite;
 			tryEating();
 			break;
+        case "runningFromPredator":
+            actionIcon.sprite = losingSprite;
+            walk_away(focusedPredator.transform.position);
+            break;
 
-		}
+        }
 
 		energy -= Time.deltaTime * defaultBasalExpense;
 	}
@@ -148,5 +170,11 @@ abstract public class CalangoBehaviour : omnivorousBehaviour {
 			looser = false;
 		}
 	}
+
+    public override void get_eaten(){	
+		registry.unregisterCalango (this.gameObject);
+
+		base.get_eaten ();	
+	}   
 
 }
