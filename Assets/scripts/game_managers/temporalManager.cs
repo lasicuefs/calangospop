@@ -23,15 +23,17 @@ public class temporalManager : MonoBehaviour {
 	registryController registry;
 	GameObject calangosParentObject;
 	GameObject plantsParentObject;
+    GameObject animalsParentObject;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		mapGenerator = GetComponentInParent<MapGenerator> ();
 		registry  = GetComponentInParent<registryController> ();
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
+        animalsParentObject = GameObject.Find("Animals");
 
-		setTimeSpeed (timeScale);
+        setTimeSpeed (timeScale);
 	}
 	
 	// Update is called once per frame
@@ -64,7 +66,8 @@ public class temporalManager : MonoBehaviour {
 	void new_hour(){
 		if(plantsParentObject.transform.childCount > 0) plantsParentObject.BroadcastMessage ("newHour");
 		if(calangosParentObject.transform.childCount > 0) calangosParentObject.BroadcastMessage ("newHour");
-		mapGenerator.UpdateMap ();
+        if(animalsParentObject.transform.childCount > 0) animalsParentObject.BroadcastMessage("newHour");
+        mapGenerator.UpdateMap ();
 	}
 
 	public int getHour(){

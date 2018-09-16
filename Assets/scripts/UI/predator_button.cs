@@ -22,7 +22,7 @@ public class predator_button : instance_button {
 	{
 		base.OnPointerEnter (eventData);
 
-		animalModel script = prefab.GetComponent<animalModel> ();
+		AnimalModel script = prefab.GetComponent<AnimalModel> ();
 		typeText.text = "Predador";
 		descText.text = "Velocidade de caça: " + script.maxVelocity+"\nGasto basal: "+script.defaultBasalExpense;
 

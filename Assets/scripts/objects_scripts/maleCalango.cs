@@ -8,6 +8,7 @@ public class maleCalango : CalangoBehaviour {
 
 	float mateCounter = 0;
 	public float mateDuration = 2.0f;
+    public float aggressivenessPercentage = .5f;
 
 	protected override void plan_action (){	
 		
@@ -51,13 +52,21 @@ public class maleCalango : CalangoBehaviour {
 		
 		findClosestMate ();
 		if (closestMate != null) {	// mate found
-			closestMate.add_proposition (this.gameObject);
-			mating = true;
-
 			competitor = closestMate.getCompetitors (this.gameObject); // look for competitors
-			if (competitor != null) {				
-				currState = "engaging"; // In case there are competitors it engages them first
-			} else {
+			if (competitor != null) {
+                if (Random.value < energy / 100)
+                {// In case there are competitors it has a chance of engaging them first
+                    currState = "engaging";
+                }
+                else
+                {
+                    closestMate = null;
+                    currState = "runningFromCompetitor";
+                    return;
+                }
+                closestMate.add_proposition(this.gameObject);
+                mating = true;
+            } else {
 				currState = "tryingToMate"; // In case there is no competition...
 			}
 		} else {
@@ -80,7 +89,7 @@ public class maleCalango : CalangoBehaviour {
 		foreach (Collider2D collider in colliders) {
 			if (collider.gameObject.tag == "calango") {
 				CalangoBehaviour calango = collider.gameObject.GetComponent<CalangoBehaviour> ();
-				if(!calango.male && calango.isFertile() && calango.getAge() >= calango.reproductiveAge && calango.getAge() < calango.seniority){
+				if(!calango.male && calango.isFertile() && calango.getAge() >= calango.reproductiveAge){
 					Vector3 diff = collider.gameObject.transform.position - position;
 					float curDistance = diff.sqrMagnitude;
 					if (curDistance < distance) {
@@ -94,6 +103,7 @@ public class maleCalango : CalangoBehaviour {
 
 	protected override void tryMating(){	
 		if (competitor != null) { // In case a competitor apears in the middle of the mating...	
+
 			mateCounter = 0.0f;  // the mating proccess goes on hold
 			currState = "engaging"; // and it engages the competitor
 		} else {
@@ -132,7 +142,7 @@ public class maleCalango : CalangoBehaviour {
 			atack (competitor);
 		}
 
-		if (this.energy < lowNutritionBoundery * 1.5f) { // In case the individual is close to starving it loses
+		if (this.energy < lowNutritionBoundery || Random.value*this.energy < 0.05f) { // In case the individual is close to starving it loses
 			competitor.winChallenge (this.GetComponent<CalangoBehaviour>());
 			closestMate.remove_proposition (this.gameObject);
 			closestMate = null;

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-abstract public class animalModel : MonoBehaviour {
+abstract public class AnimalModel : MonoBehaviour {
 
 	public float velocity = 1;
 	public float maxVelocity = 1.5f;
 	public float childrenGenerated = 2;
 	public float malePercentage = 50;  // In percentage %
 	public int reproductiveAge = 1;
-	public int seniority = 3;
 	public int maxAge = 4;
 
 	public float maxEnergy = 100;
@@ -41,10 +40,25 @@ abstract public class animalModel : MonoBehaviour {
 	protected MapGenerator mapGenerator;
 
 	public string currState = "iddle";
+    bool hidden = false;
 
     public string[] predators;
     protected List<GameObject> predatorList;
     protected GameObject focusedPredator;
+    protected GameObject focusedHideout;
+
+    public bool Hidden
+    {
+        get
+        {
+            return hidden;
+        }
+
+        set
+        {
+            hidden = value;
+        }
+    }
 
     // Use this for initialization
     protected void Start () {
@@ -53,7 +67,9 @@ abstract public class animalModel : MonoBehaviour {
 		hidration = Random.Range (maxHidration/2, maxHidration);
 
 		animator = GetComponent<Animator> ();
-	}
+        registry = GameObject.Find("MapController").GetComponent<registryController>();
+
+    }
 	
 	// Update is called once per frame
 	protected void Update () {
@@ -87,7 +103,7 @@ abstract public class animalModel : MonoBehaviour {
 		Destroy(this.gameObject);
 	}
 
-	protected void eat_animal(animalModel animal){
+	protected void eat_animal(AnimalModel animal){
 
 		energy = energy + animal.energyWhenConsumed;
 		hidration = hidration + animal.hidrationWhenConsumed;
@@ -103,12 +119,10 @@ abstract public class animalModel : MonoBehaviour {
 		starving = false;
 	}
 
-	protected void eat_plant(GameObject plant){
-
-		plantModel model = plant.GetComponent<plantModel> ();
-
-		energy = energy + model.energyWhenConsumed;
-		hidration = hidration + model.hidrationWhenConsumed;
+	protected void eat_plant(PlantModel plant){
+        
+		energy = energy + plant.energyWhenConsumed;
+		hidration = hidration + plant.hidrationWhenConsumed;
 		if (energy > maxEnergy) {
 			energy = maxEnergy;
 		}
@@ -116,12 +130,33 @@ abstract public class animalModel : MonoBehaviour {
 			hidration = maxHidration;
 		}
 
-		model.Get_Eaten ();
+        plant.Get_Eaten ();
 		hungry = false;
 		starving = false;
 	}
 
-	protected void walk_randomly(){
+    protected void eat_insect(PlantModel plant)
+    {
+        if (plant.hasAnyInsect())
+        {
+            energy = energy + plant.getSwarn().energyWhenConsumed;
+            hidration = hidration + plant.getSwarn().hidrationWhenConsumed;
+            if (energy > maxEnergy)
+            {
+                energy = maxEnergy;
+            }
+            if (hidration > maxHidration)
+            {
+                hidration = maxHidration;
+            }
+
+            plant.Get_Insect_Eaten();
+            hungry = false;
+            starving = false;
+        }        
+    }
+
+    protected void walk_randomly(){
 		if (Random.Range (0, 60) == 1) {
 			directionX = - directionX;
 			animator.SetBool("right", directionX >0 );
@@ -248,7 +283,7 @@ abstract public class animalModel : MonoBehaviour {
         
         foreach (GameObject predator in predatorList)
         {
-            Vector3 diff = predator.gameObject.transform.position - position;
+            Vector3 diff = predator.transform.position - position;
             float curDistance = diff.sqrMagnitude;
                          
             if (curDistance < distance)
@@ -275,5 +310,40 @@ abstract public class animalModel : MonoBehaviour {
     public void stopHunting(GameObject predator)
     {
         predatorList.Remove(predator);
+    }
+
+    protected void findClosestHideoutInSight(GameObject threat)
+    {
+        focusedHideout = null;
+
+        float distance = lineOfSight;
+        Vector3 position = transform.position;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, lineOfSight);
+
+        foreach (Collider2D collider in colliders)
+        {
+            PlantModel plant;
+            if (collider.gameObject.tag == "plant")
+            {
+                plant = collider.gameObject.GetComponent<PlantModel>();
+                if (plant.isHideout)
+                {
+                    Vector3 diff = collider.gameObject.transform.position - position;
+                    float curDistance = diff.sqrMagnitude;
+                    if (curDistance < distance)
+                    {
+                        //The hideout must be at least closer to the calango than to the predator
+                        float distanceToPredator = (threat.transform.position - collider.gameObject.transform.position).sqrMagnitude;
+                        if(distanceToPredator > curDistance)
+                        {
+                            focusedHideout = collider.gameObject;
+                            distance = curDistance;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

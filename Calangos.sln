@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calangos", "Calangos.csproj", "{8DB75217-0081-531C-3A2B-C2AB1D3A3604}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calangos.Editor", "Calangos.Editor.csproj", "{A59D0E07-A375-7F96-FAE8-87E46D5A3180}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +17,15 @@ Global
 		{8DB75217-0081-531C-3A2B-C2AB1D3A3604}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DB75217-0081-531C-3A2B-C2AB1D3A3604}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DB75217-0081-531C-3A2B-C2AB1D3A3604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59D0E07-A375-7F96-FAE8-87E46D5A3180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59D0E07-A375-7F96-FAE8-87E46D5A3180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59D0E07-A375-7F96-FAE8-87E46D5A3180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59D0E07-A375-7F96-FAE8-87E46D5A3180}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3667A476-FFCF-4671-B4F1-16FAB433216E}
 	EndGlobalSection
 EndGlobal

@@ -2,7 +2,7 @@
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	public class herbivoralBehaviour : animalModel {
+	public class herbivoralBehaviour : SecondaryAnimalBehaviour {
 		
 		private GameObject closestEdible = null;
 		private bool noCloseFoodSource = false;
@@ -86,7 +86,8 @@
 				if (diff.sqrMagnitude > 0.03f) {
 					walk_towards (closestEdible.transform.position);
 				} else {
-					eat_plant (closestEdible);
+                    PlantModel plant = closestEdible.GetComponent<PlantModel>();
+                    eat_plant (plant);
 					closestEdible = null;
 				}
 			} else { // The plant was taken			
@@ -107,14 +108,21 @@
 			Collider2D[] colliders = Physics2D.OverlapCircleAll(position, lineOfSight);
 
 			foreach(Collider2D collider in colliders){
-				if(collider.gameObject.tag == "edible plant"){
-					Vector3 diff = collider.gameObject.transform.position - position;
-					float curDistance = diff.sqrMagnitude;
-					if (curDistance < distance) {
-						closestEdible = collider.gameObject;
-						distance = curDistance;
-					}
-				}
+                PlantModel plant;
+                if (collider.gameObject.tag == "plant")
+                {
+                    plant = collider.gameObject.GetComponent<PlantModel>();
+                    if (plant.edible)
+                    {
+                        Vector3 diff = collider.gameObject.transform.position - position;
+                        float curDistance = diff.sqrMagnitude;
+                        if (curDistance < distance)
+                        {
+                            closestEdible = collider.gameObject;
+                            distance = curDistance;
+                        }
+                    }
+                }
 			}	
 
 			if (closestEdible == null) {// there is no tree on the map

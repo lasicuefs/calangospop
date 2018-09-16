@@ -48,7 +48,7 @@ public class MapGenerator : MonoBehaviour {
 				} else if (result <= ediblePlantPercentage+decorativePlantPercentage+lizardPercentage){
 					bool isMacho = (Random.value < .5);
 					CalangoBehaviour calango = this.generateCalango ( isMacho , new Vector3 ((i - j) * (-tileSize / 2), (i + j) * (-tileSize / 4), 0));	
-					calango.setAge (Random.Range (1, calango.seniority*24)); // generating calangos at different ages
+					calango.setAge (Random.Range (1, (calango.maxAge-1)*24)); // generating calangos at different ages
 				}
 			}
 		}
@@ -66,7 +66,7 @@ public class MapGenerator : MonoBehaviour {
 				for (int j = 0; j < mapSize; j++) {
 					int result = Random.Range (1, 1001);
 
-					plantModel model = ediblePlant.GetComponent<plantModel> ();
+					PlantModel model = ediblePlant.GetComponent<PlantModel> ();
 					if (result <= model.chanceOfBeingSpawned * 10) {
 						generateEdiblePlant (i, j);
 					}
@@ -100,7 +100,7 @@ public class MapGenerator : MonoBehaviour {
 		float randomOffsety = Random.Range(-10,11)/10*tileSize;
 
 		GameObject edible = Instantiate (ediblePlant, new Vector3 (((positionX-positionY) * (-tileSize / 2))+randomOffsetx, ((positionX+positionY) * (-tileSize / 4))+randomOffsety, 0), new Quaternion (0, 0, 0 ,0));
-		edible.GetComponent<plantModel> ().initialize (registry, this);
+		edible.GetComponent<PlantModel> ().initialize (registry, this);
 		registry.registerEdiblePlant (edible);
 
 		edible.transform.parent = plantsParentObject.transform;
@@ -120,4 +120,16 @@ public class MapGenerator : MonoBehaviour {
 		calango.transform.parent = calangosParentObject.transform;
 		return calangoScript;
 	}
+
+    public void generateCustomAnimal(GameObject prefab, float positionX, float positionY)
+    {
+
+        float randomOffsetx = Random.Range(-10, 11) / 10 * tileSize;
+        float randomOffsety = Random.Range(-10, 11) / 10 * tileSize;
+
+        GameObject animal = Instantiate(prefab, new Vector3(positionX, positionY, 0), new Quaternion(0, 0, 0, 0));
+        AnimalModel animalScript = animal.GetComponent<AnimalModel>();
+        animalScript.setControllerReferences(registry, this);
+        animal.transform.parent = animalsParentObject.transform;
+    }
 }

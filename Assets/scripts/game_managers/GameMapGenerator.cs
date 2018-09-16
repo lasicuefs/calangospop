@@ -39,7 +39,7 @@ public class GameMapGenerator : MapGenerator {
 				if (result <= lizardPercentage) {
 					bool isMacho = (Random.value < .5);
 					CalangoBehaviour calango = this.generateCalango (isMacho, new Vector3 ((i - j) * (-tileSize / 2), (i + j) * (-tileSize / 4), 0));	
-					calango.setAge (Random.Range (1, calango.seniority * 24)); // generating calangos at different ages
+					calango.setAge (Random.Range (1, (calango.maxAge-1) * 24)); // generating calangos at different ages
 				}
 			}
 	}
@@ -52,18 +52,9 @@ public class GameMapGenerator : MapGenerator {
 		float randomOffsety = Random.Range(-10,11)/10*tileSize;
 
 		GameObject edible = Instantiate (prefab, new Vector3 (positionX, positionY, 0), new Quaternion (0, 0, 0 ,0));
-		edible.GetComponent<plantModel> ().initialize (registry, this);
+		edible.GetComponent<PlantModel> ().initialize (registry, this);
 		registry.registerEdiblePlant (edible);
 
 		edible.transform.parent = plantsParentObject.transform;
-	}
-
-	public void generateCustomAnimal(GameObject prefab, float positionX, float positionY){	
-
-		float randomOffsetx = Random.Range(-10,11)/10*tileSize;
-		float randomOffsety = Random.Range(-10,11)/10*tileSize;
-
-		GameObject animal = Instantiate (prefab, new Vector3 (positionX, positionY, 0), new Quaternion (0, 0, 0 ,0));
-		animal.transform.parent = animalsParentObject.transform;
-	}
+	}	
 }

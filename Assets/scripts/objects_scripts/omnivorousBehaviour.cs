@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class omnivorousBehaviour : animalModel {
+public class omnivorousBehaviour : SecondaryAnimalBehaviour {
 
 	protected GameObject closestEdible = null;
 	protected bool noCloseFoodSource = false;
@@ -60,6 +60,12 @@ public class omnivorousBehaviour : animalModel {
             case "searchingFood":
                 searchFood();
                 break;
+            case "tryingToEat":
+                tryEating();
+                break;
+            case "runningFromPredator":
+                walk_away(focusedPredator.transform.position);
+                break;
         }
 
         energy -= Time.deltaTime * defaultBasalExpense;
@@ -87,7 +93,8 @@ public class omnivorousBehaviour : animalModel {
 			if (diff.sqrMagnitude > 0.03f) {
 				walk_towards (closestEdible.transform.position);
 			} else {
-				eat_plant (closestEdible);
+                PlantModel plant = closestEdible.GetComponent<PlantModel>();
+                eat_plant (plant);
 				closestEdible = null;
 				currState = "iddle";
 			}

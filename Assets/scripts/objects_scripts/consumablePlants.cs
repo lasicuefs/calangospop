@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class consumablePlants : plantModel {
+public class consumablePlants : PlantModel {
 
 	// Use this for initialization
 	void Start () {

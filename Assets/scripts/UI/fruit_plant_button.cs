@@ -18,7 +18,7 @@ public class fruit_plant_button : instance_button {
 		base.OnPointerEnter (eventData);
 
 		fruitfulPlant script = prefab.GetComponent<fruitfulPlant> ();
-		consumablePlants fruit =  script.fruitPreab.GetComponent<consumablePlants>();
+        PlantModel fruit =  script.fruitPreab.GetComponent<PlantModel>();
 		typeText.text = "Planta frutífera";
 		descText.text = "Frutas por hora: " + script.avarageFruitPerHour+"\nRaio de alcançe: "+script.fruitRadius+"\nEnergia da fruta: " + fruit.energyWhenConsumed+"\nHidratação da fruta: "+fruit.hidrationWhenConsumed;
 

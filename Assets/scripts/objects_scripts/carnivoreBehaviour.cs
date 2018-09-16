@@ -3,40 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class carnivoreBehaviour : animalModel {
+public class carnivoreBehaviour : SecondaryAnimalBehaviour {
 
 	public string[] preys;
 
-	private GameObject closestEdible = null;
+	private AnimalModel closestEdible = null;
 	private bool noCloseFoodSource = false;
 
 	// Use this for initialization
 	void Start () {
 		base.Start ();
-	}
+
+        registry.registerPredator(gameObject);
+    }
 
 	// Update is called once per frame
 	void Update () {
 		base.Update ();
 	}
-
-    /*protected override void plan_action (){	
-		if (energy <= 0) {
-			die ();	
-		}if (!hungry && energy/maxEnergy < lowNutritionBoundery/100) {
-			Get_Hungry ();
-		} else if (hungry) {
-			if (noCloseFoodSource) {
-				walk_randomly ();
-			} else {
-				tryEating ();
-			}
-		} else {
-			iddle();
-		}
-
-		energy -= Time.deltaTime * defaultBasalExpense;
-	}*/
+    
     protected override void check_events()
     {
         if (energy <= 0)
@@ -90,13 +75,13 @@ public class carnivoreBehaviour : animalModel {
 
 	void tryEating(){
 
-		if (closestEdible != null) {
+		if (closestEdible != null && !closestEdible.Hidden) {
 			Vector3 diff = closestEdible.transform.position - transform.position;
 
 			if (diff.sqrMagnitude > 0.03f) {
 				run_towards (closestEdible.transform.position);
 			} else {
-				animalModel model = closestEdible.GetComponent<animalModel> ();
+				AnimalModel model = closestEdible.GetComponent<AnimalModel> ();
 				eat_animal (model);
 				closestEdible = null;
 				currState = "iddle";
@@ -111,8 +96,7 @@ public class carnivoreBehaviour : animalModel {
 	}
 
 	protected override void findClosestEdible(){
-
-		//trees = GameObject.FindGameObjectsWithTag ("edible plant");
+        
 		float distance = Mathf.Infinity;
 		Vector3 position = transform.position;
 
@@ -120,14 +104,19 @@ public class carnivoreBehaviour : animalModel {
 
 		foreach(Collider2D collider in colliders){
 			if(preys.Contains(collider.gameObject.tag)){
-				Vector3 diff = collider.gameObject.transform.position - position;
-				float curDistance = diff.sqrMagnitude;
-				if (curDistance < distance) {
-					closestEdible = collider.gameObject;
-                    animalModel model = closestEdible.GetComponent<animalModel>();
-                    model.getHunted(gameObject);
-                    distance = curDistance;
-				}
+                AnimalModel model = collider.GetComponent<AnimalModel>();
+                if (!model.Hidden)
+                {
+                    Vector3 diff = collider.gameObject.transform.position - position;
+                    float curDistance = diff.sqrMagnitude;
+                    if (curDistance < distance)
+                    {
+                        closestEdible = model;
+                        model.getHunted(gameObject);
+                        distance = curDistance;
+                    }
+                }
+               
 			}
 		}	
 
@@ -138,18 +127,18 @@ public class carnivoreBehaviour : animalModel {
 		}
 	}
 
-    public animalModel getPrey()
+    public AnimalModel getPrey()
     {
-        return closestEdible.GetComponent<animalModel>();
+        return closestEdible.GetComponent<AnimalModel>();
     }
 
 	protected override void die(){
         if (closestEdible != null)
         {
-            animalModel model = closestEdible.GetComponent<animalModel>();
+            AnimalModel model = closestEdible.GetComponent<AnimalModel>();
             model.stopHunting(gameObject);
         }
-        
+        registry.unregisterPredator(gameObject);
         Destroy (gameObject);
 	}
 }

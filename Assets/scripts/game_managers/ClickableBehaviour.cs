@@ -17,10 +17,8 @@ public class ClickableBehaviour : MonoBehaviour {
 	}
 
 	void OnMouseDown () {
-		Debug.Log ("mouse detec");
 		if (Input.GetKey ("mouse 0")) {
-			Debug.Log ("down detec");
-			controller.select_Animal (this);
+			controller.select_unit (this);
 		}
 	}
 }

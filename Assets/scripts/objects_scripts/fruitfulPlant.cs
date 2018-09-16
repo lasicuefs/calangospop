@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fruitfulPlant : plantModel {
+public class fruitfulPlant : PlantModel {
 
 	public int avarageFruitPerHour = 0;
 	public float fruitRadius = 1;

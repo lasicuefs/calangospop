@@ -23,7 +23,7 @@ public class GameRules : MonoBehaviour {
 		int numCalangos = registry.getCalangosList ().Count;
 		if (!gameOver && numCalangos <= 0) {
 			game_over ();
-		} else if(!success && numCalangos>=100){
+		} else if(!success && numCalangos>=500){
 			gameSuccess ();
 		}
 	}

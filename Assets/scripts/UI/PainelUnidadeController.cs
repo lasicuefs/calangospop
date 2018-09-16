@@ -1,7 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+
+static class SelectionTypes
+{
+    public const int ANIMAL = 0;
+    public const int PLANT = 1; 
+
+}
 
 public class PainelUnidadeController : MonoBehaviour {
 
@@ -9,48 +14,81 @@ public class PainelUnidadeController : MonoBehaviour {
 	public Text textState;
 	public Text textAge;
 
-	animalModel selected;
+    public Text textName;
+    public Text textInsect;
+    public Text textType;
+
+    public GameObject animalPanel;
+    public GameObject plantPanel;
+
+    GameObject selected;
+    int selectionType;
+
 	ClickableBehaviour oldUnit;
 	Camera followCamera;
+    RectTransform rect;
+    Vector3 initiaPos;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		followCamera = GameObject.Find("unitCamera").GetComponent<Camera>();
-	}
+        rect = gameObject.GetComponent<RectTransform>();
+        initiaPos = rect.localPosition;
+    }
 
-	public void select_Animal(ClickableBehaviour target){
+	public void select_unit(ClickableBehaviour target){
 		if(oldUnit != null) oldUnit.GetComponent<SpriteRenderer>().enabled = false;
 		target.GetComponent<SpriteRenderer>().enabled = true;
 
-		selected = target.GetComponentInParent<animalModel>();
+        if (target.GetComponentInParent<AnimalModel>() != null) selectionType = SelectionTypes.ANIMAL;
+        else selectionType = SelectionTypes.PLANT;
+
+        selected = target.gameObject;
 		oldUnit = target;
-	}
+        rect.localPosition = initiaPos;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		/*RaycastHit hit;
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
 
-		if (Physics.Raycast (ray, hit))
-		{  
-			//  Do whatever you want to detect what's been hit from the data stored in the "hit" variable - this should rotate it...
+        if (selected != null)
+        {
+            if (selectionType == SelectionTypes.ANIMAL) {
+                AnimalModel animal = selected.GetComponentInParent<AnimalModel>();
+                followCamera.transform.position = selected.transform.position + new Vector3(0, .1f, -1);
 
-			Transform transform = hit.collider.GetComponent(Transform);
+                textEnergy.text = "Energia: " + (animal.Get_Energy() / animal.maxEnergy * 100).ToString("F0") + " %";
+                textState.text = "Estado: " + animal.currState;
+                textAge.text = "Idade: " + animal.getAge() + " anos";
 
-			if (transform )
-			{
-				Debug.Log (transform.gameObject.name);
-			}
+                animalPanel.SetActive(true);
+                plantPanel.SetActive(false);
+            } else if (selectionType == SelectionTypes.PLANT)
+            {
+                PlantModel plant = selected.GetComponentInParent<PlantModel>();
+                InsectSwarmModel swarm = plant.getSwarn();
+                followCamera.transform.position = selected.transform.position + new Vector3(0, .1f, -1);
 
-		}*/
+                 textName.text = "Nome: " + plant.name;               
+                 textType.text = "Atributos: " + (plant.hasInsects ? "Contém insetos. " : "") + (plant.isHideout ? "Esconderijo contra predadores. " : "") + (plant.sunProtection ? "Prejeta sombras. " : "");
 
-		if (selected != null) {
-			followCamera.transform.position = selected.transform.position + new Vector3 (0, .1f, -1);
-
-			textEnergy.text = "Energia: " + (selected.Get_Energy()/selected.maxEnergy*100).ToString("F0") +" %";
-			textState.text = "Estado: " + selected.currState;
-			textAge.text = "Idade: " + selected.getAge() + " anos";
-		}
+                if (swarm != null)
+                {
+                    textInsect.text = "Insects: " + swarm.insectCount;
+                    textInsect.gameObject.SetActive(true);
+                } else
+                {
+                    textInsect.gameObject.SetActive(false);
+                }
+                plantPanel.SetActive(true);
+                animalPanel.SetActive(false);
+            }
+     
+        } else
+        {
+            plantPanel.SetActive(false);
+            animalPanel.SetActive(false);
+            rect.localPosition = new Vector3(2000, 0, 0);
+        }
 	}
 }

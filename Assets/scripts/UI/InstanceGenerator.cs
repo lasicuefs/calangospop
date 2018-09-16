@@ -45,7 +45,11 @@ public class InstanceGenerator : MonoBehaviour {
 				selected = false;
 				GetComponent<SpriteRenderer>().enabled = false;
 			} 
-		}
+		} else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            selected = false;
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
 		
 	}
 
