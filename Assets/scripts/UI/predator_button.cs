@@ -17,14 +17,11 @@ public class predator_button : instance_button {
 		resControl.decreaseBiomass (price);
 		generator.select (prefab, amount, radius, 1);
 	}
-
-	public override void OnPointerEnter(PointerEventData eventData)
-	{
-		base.OnPointerEnter (eventData);
-
-		AnimalModel script = prefab.GetComponent<AnimalModel> ();
-		typeText.text = "Predador";
-		descText.text = "Velocidade de caça: " + script.maxVelocity+"\nGasto basal: "+script.defaultBasalExpense;
-
-	}
+    
+    public override void setText()
+    {
+        AnimalModel script = prefab.GetComponent<AnimalModel>();
+        typeText.text = "Predador";
+        descText.text = "Velocidade de caça: " + script.maxVelocity + "\nGasto basal: " + script.defaultBasalExpense;
+    }
 }

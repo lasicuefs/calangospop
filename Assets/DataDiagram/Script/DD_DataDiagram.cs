@@ -305,9 +305,9 @@ public class DD_DataDiagram : MonoBehaviour , IScrollHandler, IDragHandler {
     private void SetLineButtonColor(GameObject line, Color color) {
 
         foreach (Transform t in lineButtonsContent.transform) {
-            if (line == t.gameObject.GetComponent<DD_LineButton>().line) {
+            if (line == t.gameObject.GetComponentInChildren<DD_LineButton>().line) {
                 //t.gameObject.GetComponent<Image>().color = color;
-                t.gameObject.GetComponent<DD_LineButton>().line = line;
+                t.gameObject.GetComponentInChildren<DD_LineButton>().line = line;
                 return;
             }
         }
@@ -352,7 +352,7 @@ public class DD_DataDiagram : MonoBehaviour , IScrollHandler, IDragHandler {
             return false;
         }
 
-        GameObject button = Instantiate((GameObject)Resources.Load("Prefabs/LineButton"), lineButtonsContent.transform);
+        GameObject button = Instantiate((GameObject)Resources.Load("Prefabs/LineButton2"), lineButtonsContent.transform);
         if (null == button) {
             Debug.LogWarning(this + "AddLineButton Error : null == button");
             return false;
@@ -360,7 +360,7 @@ public class DD_DataDiagram : MonoBehaviour , IScrollHandler, IDragHandler {
 
         //button.name = string.Format("Button{0}", line.name);
         //button.GetComponent<Image>().color = lines.color;
-        button.GetComponent<DD_LineButton>().line = line;
+        button.GetComponentInChildren<DD_LineButton>().line = line;
 
         return true;
     }
@@ -374,8 +374,8 @@ public class DD_DataDiagram : MonoBehaviour , IScrollHandler, IDragHandler {
 
         foreach (Transform t in lineButtonsContent.transform) {
             try {
-                if (line == t.gameObject.GetComponent<DD_LineButton>().line) {
-                    t.gameObject.GetComponent<DD_LineButton>().DestroyLineButton();
+                if (line == t.gameObject.GetComponentInChildren<DD_LineButton>().line) {
+                    t.gameObject.GetComponentInChildren<DD_LineButton>().DestroyLineButton();
                     Destroy(t.gameObject);
                     return true;
                 }

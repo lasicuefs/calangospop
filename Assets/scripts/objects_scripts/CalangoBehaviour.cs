@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-abstract public class CalangoBehaviour : AnimalModel {
+abstract public class CalangoBehaviour : AnimalModel
+{
 
     public Sprite mateSprite;
     public Sprite eatSprite;
     public Sprite combatSprite;
     public Sprite losingSprite;
+    public Sprite heatSprite;
 
     public bool male;
     public float matingChance = 30;
@@ -29,41 +31,75 @@ abstract public class CalangoBehaviour : AnimalModel {
 
     protected float hideCounter = 0;
     protected float hiddingTimeInSec = 5;
+    public float temperatureTransferInSec = .02f;
+    public float maxBodyTemp = 33;
+    public float highBodyTempThreshold = 30;
+    public float lowBodyTempThreshold = 26;
+    protected float currentTemp = 25;
+    bool inShadow = false;
+
+    GameRules rules;
 
     // Use this for initialization
-    void Start() {
+     protected void Start()
+    {
         base.Start();
-
+        rules = GameObject.Find("MapController").GetComponent<GameRules>();
         actionIcon = transform.Find("actionIcon").GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         base.Update();
+
+        if(rules.isHeatEnabled()) updateTemp();
+    }
+
+    void updateTemp()
+    {
+        float EnvTemp = inShadow ? GameConstants.temperatureInShadow : GameConstants.temperatureInSun;
+        if (currentTemp > EnvTemp)
+        {
+            currentTemp -= (currentTemp - EnvTemp) * temperatureTransferInSec * Time.deltaTime * 5;
+        }
+        else
+        {
+            currentTemp += (EnvTemp - currentTemp) * temperatureTransferInSec * Time.deltaTime;
+        }
+        if (currentTemp > maxBodyTemp)
+        {
+            this.die(Deaths.INSOLACAO);
+        }
     }
 
     protected override void check_events()
     {
+        inShadow = false;
         //Check for events that may change the calango behaviour in order of importance
         if (!CheckIfDead())
         {
             if (!CheckIfStarving())
             {
-                if (!CheckIfRunningFromPredator()){
+                if (!CheckIfRunningFromPredator())
+                {
                     if (!CheckIfBeingHunted())
                     {
-                        CheckIfHungry();
+                        if (!CheckIfInsolated())
+                        {
+                            CheckIfHungry();
+                        }
                     }
                 }
             }
-        }        
+        }
     }
 
     bool CheckIfDead()
     {
         if (energy <= 0)
         {
-            this.die();
+            this.die(Deaths.INANICAO);
             return true;
         }
         return false;
@@ -71,12 +107,12 @@ abstract public class CalangoBehaviour : AnimalModel {
 
     bool CheckIfRunningFromPredator()
     {
-        string[] lifeOrDeathStates = { "runningFromPredator", "hidding" };
+        string[] lifeOrDeathStates = { GameConstants.states.RUNNINGFROMPREDATOR, GameConstants.states.HIDDING };
         if (lifeOrDeathStates.Contains(currState))
         {
             if (predatorList.Count == 0)
             {
-                currState = "iddle";
+                currState = GameConstants.states.IDDLE;
                 return false;
             }
             return true;
@@ -103,13 +139,26 @@ abstract public class CalangoBehaviour : AnimalModel {
             starving = true;
             looser = false;
             mating = false; // if it is starving it stops running from other animals or mating and start looking for food
-            currState = "searchingFood";
+            currState = GameConstants.states.SEARCHINGFOOD;
             return true;
         }
         return false;
     }
-    bool CheckIfHungry() { 
-        
+
+    bool CheckIfInsolated()
+    {
+        if (currState == GameConstants.states.SEARCHINGSHADOW || currState == GameConstants.states.RUNNINGTOSHADOW || currState == GameConstants.states.COOLING) return true;
+        else if (currentTemp > highBodyTempThreshold )
+        {
+            currState = GameConstants.states.SEARCHINGSHADOW;
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckIfHungry()
+    {
+
         if (!hungry && energy / maxEnergy < maxNutritionBoundery / 100)
         {
             hungry = true;
@@ -118,160 +167,221 @@ abstract public class CalangoBehaviour : AnimalModel {
         return false;
     }
 
-    protected override void plan_action (){			
+    protected override void plan_action()
+    {
 
- 		switch (currState) {
+        switch (currState)
+        {
 
-		case "iddle":
-			actionIcon.sprite = null;
-			iddle();
-			break;
-		case "tryingToMate":
-			actionIcon.sprite = mateSprite;
-			tryMating ();
-			break;
-		case "searchingFood":
-			actionIcon.sprite = eatSprite;
-			searchFood();
-			break;
-		case "tryingToEat":
-			actionIcon.sprite = eatSprite;
-			tryEating();
-			break;
-        case "runningFromPredator":
-            actionIcon.sprite = losingSprite;
-            runFromPredator();
-            break;
-        case "hidding":
-            actionIcon.sprite = losingSprite;
-            hide();
-            break;
+            case GameConstants.states.IDDLE:
+                actionIcon.sprite = null;
+                iddle();
+                break;
+            case GameConstants.states.TRYTOMATE:
+                actionIcon.sprite = mateSprite;
+                tryMating();
+                break;
+            case GameConstants.states.SEARCHINGFOOD:
+                actionIcon.sprite = eatSprite;
+                searchFood();
+                break;
+            case GameConstants.states.TRYTOEAT:
+                actionIcon.sprite = eatSprite;
+                tryEating();
+                break;
+            case GameConstants.states.SEARCHINGSHADOW:
+                actionIcon.sprite = heatSprite;
+                searchShadow();
+                break;
+            case GameConstants.states.RUNNINGTOSHADOW:
+                actionIcon.sprite = heatSprite;
+                runToShadow();
+                break;
+            case GameConstants.states.COOLING:
+                actionIcon.sprite = heatSprite;
+                coolDown();
+                break;
+            case GameConstants.states.RUNNINGFROMPREDATOR:
+                actionIcon.sprite = losingSprite;
+                runFromPredator();
+                break;
+            case GameConstants.states.HIDDING:
+                actionIcon.sprite = losingSprite;
+                hide();
+                break;
         }
 
 
-		energy -= Time.deltaTime * defaultBasalExpense;
-	}
+        energy -= Time.deltaTime * defaultBasalExpense;
+    }
 
     protected void hide()
     {
         hideCounter += Time.deltaTime;
-        if(hideCounter> hiddingTimeInSec)
+        if (hideCounter > hiddingTimeInSec)
         {
-            currState = "iddle";
+            currState = GameConstants.states.IDDLE;
             Hidden = false;
         }
     }
 
-        protected void runFromPredator()
+    protected void runFromPredator()
     {
         //if there is a hideout close run towards it
-        if(focusedHideout != null)
+        if (focusedHideout != null)
         {
             walk_towards(focusedHideout.transform.position);
             if ((focusedHideout.transform.position - transform.position).sqrMagnitude < 0.03f)
             {
-                currState = "hidding";
+                currState = GameConstants.states.HIDDING;
                 hideCounter = 0;
                 Hidden = true;
             }
-        } else
+        }
+        else
         {
             hideoutSearchCounter += Time.deltaTime;
-            if(hideoutSearchCounter > hideoutSearchIntervalInSec)
+            if (hideoutSearchCounter > hideoutSearchIntervalInSec)
             {
                 findClosestHideoutInSight(focusedPredator);
                 hideoutSearchCounter = 0;
             }
             walk_away(focusedPredator.transform.position);
-            if((focusedPredator.transform.position-transform.position).sqrMagnitude > lineOfSight)
+            if ((focusedPredator.transform.position - transform.position).sqrMagnitude > lineOfSight)
             {
-                currState = "hidding";
+                currState = GameConstants.states.HIDDING;
             }
         }
     }
 
-	protected void iddle(){	
-	
-		if (age < reproductiveAge) { // If not in reproductive stage
-			if (hungry)
-				currState = "searchingFood";
-			else
-				currState = "iddle";
-		} else {
-			searchMate ();
-		}
+    protected void iddle()
+    {
 
-		animator.SetBool("iddle", true );
-	}
+        if (age < reproductiveAge)
+        { // If not in reproductive stage
+            if (hungry)
+                currState = GameConstants.states.SEARCHINGFOOD;
+            else
+                currState = GameConstants.states.IDDLE;
+        }
+        else
+        {
+            searchMate();
+        }
 
-	private bool Is_Hungry(){
-		hungry = (energy / maxEnergy < maxNutritionBoundery / 100);
-		return hungry;
-	}
+        animator.SetBool("iddle", true);
+    }
 
-	protected void searchFood(){
-		findClosestEdible ();
-		if (noCloseFoodSource) {
-			walk_randomly ();
-		} else {
-			tryEating ();
-			currState = "tryingToEat";
-		}
-	}
+    private bool Is_Hungry()
+    {
+        hungry = (energy / maxEnergy < maxNutritionBoundery / 100);
+        return hungry;
+    }
 
-	protected abstract void searchMate();
+    protected void searchFood()
+    {
+        findClosestEdible();
+        if (noCloseFoodSource)
+        {
+            walk_randomly();
+        }
+        else
+        {
+            tryEating();
+            currState = GameConstants.states.TRYTOEAT;
+        }
+    }
 
-	protected abstract void tryMating();
+    protected void searchShadow()
+    {
+        findClosestShadowInSight();
 
-	/*protected abstract void tryMating();
+        if (focusedShadowProducer == null)
+        {
+            walk_randomly();
+        }
+        else
+        {
+            currState = GameConstants.states.RUNNINGTOSHADOW;
+        }
+    }
+
+    protected abstract void searchMate();
+
+    protected abstract void tryMating();
+
+    /*protected abstract void tryMating();
 	protected abstract void findClosestMate();*/
 
-	public bool isFertile(){
-		return canReproduce;
-	}
+    public bool isFertile()
+    {
+        return canReproduce;
+    }
 
-	protected override void die(){
-		registry.unregisterCalango(gameObject, Deaths.INANICAO);
-		Destroy (gameObject);
-	}
+    protected void die(string cause)
+    {
+        registry.unregisterCalango(gameObject, cause);
+        this.die();
+    }
 
-	public void getChallenged(CalangoBehaviour source){
-		competitor = source;
-	}
+    protected override void die()
+    {
+        Destroy(gameObject);
+    }
 
-	public void winChallenge(CalangoBehaviour looser){
-		if (competitor == looser)
-			competitor = null;
-	}
+    protected override void dieOfOldAge()
+    {
+        die(Deaths.NATURAL);
+    }
 
-	public void atack(CalangoBehaviour competitor){
-		float damage = age / 10 * Time.deltaTime; // Preciso bolar um calculo para o ataque (dano por segundo)
-		competitor.getAttacked (damage);
-	}
+    public void getChallenged(CalangoBehaviour source)
+    {
+        competitor = source;
+    }
 
-	public void getAttacked(float damage){
-		this.energy -= damage;
-	}
+    public void winChallenge(CalangoBehaviour looser)
+    {
+        if (competitor == looser)
+            competitor = null;
+    }
 
-	protected void runFromCompetitor(){
-		if (competitor != null) {
-			Vector3 diff = competitor.transform.position - transform.position;
-			if (diff.sqrMagnitude < 10f) { // still in range			
-				walk_away (competitor.transform.position);
-			} else {
-				competitor = null;
-				looser = false;
-			}
-		} else {  // In case the competitor died
-			looser = false;
-		}
-	}
+    public void atack(CalangoBehaviour competitor)
+    {
+        float damage = age / 10 * Time.deltaTime; // Preciso bolar um calculo para o ataque (dano por segundo)
+        competitor.getAttacked(damage);
+    }
 
-    public override void get_eaten(){	
-		registry.unregisterCalango (this.gameObject, Deaths.PREDADOR);
+    public void getAttacked(float damage)
+    {
+        this.energy -= damage;
+    }
 
-		base.get_eaten ();	
-	}
+    protected void runFromCompetitor()
+    {
+        if (competitor != null)
+        {
+            Vector3 diff = competitor.transform.position - transform.position;
+            if (diff.sqrMagnitude < 10f)
+            { // still in range			
+                walk_away(competitor.transform.position);
+            }
+            else
+            {
+                competitor = null;
+                looser = false;
+            }
+        }
+        else
+        {  // In case the competitor died
+            looser = false;
+        }
+    }
+
+    public override void get_eaten()
+    {
+        registry.unregisterCalango(this.gameObject, Deaths.PREDADOR);
+        base.get_eaten();
+    }
 
     protected void tryEating()
     {
@@ -292,21 +402,24 @@ abstract public class CalangoBehaviour : AnimalModel {
                     if (plant.edible)
                     {
                         eat_plant(plant);
-                    } else {
+                    }
+                    else
+                    {
                         eat_insect(plant);
                     }
-                } else
+                }
+                else
                 {
 
                 }
                 closestEdible = null;
-                currState = "iddle";
+                currState = GameConstants.states.IDDLE;
             }
         }
         else
         { // The plant was taken	
             findClosestEdible();
-            currState = "searchingFood";
+            currState = GameConstants.states.SEARCHINGFOOD;
         }
     }
 
@@ -346,5 +459,32 @@ abstract public class CalangoBehaviour : AnimalModel {
             noCloseFoodSource = false;
         }
     }
-    
+
+    protected void runToShadow()
+    {
+        //if there is a shadow close run towards it
+        if (focusedShadowProducer != null)
+        {
+            walk_towards(focusedShadowProducer.transform.position);
+            if ((focusedShadowProducer.transform.position - transform.position).sqrMagnitude < .4f)
+            {
+                currState = GameConstants.states.COOLING;
+            }
+        }
+    }
+
+    protected void coolDown()
+    {
+        inShadow = true;
+        if (currentTemp < lowBodyTempThreshold)
+        {
+            currState = GameConstants.states.IDDLE;
+            inShadow = false;
+        }
+    }
+
+    public float getBodyTemp()
+    {
+        return currentTemp;
+    }
 }

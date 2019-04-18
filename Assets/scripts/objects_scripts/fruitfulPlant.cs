@@ -6,7 +6,7 @@ public class fruitfulPlant : PlantModel {
 
 	public int avarageFruitPerHour = 0;
 	public float fruitRadius = 1;
-	public GameObject fruitPreab;
+	public GameObject fruitPrefab;
 
 	public void initialize(registryController registry, GameMapGenerator mapGenerator){
 		this.registry = registry;
@@ -26,7 +26,7 @@ public class fruitfulPlant : PlantModel {
 			float xOffset = Mathf.Sin (angle) * radius;
 			float yOffset = Mathf.Cos (angle) * radius / 2f;
 			//Vector3 offSet = Random.insideUnitCircle * selectedSize;
-			((GameMapGenerator)mapGenerator).generateCustomPlant (fruitPreab, transform.position.x - xOffset, transform.position.y - yOffset);
+			((GameMapGenerator)mapGenerator).generateCustomPlant (fruitPrefab, transform.position.x - xOffset, transform.position.y - yOffset);
 		}
 	} 
 }

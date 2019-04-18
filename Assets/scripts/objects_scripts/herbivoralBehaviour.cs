@@ -26,23 +26,23 @@
 
             if (check_for_predators())
             {
-                currState = "runningFromPredator";
+                currState = GameConstants.states.RUNNINGFROMPREDATOR;
             }
             else
             {
-                if (currState == "runningFromPredator") currState = "iddle";
+                if (currState == GameConstants.states.RUNNINGFROMPREDATOR) currState = GameConstants.states.IDDLE;
 
                 if (!starving && energy / maxEnergy < lowNutritionBoundery / 100)
                 {
                     starving = true;
-                    currState = "searchingFood";
+                    currState = GameConstants.states.SEARCHINGFOOD;
                 }
                 else
                 {
                     if (!hungry && energy / maxEnergy < maxNutritionBoundery / 100)
                     {
                         hungry = true;
-                        currState = "searchingFood";
+                        currState = GameConstants.states.SEARCHINGFOOD;
                     }
                 }
             }
@@ -53,10 +53,10 @@
         switch (currState)
         {
 
-            case "iddle":
+            case GameConstants.states.IDDLE:
                 iddle();
                 break;
-            case "searchingFood":
+            case GameConstants.states.SEARCHINGFOOD:
                 searchFood();
                 break;
         }
@@ -74,7 +74,7 @@
         else
         {
             tryEating();
-            currState = "tryingToEat";
+            currState = GameConstants.states.TRYTOEAT;
         }
     }
 

@@ -13,13 +13,10 @@ public class consumable_plant_button : instance_button {
 		base.Update ();
 	}
 
-	public override void OnPointerEnter(PointerEventData eventData)
-	{
-		base.OnPointerEnter (eventData);
-
-		consumablePlants script = prefab.GetComponent<consumablePlants> ();
-		typeText.text = "Planta consumível";
-		descText.text = "Energia: " + script.energyWhenConsumed+"\nHidratação: "+script.hidrationWhenConsumed;
-
-	}
+    public override void setText()
+    {
+        consumablePlants script = prefab.GetComponent<consumablePlants>();
+        typeText.text = "Planta consumível";
+        descText.text = "Energia: " + script.energyWhenConsumed + "\nHidratação: " + script.hidrationWhenConsumed;
+    }
 }

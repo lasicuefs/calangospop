@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class temporalManager : MonoBehaviour {
+public class TemporalManager : MonoBehaviour {
 
 	public int secondsForDay = 60; //how much seconds does a day longs
 	public int timeScale = 1;

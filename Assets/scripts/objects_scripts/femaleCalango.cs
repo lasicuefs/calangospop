@@ -11,16 +11,14 @@ public class femaleCalango : CalangoBehaviour {
 
 	void Start(){
 		base.Start ();
-
-		actionIcon = transform.Find ("actionIcon").GetComponent<SpriteRenderer>();
-		hoursSinceBirth = Random.Range (0, reproductiveInterval);
+        hoursSinceBirth = Random.Range (0, reproductiveInterval);
 	}
 
 	protected override void searchMate(){
 		
 		if (interestedMates.Count > 0) {
 			mating = true;
-			currState = "tryingToMate";
+			currState = GameConstants.states.TRYTOMATE;
 		} else
 			notMating ();
 		
@@ -34,8 +32,8 @@ public class femaleCalango : CalangoBehaviour {
 	}
 
 	void notMating(){
-		if(hungry) currState = "searchingFood";
-		else  currState = "iddle";
+		if(hungry) currState = GameConstants.states.SEARCHINGFOOD;
+		else  currState = GameConstants.states.IDDLE;
 	}
 
 	public void add_proposition(GameObject sender){
@@ -84,7 +82,6 @@ public class femaleCalango : CalangoBehaviour {
 			hoursSinceBirth++;
 
 			if (hoursSinceBirth >= reproductiveInterval) {
-				Debug.Log ("canReproduceagin");
 				hoursSinceBirth = 0;
 				canReproduce = true;
 			}

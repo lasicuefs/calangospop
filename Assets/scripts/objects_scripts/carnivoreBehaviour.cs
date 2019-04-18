@@ -32,14 +32,14 @@ public class carnivoreBehaviour : SecondaryAnimalBehaviour {
         if (!starving && energy / maxEnergy < lowNutritionBoundery / 100)
         {
             starving = true;
-            currState = "searchingFood";
+            currState = GameConstants.states.SEARCHINGFOOD;
         }
         else
         {
             if (!hungry && energy / maxEnergy < maxNutritionBoundery / 100)
             {
                 hungry = true;
-                currState = "searchingFood";
+                currState = GameConstants.states.SEARCHINGFOOD;
             }
         }
     }
@@ -48,13 +48,13 @@ public class carnivoreBehaviour : SecondaryAnimalBehaviour {
 		
 		switch (currState) {
 
-		case "iddle":
+		case GameConstants.states.IDDLE:
 			iddle();
 			break;
-		case "searchingFood":
+		case GameConstants.states.SEARCHINGFOOD:
 			searchFood();
 			break;
-		case "tryingToEat":
+		case GameConstants.states.TRYTOEAT:
 			tryEating();
 			break;
 
@@ -69,7 +69,7 @@ public class carnivoreBehaviour : SecondaryAnimalBehaviour {
 			walk_randomly ();
 		} else {
 			tryEating ();
-			currState = "tryingToEat";
+			currState = GameConstants.states.TRYTOEAT;
 		}
 	}
 
@@ -84,7 +84,7 @@ public class carnivoreBehaviour : SecondaryAnimalBehaviour {
 				AnimalModel model = closestEdible.GetComponent<AnimalModel> ();
 				eat_animal (model);
 				closestEdible = null;
-				currState = "iddle";
+				currState = GameConstants.states.IDDLE;
 			}
 		} else { // The animal died			
 			findClosestEdible();

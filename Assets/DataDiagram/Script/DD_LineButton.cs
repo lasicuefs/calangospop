@@ -82,7 +82,7 @@ public class DD_LineButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
 
         m_Label.transform.SetParent(dd.transform);
-        m_Label.transform.position = transform.position + new Vector3(0, - GetComponent<RectTransform>().rect.height / 2, 0);
+        //m_Label.transform.position = transform.position + new Vector3(0, - GetComponent<RectTransform>().rect.height / 2, 0);
         m_Label.SetActive(true);
     }
 
@@ -97,7 +97,7 @@ public class DD_LineButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             return;
 
         m_Label.transform.SetParent(transform);
-        m_Label.SetActive(false);
+        //m_Label.SetActive(false);
     }
 
     public void OnButtonClick() {

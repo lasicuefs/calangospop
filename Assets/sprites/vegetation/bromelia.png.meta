@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: f4795807c8c7d214bba371bdf7ced2ce
-timeCreated: 1504214733
-licenseType: Free
+guid: 4a6f180c68992694488885680e2413ce
 TextureImporter:
   fileIDToRecycleName: {}
-  serializedVersion: 4
+  externalObjects: {}
+  serializedVersion: 5
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -12,6 +11,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -27,10 +28,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -39,105 +43,41 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 212, y: 209, z: 201, w: 142}
   spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-  - buildTarget: iPhone
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-  - buildTarget: Android
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-  - buildTarget: WebGL
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline:
-    - - {x: 111, y: 33}
-      - {x: 106, y: 46}
-      - {x: 92, y: 36}
-      - {x: 150, y: 43}
-      - {x: 158, y: 45}
-      - {x: 127, y: 62}
-      - {x: 142, y: 100}
-      - {x: 140, y: 105}
-      - {x: 131, y: 108}
-      - {x: 158, y: 116}
-      - {x: 153, y: 120}
-      - {x: 143, y: 121}
-      - {x: 127, y: 121}
-      - {x: 101, y: 117}
-      - {x: 168, y: 134}
-      - {x: 134, y: 156}
-      - {x: -27, y: 156}
-      - {x: -41, y: 125}
-      - {x: -13, y: 54}
-      - {x: -12, y: 53}
-      - {x: -12, y: 48}
-      - {x: -11, y: 44}
-      - {x: -12, y: 48}
-      - {x: -14, y: 53}
-      - {x: -32, y: 71}
-      - {x: -39, y: 75}
-      - {x: -80, y: 105}
-      - {x: -99, y: 108}
-      - {x: -159, y: 80}
-      - {x: -162, y: 62}
-      - {x: -162, y: 41}
-      - {x: -157, y: 38}
-      - {x: -132, y: 29}
-      - {x: -145, y: 25}
-      - {x: -162, y: 16}
-      - {x: -162, y: 13}
-      - {x: -159, y: 11}
-      - {x: -132, y: -14}
-      - {x: -124, y: -20}
-      - {x: -112, y: -79}
-      - {x: 109, y: -79}
-      - {x: 183, y: -9}
-      - {x: 183, y: -1}
-      - {x: 176, y: 6}
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 820e362e669ea234499c50e509195e9c
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

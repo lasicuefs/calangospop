@@ -15,13 +15,13 @@ public class PainelGeralControler : MonoBehaviour {
     public Text textStarvation;
     public Text textPredation;
     registryController registry;
-	temporalManager tempManager;
+	TemporalManager tempManager;
 
 	// Use this for initialization
 	void Start () {
 		GameObject mapController = GameObject.Find ("MapController");
 		registry = mapController.GetComponent<registryController> ();
-		tempManager =  mapController.GetComponent<temporalManager> ();
+		tempManager =  mapController.GetComponent<TemporalManager> ();
 	}
 	
 	// Update is called once per frame

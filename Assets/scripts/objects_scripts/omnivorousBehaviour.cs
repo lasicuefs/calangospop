@@ -26,23 +26,23 @@ public class omnivorousBehaviour : SecondaryAnimalBehaviour {
 
         if (check_for_predators())
         {
-            currState = "runningFromPredator";
+            currState = GameConstants.states.RUNNINGFROMPREDATOR;
         }
         else
         {
-            if (currState == "runningFromPredator") currState = "iddle";
+            if (currState == GameConstants.states.RUNNINGFROMPREDATOR) currState = GameConstants.states.IDDLE;
 
             if (!starving && energy / maxEnergy < lowNutritionBoundery / 100)
             {
                 starving = true;
-                currState = "searchingFood";
+                currState = GameConstants.states.SEARCHINGFOOD;
             }
             else
             {
                 if (!hungry && energy / maxEnergy < maxNutritionBoundery / 100)
                 {
                     hungry = true;
-                    currState = "searchingFood";
+                    currState = GameConstants.states.SEARCHINGFOOD;
                 }
             }
         }
@@ -54,16 +54,16 @@ public class omnivorousBehaviour : SecondaryAnimalBehaviour {
         switch (currState)
         {
 
-            case "iddle":
+            case GameConstants.states.IDDLE:
                 iddle();
                 break;
-            case "searchingFood":
+            case GameConstants.states.SEARCHINGFOOD:
                 searchFood();
                 break;
-            case "tryingToEat":
+            case GameConstants.states.TRYTOEAT:
                 tryEating();
                 break;
-            case "runningFromPredator":
+            case GameConstants.states.RUNNINGFROMPREDATOR:
                 walk_away(focusedPredator.transform.position);
                 break;
         }
@@ -81,7 +81,7 @@ public class omnivorousBehaviour : SecondaryAnimalBehaviour {
         else
         {
             tryEating();
-            currState = "tryingToEat";
+            currState = GameConstants.states.TRYTOEAT;
         }
     }
 
@@ -96,11 +96,11 @@ public class omnivorousBehaviour : SecondaryAnimalBehaviour {
                 PlantModel plant = closestEdible.GetComponent<PlantModel>();
                 eat_plant (plant);
 				closestEdible = null;
-				currState = "iddle";
+				currState = GameConstants.states.IDDLE;
 			}
 		} else { // The plant was taken	
 			findClosestEdible();
-			currState = "searchingFood";
+			currState = GameConstants.states.SEARCHINGFOOD;
 		}
 	}
 

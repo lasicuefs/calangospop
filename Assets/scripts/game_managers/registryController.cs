@@ -5,6 +5,8 @@ static class Deaths
 {
     public const string INANICAO = "INANICAO";
     public const string PREDADOR = "PREDADOR";
+    public const string INSOLACAO = "INSOLACAO";
+    public const string NATURAL = "NATURAL";
 }
 public class registryController : MonoBehaviour {
 
@@ -22,12 +24,6 @@ public class registryController : MonoBehaviour {
         deaths = new Dictionary<string, int>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-		Grapher.Log (calangos.Count, "calangos");
-		Grapher.Log (ediblePlants.Count, "edibles");
-	}
-
 	public void registerCalango(GameObject calango){
 		calangos.Add (calango);
 		animals.Add (calango);

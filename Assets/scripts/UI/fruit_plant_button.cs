@@ -12,15 +12,14 @@ public class fruit_plant_button : instance_button {
 	void Update(){
 		base.Update ();
 	}
+    
+    public override void setText()
+    {
+        fruitfulPlant script = prefab.GetComponent<fruitfulPlant>();
+        PlantModel fruit = script.fruitPrefab.GetComponent<PlantModel>();
+        typeText.text = "Planta frutífera";
+        descText.text = "Frutas por hora: " + script.avarageFruitPerHour + "\nRaio de alcançe: " + script.fruitRadius + "\nEnergia da fruta: " + fruit.energyWhenConsumed;
+        descText.text += "\n"+ (script.hasInsects ? "Contém insetos\n" : "") + (script.isHideout ? "Esconderijo contra predadores\n" : "") + (script.sunProtection ? "Prejeta sombras\n" : "");
 
-	public override void OnPointerEnter(PointerEventData eventData)
-	{
-		base.OnPointerEnter (eventData);
-
-		fruitfulPlant script = prefab.GetComponent<fruitfulPlant> ();
-        PlantModel fruit =  script.fruitPreab.GetComponent<PlantModel>();
-		typeText.text = "Planta frutífera";
-		descText.text = "Frutas por hora: " + script.avarageFruitPerHour+"\nRaio de alcançe: "+script.fruitRadius+"\nEnergia da fruta: " + fruit.energyWhenConsumed+"\nHidratação da fruta: "+fruit.hidrationWhenConsumed;
-
-	}
+    }
 }

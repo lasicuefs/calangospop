@@ -39,13 +39,15 @@ abstract public class AnimalModel : MonoBehaviour {
 	protected registryController registry;
 	protected MapGenerator mapGenerator;
 
-	public string currState = "iddle";
+    [HideInInspector]
+	public string currState = GameConstants.states.IDDLE;
     bool hidden = false;
 
     public string[] predators;
     protected List<GameObject> predatorList;
     protected GameObject focusedPredator;
     protected GameObject focusedHideout;
+    protected GameObject focusedShadowProducer;
 
     public bool Hidden
     {
@@ -62,6 +64,7 @@ abstract public class AnimalModel : MonoBehaviour {
 
     // Use this for initialization
     protected void Start () {
+        currState = GameConstants.states.IDDLE;
         predatorList = new List<GameObject>();
         energy = Random.Range (maxEnergy/2, maxEnergy);
 		hidration = Random.Range (maxHidration/2, maxHidration);
@@ -173,7 +176,7 @@ abstract public class AnimalModel : MonoBehaviour {
 
 		animator.SetBool("iddle", false );
 		animator.SetBool("running", false);
-		energy -= Time.deltaTime * defaultBasalExpense;
+		energy -= Time.deltaTime * defaultBasalExpense * 3.0f;
 	}
 
 	abstract protected void findClosestEdible (); 
@@ -188,7 +191,7 @@ abstract public class AnimalModel : MonoBehaviour {
 		animator.SetBool("running", false);
 
 		animator.SetBool("iddle", false );
-		energy -= Time.deltaTime * defaultBasalExpense;
+		energy -= Time.deltaTime * defaultBasalExpense * 3.0f;
 	}
 
 	protected void run_towards(Vector3 destinationPos){
@@ -201,7 +204,7 @@ abstract public class AnimalModel : MonoBehaviour {
 		animator.SetBool("running", true);
 
 		animator.SetBool("iddle", false );
-		energy -= Time.deltaTime * defaultBasalExpense;
+		energy -= Time.deltaTime * defaultBasalExpense * 3.0f;
 	}
 
 	protected void walk_away(Vector3 enemyPos){
@@ -215,17 +218,23 @@ abstract public class AnimalModel : MonoBehaviour {
 		animator.SetBool("up", transform.position.y < destinationPos.y);
 
 		animator.SetBool("iddle", false );
-		energy -= Time.deltaTime * defaultBasalExpense;
+		energy -= Time.deltaTime * defaultBasalExpense * 3.0f;
 	}
 
 	abstract protected void die();
 
-	public void getOlder(){
+    protected virtual void dieOfOldAge()
+    {
+        die();
+    }
+
+
+    public void getOlder(){
 		age++;
 		if (age == reproductiveAge) {
 			transform.localScale += transform.localScale * 0.5f;
 		} else if (age > maxAge) {
-			die ();
+            dieOfOldAge();
 		}
 	}
 
@@ -340,6 +349,37 @@ abstract public class AnimalModel : MonoBehaviour {
                             focusedHideout = collider.gameObject;
                             distance = curDistance;
                         }
+                    }
+                }
+            }
+        }
+
+    }
+
+    protected void findClosestShadowInSight()
+    {
+        focusedShadowProducer = null;
+
+        float distance = lineOfSight;
+        Vector3 position = transform.position;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, lineOfSight);
+
+        foreach (Collider2D collider in colliders)
+        {
+            PlantModel plant;
+            if (collider.gameObject.tag == "plant")
+            {
+                plant = collider.gameObject.GetComponent<PlantModel>();
+
+                if (plant.sunProtection)
+                {
+                    Vector3 diff = collider.gameObject.transform.position - position;
+                    float curDistance = diff.sqrMagnitude;
+                    if (curDistance < distance)
+                    {                        
+                        focusedShadowProducer = collider.gameObject;
+                        distance = curDistance;                        
                     }
                 }
             }

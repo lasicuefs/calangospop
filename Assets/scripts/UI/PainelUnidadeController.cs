@@ -10,13 +10,15 @@ static class SelectionTypes
 
 public class PainelUnidadeController : MonoBehaviour {
 
-	public Text textEnergy;
 	public Text textState;
 	public Text textAge;
+    public Image energyBar;
+    public Image tempBar;
 
     public Text textName;
     public Text textInsect;
     public Text textType;
+
 
     public GameObject animalPanel;
     public GameObject plantPanel;
@@ -57,9 +59,14 @@ public class PainelUnidadeController : MonoBehaviour {
                 AnimalModel animal = selected.GetComponentInParent<AnimalModel>();
                 followCamera.transform.position = selected.transform.position + new Vector3(0, .1f, -1);
 
-                textEnergy.text = "Energia: " + (animal.Get_Energy() / animal.maxEnergy * 100).ToString("F0") + " %";
+                //textEnergy.text = "Energia: " + (animal.Get_Energy() / animal.maxEnergy * 100).ToString("F0") + " %";
+                energyBar.fillAmount = animal.Get_Energy() /animal.maxEnergy;
                 textState.text = "Estado: " + animal.currState;
                 textAge.text = "Idade: " + animal.getAge() + " anos";
+
+                CalangoBehaviour calango = selected.GetComponentInParent<CalangoBehaviour>();
+                if (calango != null) tempBar.fillAmount = Mathf.Clamp((calango.getBodyTemp() - calango.lowBodyTempThreshold) / (calango.maxBodyTemp-calango.lowBodyTempThreshold), 0, 1);
+                else tempBar.fillAmount = 0;
 
                 animalPanel.SetActive(true);
                 plantPanel.SetActive(false);
@@ -69,8 +76,8 @@ public class PainelUnidadeController : MonoBehaviour {
                 InsectSwarmModel swarm = plant.getSwarn();
                 followCamera.transform.position = selected.transform.position + new Vector3(0, .1f, -1);
 
-                 textName.text = "Nome: " + plant.name;               
-                 textType.text = "Atributos: " + (plant.hasInsects ? "Contém insetos. " : "") + (plant.isHideout ? "Esconderijo contra predadores. " : "") + (plant.sunProtection ? "Prejeta sombras. " : "");
+                 textName.text = "Nome: " + plant.plantName;               
+                 textType.text = "Atributos: " + (plant.hasInsects ? "\nContém insetos." : "") + (plant.isHideout ? "\nEsconderijo contra predadores." : "") + (plant.sunProtection ? "\nPrejeta sombras. " : "");
 
                 if (swarm != null)
                 {

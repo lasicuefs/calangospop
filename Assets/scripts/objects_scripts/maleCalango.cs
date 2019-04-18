@@ -14,31 +14,43 @@ public class maleCalango : CalangoBehaviour {
 		
 		switch (currState) {
 
-		case "iddle":
+		case GameConstants.states.IDDLE:
 			actionIcon.sprite = null;
 			iddle();
 			break;
-		case "tryingToMate":
+		case GameConstants.states.TRYTOMATE:
 			actionIcon.sprite = mateSprite;
 			tryMating ();
 			break;
-		case "runningFromCompetitor":
+		case GameConstants.states.RUNNINGFROMCOMPETITOR:
 			actionIcon.sprite = losingSprite;
 			runFromMatingCompetitor ();
 			break;
-		case "engaging":
+		case GameConstants.states.ENGAGING:
 			actionIcon.sprite = combatSprite;
 			engageCompetitor ();
 			break;
-		case "searchingFood":
+		case GameConstants.states.SEARCHINGFOOD:
 			actionIcon.sprite = eatSprite;
 			searchFood();
 			break;
-		case "tryingToEat":
+        case GameConstants.states.SEARCHINGSHADOW:
+            actionIcon.sprite = heatSprite;
+            searchShadow();
+            break;
+        case GameConstants.states.RUNNINGTOSHADOW:
+            actionIcon.sprite = heatSprite;
+            runToShadow();
+            break;
+        case GameConstants.states.COOLING:
+            actionIcon.sprite = heatSprite;
+            coolDown();
+            break;
+        case GameConstants.states.TRYTOEAT:
 			actionIcon.sprite = eatSprite;
 			tryEating();
 			break;
-        case "runningFromPredator":
+        case GameConstants.states.RUNNINGFROMPREDATOR:
             actionIcon.sprite = losingSprite;
             walk_away(focusedPredator.transform.position);
             break;
@@ -56,7 +68,7 @@ public class maleCalango : CalangoBehaviour {
 			if (competitor != null) {
                 if (Random.value < energy / 100)
                 {// In case there are competitors it has a chance of engaging them first
-                    currState = "engaging";
+                    currState = GameConstants.states.ENGAGING;
                 }
                 else
                 {
@@ -67,7 +79,7 @@ public class maleCalango : CalangoBehaviour {
                 closestMate.add_proposition(this.gameObject);
                 mating = true;
             } else {
-				currState = "tryingToMate"; // In case there is no competition...
+				currState = GameConstants.states.TRYTOMATE; // In case there is no competition...
 			}
 		} else {
 			notMating ();
@@ -75,8 +87,8 @@ public class maleCalango : CalangoBehaviour {
 	}
 
 	void notMating(){
-		if(hungry) currState = "searchingFood";
-		else  currState = "iddle";
+		if(hungry) currState = GameConstants.states.SEARCHINGFOOD;
+		else  currState = GameConstants.states.IDDLE;
 	}
 
 	protected void findClosestMate(){
@@ -105,7 +117,7 @@ public class maleCalango : CalangoBehaviour {
 		if (competitor != null) { // In case a competitor apears in the middle of the mating...	
 
 			mateCounter = 0.0f;  // the mating proccess goes on hold
-			currState = "engaging"; // and it engages the competitor
+			currState = GameConstants.states.ENGAGING; // and it engages the competitor
 		} else {
 			if (closestMate != null) {	// Mate still alive	 
 				Vector3 diff = closestMate.transform.position - transform.position;
@@ -121,7 +133,7 @@ public class maleCalango : CalangoBehaviour {
 				closestMate = null;
 				competitor = null;
 				mating = false;
-				currState = "iddle";
+				currState = GameConstants.states.IDDLE;
 			}
 		}
 
@@ -129,7 +141,7 @@ public class maleCalango : CalangoBehaviour {
 
 	protected void engageCompetitor(){	
 		if (competitor == null) { // if the competitor died for any reason
-			currState = "tryingToMate";
+			currState = GameConstants.states.TRYTOMATE;
 			return;
 		}
 
@@ -154,7 +166,7 @@ public class maleCalango : CalangoBehaviour {
 
 	void runFromMatingCompetitor(){
 		runFromCompetitor ();
-		if(!looser) currState = "iddle";
+		if(!looser) currState = GameConstants.states.IDDLE;
 	}
 
 	void matingRitual(){
@@ -173,14 +185,14 @@ public class maleCalango : CalangoBehaviour {
 		closestMate = null;
 		mating = false;
 
-		currState = "iddle";
+		currState = GameConstants.states.IDDLE;
 	}
 
 	public void winChallenge(CalangoBehaviour looser){
 		if (competitor == looser)
 			competitor = null;
 
-		currState = "tryingToMate";
+		currState = GameConstants.states.TRYTOMATE;
 	}
 
 
