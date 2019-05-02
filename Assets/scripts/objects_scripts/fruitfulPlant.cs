@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class fruitfulPlant : PlantModel {
 
-	public int avarageFruitPerHour = 0;
+	public float avarageFruitPerHour = 0;
 	public float fruitRadius = 1;
 	public GameObject fruitPrefab;
 
@@ -15,8 +15,8 @@ public class fruitfulPlant : PlantModel {
 
 	void newHour(){
 		base.newHour();
-		int randOffSet = Random.Range (0, avarageFruitPerHour*2) - avarageFruitPerHour;
-		int fruitAmount = avarageFruitPerHour - randOffSet;
+        int fruitAmount = Mathf.RoundToInt(Random.Range(0, avarageFruitPerHour * 2));
+		//int fruitAmount = avarageFruitPerHour - randOffSet;
 
 		float angleOffset = Random.value * 2f * Mathf.PI;
 		for (int i = 0; i < fruitAmount; i++) {

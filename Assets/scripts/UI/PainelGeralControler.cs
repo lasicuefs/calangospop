@@ -9,19 +9,15 @@ public class PainelGeralControler : MonoBehaviour {
 	public Text textEdiblePlants;
     public Text textInsects;
     public Text textPredators;
-    public Text textDay;
-	public Text textTime;
 
     public Text textStarvation;
     public Text textPredation;
     registryController registry;
-	TemporalManager tempManager;
 
 	// Use this for initialization
 	void Start () {
 		GameObject mapController = GameObject.Find ("MapController");
 		registry = mapController.GetComponent<registryController> ();
-		tempManager =  mapController.GetComponent<TemporalManager> ();
 	}
 	
 	// Update is called once per frame
@@ -35,8 +31,5 @@ public class PainelGeralControler : MonoBehaviour {
 
         textStarvation.text = "Fome: " + registry.getDeathsByStarvation();
         textPredation.text = "Predação: " + registry.getDeathsByPredation();
-
-        textDay.text = "Dias: " + tempManager.getDay();
-		textTime.text = "Horas: " + tempManager.getHour()+":00";
-	}
+    }
 }

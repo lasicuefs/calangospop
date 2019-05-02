@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMapGenerator : MapGenerator {
-	
+
+    public bool isRandomMap;
 	public int initialPopulationSize = 10;
 	cameraScript camera;
 
@@ -13,7 +14,7 @@ public class GameMapGenerator : MapGenerator {
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
 		animalsParentObject = GameObject.Find ("Animals");
-		initialize_map ();
+		if (isRandomMap) initialize_map();
 
 
 		camera = GameObject.Find ("Main Camera").GetComponent<cameraScript>();
@@ -42,9 +43,9 @@ public class GameMapGenerator : MapGenerator {
 					calango.setAge (Random.Range (1, (calango.maxAge-1) * 24)); // generating calangos at different ages
 				}
 			}
-	}
+	    }
 
-	}
+    }
 
 	public void generateCustomPlant(GameObject prefab, float positionX, float positionY){	
 

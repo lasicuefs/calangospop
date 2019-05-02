@@ -9,7 +9,7 @@ public class TemporalManager : MonoBehaviour {
 	public int timeScale = 1;
 	float hourCounter = 0.0f;
 	int currentDay = 1;
-	int currentHour = 0;
+	int currentHour = 1;
 
 	int minTime = 0;
 	public int maxTime = 3;
@@ -46,8 +46,8 @@ public class TemporalManager : MonoBehaviour {
 			currentHour++;
 		}
 
-		if (currentHour >= 24) {
-			currentHour = 0;
+		if (currentHour > 24) {
+			currentHour = 1;
 			currentDay++;
 		}
 

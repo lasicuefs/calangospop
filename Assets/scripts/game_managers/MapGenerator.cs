@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
 
-	public GameObject sand		;
+	public GameObject sand;
 	public GameObject decorativePlant;
 	public GameObject ediblePlant;
 	public GameObject calangoMale;

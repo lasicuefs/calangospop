@@ -93,9 +93,23 @@ public class omnivorousBehaviour : SecondaryAnimalBehaviour {
 			if (diff.sqrMagnitude > 0.03f) {
 				walk_towards (closestEdible.transform.position);
 			} else {
-                PlantModel plant = closestEdible.GetComponent<PlantModel>();
-                eat_plant (plant);
-				closestEdible = null;
+                if (closestEdible.tag == "plant")
+                {
+                    PlantModel plant = closestEdible.GetComponent<PlantModel>();
+                    if (plant.edible)
+                    {
+                        eat_plant(plant);
+                    }
+                    else
+                    {
+                        eat_insect(plant);
+                    }
+                }
+                else
+                {
+
+                }
+                closestEdible = null;
 				currState = GameConstants.states.IDDLE;
 			}
 		} else { // The plant was taken	
@@ -116,15 +130,22 @@ public class omnivorousBehaviour : SecondaryAnimalBehaviour {
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(position, lineOfSight);
 
 		foreach(Collider2D collider in colliders){
-			if(collider.gameObject.tag == "edible plant"){
-				Vector3 diff = collider.gameObject.transform.position - position;
-				float curDistance = diff.sqrMagnitude;
-				if (curDistance < distance) {
-					closestEdible = collider.gameObject;
-					distance = curDistance;
-				}
-			}
-		}	
+            if (collider.gameObject.tag == "plant")
+            {
+                PlantModel plant;
+                plant = collider.gameObject.GetComponent<PlantModel>();
+                if (plant.edible || plant.hasAnyInsect())
+                {
+                    Vector3 diff = collider.gameObject.transform.position - position;
+                    float curDistance = diff.sqrMagnitude;
+                    if (curDistance < distance)
+                    {
+                        closestEdible = collider.gameObject;
+                        distance = curDistance;
+                    }
+                }
+            }
+        }	
 
 		if (closestEdible == null) {// there is no tree on the map
 			noCloseFoodSource = true;

@@ -302,6 +302,8 @@
     <Compile Include="Assets\DataDiagram\Script\DD_LineButtonsContent.cs" />
     <Compile Include="Assets\DataDiagram\Script\DD_Lines.cs" />
     <Compile Include="Assets\DataDiagram\Script\DD_ZoomButton.cs" />
+    <Compile Include="Assets\OptionsTab.cs" />
+    <Compile Include="Assets\PlantRegister.cs" />
     <Compile Include="Assets\scripts\game_managers\cameraScript.cs" />
     <Compile Include="Assets\scripts\game_managers\ClickableBehaviour.cs" />
     <Compile Include="Assets\scripts\game_managers\FirstStageRules.cs" />
@@ -310,9 +312,11 @@
     <Compile Include="Assets\scripts\game_managers\MapGenerator.cs" />
     <Compile Include="Assets\scripts\game_managers\registryController.cs" />
     <Compile Include="Assets\scripts\game_managers\Resources_Controller.cs" />
+    <Compile Include="Assets\scripts\game_managers\SecondStageRules.cs" />
     <Compile Include="Assets\scripts\game_managers\TemporalManager.cs" />
     <Compile Include="Assets\scripts\game_managers\Tutorial.cs" />
     <Compile Include="Assets\scripts\game_managers\TutorialFase1.cs" />
+    <Compile Include="Assets\scripts\game_managers\TutorialFase2.cs" />
     <Compile Include="Assets\scripts\objects_scripts\animalModel.cs" />
     <Compile Include="Assets\scripts\objects_scripts\CalangoBehaviour.cs" />
     <Compile Include="Assets\scripts\objects_scripts\carnivoreBehaviour.cs" />
@@ -338,6 +342,7 @@
     <Compile Include="Assets\scripts\UI\PainelGeralControler.cs" />
     <Compile Include="Assets\scripts\UI\PainelUnidadeController.cs" />
     <Compile Include="Assets\scripts\UI\predator_button.cs" />
+    <Compile Include="Assets\TimePanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\mnmat\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />
