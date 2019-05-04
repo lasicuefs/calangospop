@@ -23,8 +23,8 @@ public class TutorialFase1 : Tutorial
 
         string[] initialText = new string[] { "Oi, Bem vido ao Calangos", "Eu sou o professor X e estou aqui para lhe ajudar a aprender!",
             "Esta é sua população de lagartos", "Neste tutorial, devemos garantir que ela aumente de tamanho até atingir 100 indivíduos!",
-            "Mas antes, vamos aprender mais sobre o jogo", "Esta é sua população de lagartos", "Esta é a barra de Biomassa, e mostra quanto você tem de Biomassa no momento",
-            "sua biomassa aumenta com o tempo", "utilizando a Biomassa você pode adicionar novas espécies de plantas ao ambiente", "Aqui voce pode escolher quais espécies adicionar",
+            "Mas antes, vamos aprender mais sobre o jogo", "Como já disse, aqui está sua população", "Esta é a barra de Biomassa, e mostra quanto você tem de Biomassa no momento",
+            "sua biomassa aumenta com o tempo", "Utilizando a Biomassa você pode adicionar novas espécies de plantas ao ambiente", "Aqui voce pode escolher quais espécies adicionar",
             "Cada espécie apresenta característias próprias e tem um custo de biomassa", "Só poderá inserir uma espécie se tiver a biomassa exigida"};
 
         PresentText(initialText);

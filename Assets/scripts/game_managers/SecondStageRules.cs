@@ -2,29 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SecondStageRules : MonoBehaviour, GameRules
+public class SecondStageRules : GameRules
 {
 
-    public GameObject gameOverMessage;
-    public GameObject successMessage;
-    public bool enableHeat;
-    registryController registry;
-    TemporalManager timeManager;
-
-    bool gameOver = false;
-    bool success = false;
-
-    // Use this for initialization
-    void Start()
+    protected override void checkRules()
     {
-        registry = GetComponent<registryController>();
-        timeManager = GetComponent<TemporalManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        int numCalangos = registry.getCalangosList().Count;
+       
+    int numCalangos = registry.getCalangosList().Count;
         if (!gameOver && numCalangos > 700)
         {
             game_over();
@@ -35,26 +19,9 @@ public class SecondStageRules : MonoBehaviour, GameRules
         }
     }
 
-    void game_over()
+    protected override void updateObjectives()
     {
-        gameOverMessage.SetActive(true);
-        gameOver = true;
-    }
-
-    void gameSuccess()
-    {
-        successMessage.SetActive(true);
-        success = true;
-    }
-
-    public void resetGame()
-    {
-        timeManager.setTimeSpeed(0);
-        Application.LoadLevel(Application.loadedLevel);
-    }
-
-    public bool isHeatEnabled()
-    {
-        return enableHeat;
+        int numCalangos = registry.getCalangosList().Count;
+        objectiveText.text = "1. Reduzir a população de calangos para 100 ou menos. Atualmente: " + numCalangos + "\n2. Não deixar a população de calangos passar de 700 indivíduos.";
     }
 }

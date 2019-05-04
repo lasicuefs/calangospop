@@ -1,9 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public interface GameRules {
-    void resetGame();
+public abstract class GameRules : MonoBehaviour {
 
-    bool isHeatEnabled();
+    public GameObject gameOverMessage;
+    public GameObject successMessage;
+    public Text objectiveText;
+    public bool enableHeat;
+    protected registryController registry;
+    protected TemporalManager timeManager;
+
+    protected bool gameOver = false;
+    protected bool success = false;
+
+    void Start()
+    {
+        registry = GetComponent<registryController>();
+        timeManager = GetComponent<TemporalManager>();
+    }
+
+    void Update()
+    {
+        checkRules();
+        updateObjectives();
+    }
+
+    protected abstract void checkRules();
+    protected abstract void updateObjectives();
+
+    public void resetGame()
+    {
+        timeManager.setTimeSpeed(0);
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    public bool isHeatEnabled()
+    {
+        return enableHeat;
+    }
+
+    protected void game_over()
+    {
+        gameOverMessage.SetActive(true);
+        gameOver = true;
+    }
+
+    protected void gameSuccess()
+    {
+        successMessage.SetActive(true);
+        success = true;
+    }
 }
