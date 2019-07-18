@@ -19,4 +19,19 @@ public class MainMenu : MonoBehaviour {
     {
         SceneManager.LoadScene("Tutorial2", LoadSceneMode.Single);
     }
+
+    public void StartTutorial3()
+    {
+        SceneManager.LoadScene("Tutorial3", LoadSceneMode.Single);
+    }
+
+    public void StartTutorial4()
+    {
+        SceneManager.LoadScene("Tutorial4", LoadSceneMode.Single);
+    }
+
+    public void StartSandBox()
+    {
+        SceneManager.LoadScene("SandBox", LoadSceneMode.Single);
+    }
 }

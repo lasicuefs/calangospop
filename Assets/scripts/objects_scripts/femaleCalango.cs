@@ -12,7 +12,7 @@ public class femaleCalango : CalangoBehaviour {
 	void Start(){
 		base.Start ();
         hoursSinceBirth = Random.Range (0, reproductiveInterval);
-	}
+    }
 
 	protected override void searchMate(){
 		
@@ -46,7 +46,7 @@ public class femaleCalango : CalangoBehaviour {
 
 	public CalangoBehaviour getCompetitors(GameObject competitor){
 		foreach(GameObject mate in interestedMates){
-			if (mate != competitor)
+			if (mate != null && mate != competitor)
 				return mate.GetComponent<CalangoBehaviour>();
 		}
 		return null;

@@ -7,8 +7,8 @@ public class InsectSwarmModel : MonoBehaviour {
     public float energyWhenConsumed = 30;
     public float hidrationWhenConsumed = 30;
 
-    public float reproductionPercetagePerHour = 30;
-    public float migrationAmountPerHour = 2;
+    public float reproductionPercetagePerHour = 25;
+    public float migrationAmountPerHour = 1;
 
     protected registryController registry;
     int maximumAmount = 0;
@@ -30,8 +30,9 @@ public class InsectSwarmModel : MonoBehaviour {
     public void newInsects()
     {
         int newInsects = (int)((InsectCount * reproductionPercetagePerHour) / 100 + migrationAmountPerHour);
+        if ((InsectCount + newInsects) > maximumAmount) newInsects = maximumAmount - insectCount;
         InsectCount += newInsects;
-        if (InsectCount > maximumAmount) InsectCount = maximumAmount;
+       
         registry.registerInsects(newInsects);
     }
 

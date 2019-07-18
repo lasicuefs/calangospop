@@ -8,7 +8,7 @@ public abstract class instance_button : MonoBehaviour
     , IPointerEnterHandler
     , IPointerExitHandler
 {
-
+    
     public Text priceText;
     public GameObject infoWindow;
     public Text nameText;
@@ -16,11 +16,15 @@ public abstract class instance_button : MonoBehaviour
     public Text descText;
     public GameObject prefab;
     public string name;
+    public string desciption = "";
     public int amount;
     public float radius = 4;
     public int price = 0;
     protected InstanceGenerator generator;
     protected Resources_Controller resControl;
+
+    Color defaultColor;
+    public Color selectedColor;
 
     // Use this for initialization
     protected void Start()
@@ -29,7 +33,7 @@ public abstract class instance_button : MonoBehaviour
         resControl = GameObject.Find("MapController").GetComponent<Resources_Controller>();
         priceText.text = price.ToString();
 
-
+        defaultColor = GetComponent<Button>().colors.normalColor;
     }
 
     // Update is called once per frame
@@ -48,8 +52,8 @@ public abstract class instance_button : MonoBehaviour
 
     public virtual void select_instance()
     {
-        resControl.decreaseBiomass(price);
-        generator.select(prefab, amount, radius, 0);
+        changeColor(selectedColor);
+        generator.select(prefab, amount, radius, price, 0, this);
     }
 
     public virtual void OnPointerEnter(PointerEventData eventData)
@@ -63,6 +67,18 @@ public abstract class instance_button : MonoBehaviour
     {
         infoWindow.SetActive(false);
 
+    }
+
+    public void Deselect()
+    {
+        changeColor(defaultColor);
+    }
+
+    private void changeColor(Color color)
+    {
+        ColorBlock colors = GetComponent<Button>().colors;
+        colors.normalColor = color;
+        GetComponent<Button>().colors = colors;
     }
 
     public abstract void setText();

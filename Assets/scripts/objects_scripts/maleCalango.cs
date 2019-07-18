@@ -52,7 +52,7 @@ public class maleCalango : CalangoBehaviour {
 			break;
         case GameConstants.states.RUNNINGFROMPREDATOR:
             actionIcon.sprite = losingSprite;
-            walk_away(focusedPredator.transform.position);
+            runFromPredator();
             break;
 
         }
@@ -73,15 +73,15 @@ public class maleCalango : CalangoBehaviour {
                 else
                 {
                     closestMate = null;
-                    currState = "runningFromCompetitor";
+                    currState = GameConstants.states.RUNNINGFROMCOMPETITOR;
                     return;
-                }
-                closestMate.add_proposition(this.gameObject);
+                }                
                 mating = true;
             } else {
 				currState = GameConstants.states.TRYTOMATE; // In case there is no competition...
 			}
-		} else {
+            closestMate.add_proposition(this.gameObject);
+        } else {
 			notMating ();
 		}
 	}
@@ -139,8 +139,14 @@ public class maleCalango : CalangoBehaviour {
 
 	}
 
-	protected void engageCompetitor(){	
-		if (competitor == null) { // if the competitor died for any reason
+	protected void engageCompetitor(){
+        if (closestMate == null) // if the female died in the meanwhile
+        {
+            competitor.winChallenge(this.GetComponent<CalangoBehaviour>());
+            mating = false;
+            currState = GameConstants.states.IDDLE;
+        }
+        else if (competitor == null) { // if the competitor died for any reason
 			currState = GameConstants.states.TRYTOMATE;
 			return;
 		}
@@ -154,13 +160,13 @@ public class maleCalango : CalangoBehaviour {
 			atack (competitor);
 		}
 
-		if (this.energy < lowNutritionBoundery || Random.value*this.energy < 0.05f) { // In case the individual is close to starving it loses
+		if (this.energy < lowNutritionBoundery*1.1 || Random.value*this.energy < 0.05f) { // In case the individual is close to starving it loses
 			competitor.winChallenge (this.GetComponent<CalangoBehaviour>());
 			closestMate.remove_proposition (this.gameObject);
 			closestMate = null;
 			mating = false;
-
-			currState = "runningFromCompetitor";
+            looser = true;
+			currState = GameConstants.states.RUNNINGFROMCOMPETITOR;
 		}
 	}
 

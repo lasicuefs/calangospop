@@ -5,7 +5,8 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour {
 
 	public GameObject sand;
-	public GameObject decorativePlant;
+    public GameObject water;
+    public GameObject decorativePlant;
 	public GameObject ediblePlant;
 	public GameObject calangoMale;
 	public GameObject calangoFemale;
@@ -24,8 +25,40 @@ public class MapGenerator : MonoBehaviour {
 	protected GameObject plantsParentObject;
 	protected GameObject animalsParentObject;
 
-	// Use this for initialization
-	void Start () {
+    private float extraTerrainPercentage = .3f;
+
+    public float ExtraTerrainPercentage
+    {
+        get
+        {
+            return extraTerrainPercentage;
+        }
+    }
+
+    protected int totalExtraTerrain;
+
+    public int TotalExtraTerrain
+    {
+        get
+        {
+            return totalExtraTerrain;
+        }
+        
+    }
+
+    protected int totalTerrain;
+
+    public int TotalTerrain
+    {
+        get
+        {
+            return totalTerrain;
+        }
+
+    }
+
+    // Use this for initialization
+    void Start () {
 		registry = GetComponentInParent<registryController> ();
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");

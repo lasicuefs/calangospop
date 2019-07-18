@@ -96,7 +96,7 @@ public class carnivoreBehaviour : SecondaryAnimalBehaviour {
 	}
 
 	protected override void findClosestEdible(){
-        
+            
 		float distance = Mathf.Infinity;
 		Vector3 position = transform.position;
 

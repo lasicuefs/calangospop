@@ -15,6 +15,7 @@ public class consumable_plant_button : instance_button {
 
     public override void setText()
     {
+        nameText.text = name;
         consumablePlants script = prefab.GetComponent<consumablePlants>();
         typeText.text = "Planta consumível";
         descText.text = "Energia: " + script.energyWhenConsumed + "\nHidratação: " + script.hidrationWhenConsumed;

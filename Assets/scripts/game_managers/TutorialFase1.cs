@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TutorialFase1 : Tutorial
 {
     //public GameObject calangosPlaceholder;
+    public Image controls;
     public Image painelRecursos;
     public Image highlight;
     public Image painelInstancias;
@@ -21,11 +22,11 @@ public class TutorialFase1 : Tutorial
     {
         base.Start();
 
-        string[] initialText = new string[] { "Oi, Bem vido ao Calangos", "Eu sou o professor X e estou aqui para lhe ajudar a aprender!",
-            "Esta é sua população de lagartos", "Neste tutorial, devemos garantir que ela aumente de tamanho até atingir 100 indivíduos!",
-            "Mas antes, vamos aprender mais sobre o jogo", "Como já disse, aqui está sua população", "Esta é a barra de Biomassa, e mostra quanto você tem de Biomassa no momento",
+        string[] initialText = new string[] { "Oi, Bem-vido ao Calangos", "Eu sou o professor X e estou aqui para lhe ajudar a aprender!",
+            "Você vai cuidar de uma população de lagartos", "Neste tutorial, devemos garantir que ela aumente de tamanho até atingir 100 indivíduos!",
+            "Mas antes, vamos aprender mais sobre o jogo", "Como já disse, aqui está sua população", "Este é seu contador de Biomassa, ele mostra quanto você tem de Biomassa no momento",
             "sua biomassa aumenta com o tempo", "Utilizando a Biomassa você pode adicionar novas espécies de plantas ao ambiente", "Aqui voce pode escolher quais espécies adicionar",
-            "Cada espécie apresenta característias próprias e tem um custo de biomassa", "Só poderá inserir uma espécie se tiver a biomassa exigida"};
+            "Cada espécie apresenta característias próprias e tem um custo de biomassa", "Só poderá inserir uma espécie se tiver a biomassa exigida",  "Insira vegetação para alimentar os seus calangos", ""};
 
         PresentText(initialText);
     }
@@ -34,19 +35,26 @@ public class TutorialFase1 : Tutorial
     {
         base.GoToNextText();
         counter = 0;
+        float cameraOffset = 2;
 
         switch (curPresentationPosition)
         {
             case 5:
                 professor.enabled = false;
                 mouse.enabled = false;
-                board.rectTransform.sizeDelta = new Vector2(500, 500);
+                board.rectTransform.sizeDelta = new Vector2(340, 500);
+                board.rectTransform.anchoredPosition = new Vector2(-170, 0);
+                overrideBoardPosition = true;
 
                 highlight.rectTransform.sizeDelta = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-                highlight.rectTransform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+                highlight.rectTransform.position = new Vector3(Screen.width * 0.5f-cameraOffset, Screen.height * 0.5f, 0);
                 highlight.gameObject.SetActive(true);
                 break;
             case 6:
+                board.rectTransform.sizeDelta = new Vector2(500, 500);
+                board.rectTransform.anchoredPosition = new Vector2(-250, 0);
+                overrideBoardPosition = false;
+
                 highlight.rectTransform.sizeDelta = painelRecursos.rectTransform.sizeDelta * new Vector2(1, 2);
                 highlight.rectTransform.position = painelRecursos.rectTransform.position;
                 break;
@@ -60,6 +68,9 @@ public class TutorialFase1 : Tutorial
                 tutorialinstanceButton.setText();
                 painelInstanciasinfo.gameObject.SetActive(true);
                 break;
+            case 13:
+                controls.gameObject.SetActive(true);
+                break;
         }
     }
 
@@ -68,6 +79,7 @@ public class TutorialFase1 : Tutorial
         base.FinishPresentation();
         painelInstanciasinfo.gameObject.SetActive(false);
         highlight.gameObject.SetActive(false);
+        controls.gameObject.SetActive(false);
     }
 
     /*protected override void Update()

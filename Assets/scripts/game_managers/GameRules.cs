@@ -9,6 +9,8 @@ public abstract class GameRules : MonoBehaviour {
     public GameObject successMessage;
     public Text objectiveText;
     public bool enableHeat;
+    public float temperatureInSun = 40;
+    public float temperatureInShadow = 25;
     protected registryController registry;
     protected TemporalManager timeManager;
 
@@ -23,7 +25,7 @@ public abstract class GameRules : MonoBehaviour {
 
     void Update()
     {
-        checkRules();
+        if(!gameOver && !success) checkRules();
         updateObjectives();
     }
 

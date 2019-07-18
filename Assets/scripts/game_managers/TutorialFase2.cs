@@ -19,7 +19,7 @@ public class TutorialFase2 : Tutorial
     {
         base.Start();
 
-        string[] initialText = new string[] { "Muito bem! Agora vamos lidar espécies concorrentes", "Cuidado! Sua população de Calangos está crescendo demais", "Insira espécies diferentes para disputar por alimentos e manter sua população controlada"};
+        string[] initialText = new string[] { "Muito bem! Sua população cresceu.", "Mas, cuidado para ela não crescer demais!", "Alimentos estão sobrando e a população irá crescer de forma desequilibrada!", "Algumas espécies disputam por alimentos e podem manter sua população controlada", "Insira espécies concorrentes para controlar o crescimento de lagartos"};
 
         PresentText(initialText);
     }
@@ -31,7 +31,7 @@ public class TutorialFase2 : Tutorial
 
         switch (curPresentationPosition)
         {
-            case 2:
+            case 3:
                 professor.enabled = false;
                 mouse.enabled = false;
                 board.rectTransform.sizeDelta = new Vector2(500, 500);

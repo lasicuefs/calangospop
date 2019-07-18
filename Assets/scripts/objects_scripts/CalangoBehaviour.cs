@@ -39,9 +39,11 @@ abstract public class CalangoBehaviour : AnimalModel
     bool inShadow = false;
 
     GameRules rules;
+    public float personalSpace = 0.1f;
+    protected GameObject closestLizard = null;
 
     // Use this for initialization
-     protected void Start()
+    protected void Start()
     {
         base.Start();
         rules = GameObject.Find("MapController").GetComponent<GameRules>();
@@ -58,7 +60,7 @@ abstract public class CalangoBehaviour : AnimalModel
 
     void updateTemp()
     {
-        float EnvTemp = inShadow ? GameConstants.temperatureInShadow : GameConstants.temperatureInSun;
+        float EnvTemp = inShadow ? rules.temperatureInShadow : rules.temperatureInSun;
         if (currentTemp > EnvTemp)
         {
             currentTemp -= (currentTemp - EnvTemp) * temperatureTransferInSec * Time.deltaTime * 5;
@@ -126,7 +128,7 @@ abstract public class CalangoBehaviour : AnimalModel
         {
             findClosestHideoutInSight(focusedPredator);
             hideoutSearchCounter = 0;
-            currState = "runningFromPredator";
+            currState = GameConstants.states.RUNNINGFROMPREDATOR;
             return true;
         }
         return false;
@@ -268,7 +270,7 @@ abstract public class CalangoBehaviour : AnimalModel
         {
             searchMate();
         }
-
+        if (currState == GameConstants.states.IDDLE && checkForCloseAnimals()) return;
         animator.SetBool("iddle", true);
     }
 
@@ -347,7 +349,8 @@ abstract public class CalangoBehaviour : AnimalModel
 
     public void atack(CalangoBehaviour competitor)
     {
-        float damage = age / 10 * Time.deltaTime; // Preciso bolar um calculo para o ataque (dano por segundo)
+        float damagePerSecond = 10; 
+        float damage = (1 - age/maxAge) * damagePerSecond * Time.deltaTime; // Preciso bolar um calculo para o ataque (dano por segundo)
         competitor.getAttacked(damage);
     }
 
@@ -361,7 +364,7 @@ abstract public class CalangoBehaviour : AnimalModel
         if (competitor != null)
         {
             Vector3 diff = competitor.transform.position - transform.position;
-            if (diff.sqrMagnitude < 10f)
+            if (diff.sqrMagnitude < 20f)
             { // still in range			
                 walk_away(competitor.transform.position);
             }
@@ -460,13 +463,50 @@ abstract public class CalangoBehaviour : AnimalModel
         }
     }
 
+    protected bool checkForCloseAnimals()
+    { // procura por animais muito próximos
+        if (closestLizard == null)
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, personalSpace);
+
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.gameObject.GetInstanceID() != gameObject.GetInstanceID() && collider.gameObject.tag == "calango")
+                {
+                    reposition_from(collider.transform.position);
+                    closestLizard = collider.gameObject;
+                    return true;
+                }
+            }
+            return false;
+        } else
+        {
+            reposition_from(closestLizard.transform.position);
+
+            Vector3 diff = closestLizard.transform.position - transform. position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance > personalSpace*2)
+            {
+                closestLizard = null;
+                return false;
+            }
+            else
+            {
+                return true;
+            }               
+           
+        }        
+    }
+
     protected void runToShadow()
     {
         //if there is a shadow close run towards it
         if (focusedShadowProducer != null)
         {
-            walk_towards(focusedShadowProducer.transform.position);
-            if ((focusedShadowProducer.transform.position - transform.position).sqrMagnitude < .4f)
+            Vector3 shadowCenter = focusedShadowProducer.GetComponent<CircleCollider2D>().bounds.center;
+            walk_towards(shadowCenter);
+            PlantModel plant = focusedShadowProducer.GetComponent<PlantModel>();
+            if ((shadowCenter - transform.position).sqrMagnitude < plant.shadowRadius)
             {
                 currState = GameConstants.states.COOLING;
             }
@@ -486,5 +526,18 @@ abstract public class CalangoBehaviour : AnimalModel
     public float getBodyTemp()
     {
         return currentTemp;
+    }
+
+    public override void getOlder()
+    {
+        age++;
+        if (age == reproductiveAge)
+        {
+            transform.localScale += transform.localScale * 0.5f;
+        }
+        else if (age > maxAge)
+        {
+            dieOfOldAge();
+        }
     }
 }

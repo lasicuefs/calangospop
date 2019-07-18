@@ -14,14 +14,14 @@ public class predator_button : instance_button {
 	}
 
 	public override void select_instance(){
-		resControl.decreaseBiomass (price);
-		generator.select (prefab, amount, radius, 1);
+		generator.select (prefab, amount, radius, price, 1, this);
 	}
     
     public override void setText()
     {
+        nameText.text = name;
         AnimalModel script = prefab.GetComponent<AnimalModel>();
         typeText.text = "Predador";
-        descText.text = "Velocidade de caça: " + script.maxVelocity + "\nGasto basal: " + script.defaultBasalExpense;
+        descText.text = (desciption =="" ? desciption : desciption + "\n") + "Velocidade de caça: " + script.maxVelocity + "\nGasto basal: " + script.defaultBasalExpense;
     }
 }

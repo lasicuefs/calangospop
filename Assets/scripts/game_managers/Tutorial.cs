@@ -23,6 +23,7 @@ public class Tutorial : MonoBehaviour {
     float originalXBoard;
     float dislocatedXProfessor = -1000;
     float dislocatedXBoard = 2000;
+    protected bool overrideBoardPosition = false;
 
     protected void Start ()
     {
@@ -43,9 +44,10 @@ public class Tutorial : MonoBehaviour {
 
         if (onTextPresentation)
         {
-            professor.rectTransform.localPosition = Vector3.Lerp(professor.rectTransform.localPosition, new Vector3(originalXProfessor, professor.rectTransform.localPosition.y, professor.rectTransform.localPosition.z),.05f);
-            board.rectTransform.localPosition = Vector3.Lerp(board.rectTransform.localPosition, new Vector3(originalXBoard, board.rectTransform.localPosition.y, board.rectTransform.localPosition.z), .05f);
-
+            if (!overrideBoardPosition) { 
+                professor.rectTransform.localPosition = Vector3.Lerp(professor.rectTransform.localPosition, new Vector3(originalXProfessor, professor.rectTransform.localPosition.y, professor.rectTransform.localPosition.z), .05f);
+                board.rectTransform.localPosition = Vector3.Lerp(board.rectTransform.localPosition, new Vector3(originalXBoard, board.rectTransform.localPosition.y, board.rectTransform.localPosition.z), .05f);
+            }
 
             if (Input.GetMouseButtonDown(0))
             {

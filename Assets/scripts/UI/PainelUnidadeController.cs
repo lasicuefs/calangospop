@@ -81,7 +81,7 @@ public class PainelUnidadeController : MonoBehaviour {
 
                 if (swarm != null)
                 {
-                    textInsect.text = "Insects: " + swarm.insectCount;
+                    textInsect.text = "Insetos: " + swarm.insectCount;
                     textInsect.gameObject.SetActive(true);
                 } else
                 {

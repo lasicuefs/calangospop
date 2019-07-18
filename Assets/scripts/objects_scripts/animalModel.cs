@@ -182,11 +182,14 @@ abstract public class AnimalModel : MonoBehaviour {
 	abstract protected void findClosestEdible (); 
 
 	protected void walk_towards(Vector3 destinationPos){
-		// já que o eixo y é duas vezes menor que o x em um mapa isométrico...
-		transform.position = Vector3.MoveTowards (transform.position, new Vector3(destinationPos.x, transform.position.y, transform.position.z), Time.deltaTime * velocity);
-		transform.position = Vector3.MoveTowards (transform.position, new Vector3(transform.position.x, destinationPos.y, transform.position.z), Time.deltaTime * velocity/2); 
 
-		animator.SetBool("right", transform.position.x < destinationPos.x);
+        // já que o eixo y é duas vezes menor que o x em um mapa isométrico...
+        transform.position = Vector3.MoveTowards (transform.position, new Vector3(destinationPos.x, transform.position.y, transform.position.z), Time.deltaTime * velocity);
+		transform.position = Vector3.MoveTowards (transform.position, new Vector3(transform.position.x, destinationPos.y, transform.position.z), Time.deltaTime * velocity/2);
+
+        clampPosition();
+
+        animator.SetBool("right", transform.position.x < destinationPos.x);
 		animator.SetBool("up", transform.position.y < destinationPos.y);
 		animator.SetBool("running", false);
 
@@ -195,11 +198,14 @@ abstract public class AnimalModel : MonoBehaviour {
 	}
 
 	protected void run_towards(Vector3 destinationPos){
-		// já que o eixo y é duas vezes menor que o x em um mapa isométrico...
-		transform.position = Vector3.MoveTowards (transform.position, new Vector3(destinationPos.x, transform.position.y, transform.position.z), Time.deltaTime * maxVelocity);
-		transform.position = Vector3.MoveTowards (transform.position, new Vector3(transform.position.x, destinationPos.y, transform.position.z), Time.deltaTime * maxVelocity/2); 
 
-		animator.SetBool("right", transform.position.x < destinationPos.x);
+        // já que o eixo y é duas vezes menor que o x em um mapa isométrico...
+        transform.position = Vector3.MoveTowards (transform.position, new Vector3(destinationPos.x, transform.position.y, transform.position.z), Time.deltaTime * maxVelocity);
+		transform.position = Vector3.MoveTowards (transform.position, new Vector3(transform.position.x, destinationPos.y, transform.position.z), Time.deltaTime * maxVelocity/2);
+
+        clampPosition();
+
+        animator.SetBool("right", transform.position.x < destinationPos.x);
 		animator.SetBool("up", transform.position.y < destinationPos.y);
 		animator.SetBool("running", true);
 
@@ -207,21 +213,41 @@ abstract public class AnimalModel : MonoBehaviour {
 		energy -= Time.deltaTime * defaultBasalExpense * 3.0f;
 	}
 
-	protected void walk_away(Vector3 enemyPos){
-		Vector3 destinationPos = - enemyPos;
+	protected void walk_away(Vector3 enemyPos)
+    {
 
-		// já que o eixo y é duas vezes menor que o x em um mapa isométrico...
-		transform.position = Vector3.MoveTowards (transform.position, new Vector3(destinationPos.x, transform.position.y, transform.position.z), Time.deltaTime * velocity);
-		transform.position = Vector3.MoveTowards (transform.position, new Vector3(transform.position.x, destinationPos.y, transform.position.z), Time.deltaTime * velocity/2); 
+        // já que o eixo y é duas vezes menor que o x em um mapa isométrico...
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(enemyPos.x, transform.position.y, transform.position.z), -1 * Time.deltaTime * velocity);
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, enemyPos.y, transform.position.z), -1 * Time.deltaTime * velocity / 2);
 
-		animator.SetBool("right", transform.position.x < destinationPos.x);
-		animator.SetBool("up", transform.position.y < destinationPos.y);
+        clampPosition();
 
-		animator.SetBool("iddle", false );
-		energy -= Time.deltaTime * defaultBasalExpense * 3.0f;
-	}
+        animator.SetBool("right", transform.position.x > enemyPos.x);
+        animator.SetBool("up", transform.position.y > enemyPos.y);
 
-	abstract protected void die();
+        animator.SetBool("iddle", false);
+        energy -= Time.deltaTime * defaultBasalExpense * 3.0f;
+    }
+
+   
+    protected void reposition_from(Vector3 source)
+    {
+
+        float variability = Random.Range(-0.2f, 0.2f);
+        // já que o eixo y é duas vezes menor que o x em um mapa isométrico...
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(source.x + variability, transform.position.y, transform.position.z), -1 * Time.deltaTime * velocity);
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, source.y + variability, transform.position.z), -1 * Time.deltaTime * velocity / 2);
+
+        clampPosition();
+
+        animator.SetBool("right", transform.position.x > source.x+ variability);
+        animator.SetBool("up", transform.position.y > source.y+ variability);
+
+        animator.SetBool("iddle", false);
+        energy -= Time.deltaTime * defaultBasalExpense * 3.0f;
+    }
+
+    abstract protected void die();
 
     protected virtual void dieOfOldAge()
     {
@@ -229,10 +255,10 @@ abstract public class AnimalModel : MonoBehaviour {
     }
 
 
-    public void getOlder(){
+    public virtual void getOlder(){
 		age++;
 		if (age == reproductiveAge) {
-			transform.localScale += transform.localScale * 0.5f;
+			transform.localScale += transform.localScale * 0.2f;
 		} else if (age > maxAge) {
             dieOfOldAge();
 		}
@@ -363,7 +389,7 @@ abstract public class AnimalModel : MonoBehaviour {
         float distance = lineOfSight;
         Vector3 position = transform.position;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, lineOfSight);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, lineOfSight*2f);
 
         foreach (Collider2D collider in colliders)
         {
@@ -385,5 +411,39 @@ abstract public class AnimalModel : MonoBehaviour {
             }
         }
 
+    }
+
+    private void clampPosition()
+    {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, limitLeft(transform.position.y), limitRigth(transform.position.y)), Mathf.Clamp(transform.position.y, limitDown(transform.position.x), limitUp(transform.position.x)), transform.position.z);
+    }
+
+
+    float limitUp(float x)
+    {
+
+        // (percentage of distance from the center) * (half map size in the y axis) - offset
+       return (1 - (Mathf.Abs(x) / (mapGenerator.mapSize * mapGenerator.tileSize / 2))) * (mapGenerator.mapSize * mapGenerator.tileSize /4) - (mapGenerator.TotalTerrain * mapGenerator.tileSize / 4);
+            
+    }
+
+    float limitDown(float x)
+    {
+        // -(percentage of distance from the center) * (half map size in the y axis) + offset
+        return - (1 -(Mathf.Abs(x) / (mapGenerator.mapSize * mapGenerator.tileSize / 2))) * (mapGenerator.mapSize * mapGenerator.tileSize / 4) - (mapGenerator.TotalTerrain * mapGenerator.tileSize / 4);
+        
+    }
+
+    float limitRigth(float y)
+    {
+        // (percentage of distance from the center) * (half map size in the x axis) 
+        return (1 -  (Mathf.Abs(y + (mapGenerator.TotalTerrain * mapGenerator.tileSize / 4)) / (mapGenerator.mapSize * mapGenerator.tileSize / 4))) * (mapGenerator.mapSize * mapGenerator.tileSize / 2);
+    }
+
+
+    float limitLeft(float y)
+    {
+        // (percentage of distance from the center) * (half map size in the x axis) 
+        return - (1 - (Mathf.Abs(y + (mapGenerator.TotalTerrain * mapGenerator.tileSize / 4)) / (mapGenerator.mapSize * mapGenerator.tileSize / 4))) * (mapGenerator.mapSize * mapGenerator.tileSize / 2);
     }
 }

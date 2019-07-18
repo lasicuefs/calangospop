@@ -10,8 +10,10 @@ public class PainelGeralControler : MonoBehaviour {
     public Text textInsects;
     public Text textPredators;
 
-    public Text textStarvation;
+    public Text textStarvation;   
+    public Text textAge;
     public Text textPredation;
+    public Text textHeat;
     registryController registry;
 
 	// Use this for initialization
@@ -30,6 +32,8 @@ public class PainelGeralControler : MonoBehaviour {
 
 
         textStarvation.text = "Fome: " + registry.getDeathsByStarvation();
-        textPredation.text = "Predação: " + registry.getDeathsByPredation();
+        textAge.text = "Idade: " + registry.getDeathsByAge();
+        if(textPredation != null) textPredation.text = "Predação: " + registry.getDeathsByPredation();
+        if(textHeat != null) textHeat.text = "Insolação: " + registry.getDeathsByHeat();
     }
 }

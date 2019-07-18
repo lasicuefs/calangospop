@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TemporalManager : MonoBehaviour {
 
-	public int secondsForDay = 60; //how much seconds does a day longs
+	public int secondsForHour = 60; //how much seconds does an hour longs
 	public int timeScale = 1;
 	float hourCounter = 0.0f;
 	int currentDay = 1;
@@ -40,7 +40,7 @@ public class TemporalManager : MonoBehaviour {
 	void Update () {
 		hourCounter += Time.deltaTime;
 
-		if(hourCounter > secondsForDay/24f){
+		if(hourCounter > secondsForHour/24f){
 			new_hour ();
 			hourCounter = 0;
 			currentHour++;

@@ -107,4 +107,15 @@ public class registryController : MonoBehaviour {
         return deaths[Deaths.INANICAO];
     }
 
+    public int getDeathsByAge()
+    {
+        if (!deaths.ContainsKey(Deaths.NATURAL)) return 0;
+        return deaths[Deaths.NATURAL];
+    }
+
+    public int getDeathsByHeat()
+    {
+        if (!deaths.ContainsKey(Deaths.INSOLACAO)) return 0;
+        return deaths[Deaths.INSOLACAO];
+    }
 }

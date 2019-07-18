@@ -6,33 +6,44 @@ public class GameMapGenerator : MapGenerator {
 
     public bool isRandomMap;
 	public int initialPopulationSize = 10;
-	cameraScript camera;
+    private float waterOffset = .065f;
+    int riverSize = 3;
+ 
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
 		registry = GetComponentInParent<registryController> ();
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
 		animalsParentObject = GameObject.Find ("Animals");
 		if (isRandomMap) initialize_map();
-
-
-		camera = GameObject.Find ("Main Camera").GetComponent<cameraScript>();
-		if (camera != null)
-			camera.setCameraPos(0, -(mapSize/4)*tileSize);
+        
+			
 	}
 
 	protected void initialize_map(){
-		// Background loop
-		for (int i = 0; i < mapSize; i++) {
-			for (int j = 0; j < mapSize; j++) {
-				Instantiate (sand, new Vector3 ((i-j) * (-tileSize / 2), (i+j) * (-tileSize / 4), ((float)(-i-j))/100), new Quaternion (0, 0, 0 ,0));
+        totalExtraTerrain = Mathf.CeilToInt(mapSize * ExtraTerrainPercentage);
+        totalTerrain = mapSize + TotalExtraTerrain*2;
+        int outsideSize = TotalExtraTerrain - riverSize;
+
+        // Background loop
+        for (int i = 0; i < totalTerrain; i++) {
+			for (int j = 0; j < totalTerrain; j++) {
+                if (i < outsideSize || i >= totalTerrain - outsideSize || j < outsideSize || j >= totalTerrain - outsideSize)
+                {
+                    Instantiate(sand, new Vector3((i - j) * (-tileSize / 2), (i + j) * (-tileSize / 4), ((float)(-i - j)) / 100), new Quaternion(0, 0, 0, 0));
+                }
+                else if (i< TotalExtraTerrain || i > totalTerrain - TotalExtraTerrain || j < TotalExtraTerrain || j > totalTerrain - TotalExtraTerrain)
+                {
+                    Instantiate(water, new Vector3((i - j) * (-tileSize / 2), (i + j) * (-tileSize / 4)- waterOffset, ((float)(-i - j)) / 100), new Quaternion(0, 0, 0, 0));
+                } else 	Instantiate (sand, new Vector3 ((i-j) * (-tileSize / 2), (i+j) * (-tileSize / 4), ((float)(-i-j))/100), new Quaternion (0, 0, 0 ,0));
 
 			}
 		}
 		// Lizard loop
-		int initialArea = mapSize / 2 - initialPopulationSize / 2;
-		int finalArea = mapSize / 2 + initialPopulationSize / 2;
+		int initialArea = totalTerrain / 2 - initialPopulationSize / 2;
+		int finalArea = totalTerrain / 2 + initialPopulationSize / 2;
 		for (int i = initialArea; i < finalArea; i++) {
 			for (int j = initialArea; j < finalArea; j++) {
 				int result = Random.Range (1, 101);

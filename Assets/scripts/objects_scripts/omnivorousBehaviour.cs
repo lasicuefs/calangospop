@@ -74,7 +74,7 @@ public class omnivorousBehaviour : SecondaryAnimalBehaviour {
     protected void searchFood()
     {
         findClosestEdible();
-        if (noCloseFoodSource)
+        if (noCloseFoodSource && starving)
         {
             walk_randomly();
         }

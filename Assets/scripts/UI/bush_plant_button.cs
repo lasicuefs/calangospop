@@ -22,6 +22,7 @@ public class bush_plant_button : instance_button {
 
     public override void setText()
     {
+        nameText.text = name;
         PlantModel script = prefab.GetComponent<PlantModel>();
         typeText.text = "Planta não frutífera";
         descText.text = (script.hasInsects ? "Contém insetos\n" : "") + (script.isHideout ? "Esconderijo contra predadores\n" : "") + (script.sunProtection ? "Prejeta sombras\n" : "");

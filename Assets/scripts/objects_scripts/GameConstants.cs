@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameConstants {
-
-	public static float temperatureInSun = 40;
-    public static float temperatureInShadow = 25;
+    internal static float temperatureInSun;
 
     public class states
     {

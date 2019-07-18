@@ -14,7 +14,8 @@ public class PlantModel : MonoBehaviour {
     public bool edible = false;
     public bool isHideout = false;
     public bool sunProtection = false;
-    
+
+    public float shadowRadius = .5f;
 
     protected registryController registry;
 	protected MapGenerator mapGenerator;
