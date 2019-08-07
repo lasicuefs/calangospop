@@ -302,6 +302,7 @@
     <Compile Include="Assets\DataDiagram\Script\DD_LineButtonsContent.cs" />
     <Compile Include="Assets\DataDiagram\Script\DD_Lines.cs" />
     <Compile Include="Assets\DataDiagram\Script\DD_ZoomButton.cs" />
+    <Compile Include="Assets\DifficultySelector.cs" />
     <Compile Include="Assets\scripts\game_managers\cameraScript.cs" />
     <Compile Include="Assets\scripts\game_managers\ClickableBehaviour.cs" />
     <Compile Include="Assets\scripts\game_managers\FirstStageRules.cs" />
@@ -326,6 +327,7 @@
     <Compile Include="Assets\scripts\objects_scripts\animalModel.cs" />
     <Compile Include="Assets\scripts\objects_scripts\CalangoBehaviour.cs" />
     <Compile Include="Assets\scripts\objects_scripts\carnivoreBehaviour.cs" />
+    <Compile Include="Assets\scripts\objects_scripts\CompetitorBehaviour.cs" />
     <Compile Include="Assets\scripts\objects_scripts\consumablePlants.cs" />
     <Compile Include="Assets\scripts\objects_scripts\femaleCalango.cs" />
     <Compile Include="Assets\scripts\objects_scripts\fruitfulPlant.cs" />
@@ -337,6 +339,7 @@
     <Compile Include="Assets\scripts\objects_scripts\PlantModel.cs" />
     <Compile Include="Assets\scripts\objects_scripts\SecondaryAnimalBehaviour.cs" />
     <Compile Include="Assets\scripts\UI\bush_plant_button.cs" />
+    <Compile Include="Assets\scripts\UI\Competitor_Button.cs" />
     <Compile Include="Assets\scripts\UI\consumable_plant_button.cs" />
     <Compile Include="Assets\scripts\UI\fruit_plant_button.cs" />
     <Compile Include="Assets\scripts\UI\GUI_Behaviour.cs" />

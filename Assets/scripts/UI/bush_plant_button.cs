@@ -26,5 +26,6 @@ public class bush_plant_button : instance_button {
         PlantModel script = prefab.GetComponent<PlantModel>();
         typeText.text = "Planta não frutífera";
         descText.text = (script.hasInsects ? "Contém insetos\n" : "") + (script.isHideout ? "Esconderijo contra predadores\n" : "") + (script.sunProtection ? "Prejeta sombras\n" : "");
+        if (script.hasInsects) descText.text += "Quantidade inicial de insetos"+ script.startingInsectAmount+ "\n Energia por inseto:" + script.insectEnergy;
     }
 }

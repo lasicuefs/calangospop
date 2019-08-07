@@ -9,6 +9,8 @@ public class PlantModel : MonoBehaviour {
     public float hidrationWhenConsumed = 50;    
     public int startingInsectAmount = 0;
     public int maxInsectAmount = 0;
+    public int insectEnergy = 30;
+
 
     public bool hasInsects = false;
     public bool edible = false;
@@ -30,7 +32,7 @@ public class PlantModel : MonoBehaviour {
         if (hasInsects)
         {
             swarm = gameObject.AddComponent<InsectSwarmModel>();
-            swarm.Initialize(startingInsectAmount, maxInsectAmount, registry);            
+            swarm.Initialize(startingInsectAmount, maxInsectAmount, insectEnergy, registry);            
         }
 	}
 	

@@ -85,7 +85,7 @@ public class DD_CoordinateAxis : DD_DrawGraphic {
     /// <summary>
     /// 坐标轴缩放的速度
     /// </summary>
-    private Vector2 m_ZoomSpeed = new Vector2(1, 1);
+    private Vector2 m_ZoomSpeed = new Vector2(.2f, .2f);
 
     /// <summary>
     /// 坐标轴移动的速度
@@ -96,7 +96,7 @@ public class DD_CoordinateAxis : DD_DrawGraphic {
     /// 坐标轴最大可伸缩范围，以坐标轴为单位
     /// Y轴的通过长宽比例计算获得
     /// </summary>
-    private float m_CoordinateAxisMaxWidth = 100;
+    private float m_CoordinateAxisMaxWidth = 1000;
     private float m_CoordinateAxisMinWidth = 0.1f;
 
     /// <summary>
@@ -155,7 +155,7 @@ public class DD_CoordinateAxis : DD_DrawGraphic {
     /// 矩形框式坐标轴刻度的间距，以屏幕像素单位
     /// </summary>
     private float m_PixelPerMark {
-        get { return INCH_PER_CENTIMETER * m_DataDiagram.m_CentimeterPerMark * Screen.dpi; }
+        get { return INCH_PER_CENTIMETER * m_DataDiagram.m_CentimeterPerMark * dpi; }
     }
 
     /// <summary>
@@ -166,9 +166,9 @@ public class DD_CoordinateAxis : DD_DrawGraphic {
         get {
             try {
                 Vector2 sizePixel = m_CoordinateRectT.rect.size;
-                return new Rect(0, 0,
-                    sizePixel.x / (m_DataDiagram.m_CentimeterPerCoordUnitX * INCH_PER_CENTIMETER * Screen.dpi),
-                    sizePixel.y / (m_DataDiagram.m_CentimeterPerCoordUnitY * INCH_PER_CENTIMETER * Screen.dpi));
+                return new Rect(0, 0, 
+                    sizePixel.x / (m_DataDiagram.m_CentimeterPerCoordUnitX * INCH_PER_CENTIMETER * dpi),
+                    sizePixel.y / (m_DataDiagram.m_CentimeterPerCoordUnitY * INCH_PER_CENTIMETER * dpi));
             } catch(NullReferenceException e) {
                 Debug.Log(this + " : " + e);
             }
@@ -181,6 +181,8 @@ public class DD_CoordinateAxis : DD_DrawGraphic {
     /// size表示相对于m_CoordinateAxisRange.size的缩放系数
     /// </summary>
     private Rect m_CoordinateAxisViewRange = new Rect(1, 1, 1, 1);
+    // private readonly float dpi = Screen.dpi
+    private readonly float dpi = 96;
 
     private float m_CoordinateAxisViewSizeX {
         get {
@@ -326,12 +328,42 @@ public class DD_CoordinateAxis : DD_DrawGraphic {
         Vector2 viewSize = new Vector2(m_CoordinateAxisViewRange.width * rangeSize.x,
             m_CoordinateAxisViewRange.height * rangeSize.y);
 
+        
+
         float YtoXScale = (rangeSize.y / rangeSize.x);
-        float zoomXVal = ZoomX * m_ZoomSpeed.x;
-        float zoomYVal = (ZoomY * m_ZoomSpeed.y) * YtoXScale;
+        float zoomXVal = ZoomX * viewSize.x * m_ZoomSpeed.x;
+        float zoomYVal = (ZoomY * viewSize.y * m_ZoomSpeed.y) * YtoXScale;
 
         viewSize.x += zoomXVal;
         viewSize.y += zoomYVal;
+
+        if (viewSize.x > m_CoordinateAxisMaxWidth)
+            viewSize.x = m_CoordinateAxisMaxWidth;
+
+        if (viewSize.x < m_CoordinateAxisMinWidth)
+            viewSize.x = m_CoordinateAxisMinWidth;
+
+        if (viewSize.y > m_CoordinateAxisMaxWidth * YtoXScale)
+            viewSize.y = m_CoordinateAxisMaxWidth * YtoXScale;
+
+        if (viewSize.y < m_CoordinateAxisMinWidth * YtoXScale)
+            viewSize.y = m_CoordinateAxisMinWidth * YtoXScale;
+
+        m_CoordinateAxisViewRange.width = viewSize.x / rangeSize.x;
+        m_CoordinateAxisViewRange.height = viewSize.y / rangeSize.y;
+    }
+    
+    private void SetScale(float scaleY)
+    {
+
+        Vector2 rangeSize = m_CoordinateAxisRange.size;
+        
+        float YtoXScale = (rangeSize.y / rangeSize.x);
+
+        Vector2 viewSize = new Vector2(scaleY/ YtoXScale,
+           scaleY);
+
+        Debug.Log(viewSize.x + "  -  " + viewSize.y);
 
         if (viewSize.x > m_CoordinateAxisMaxWidth)
             viewSize.x = m_CoordinateAxisMaxWidth;
@@ -647,6 +679,12 @@ public class DD_CoordinateAxis : DD_DrawGraphic {
     public void InputPoint(GameObject line, Vector2 point) {
 
         line.GetComponent<DD_Lines>().AddPoint(CoordinateToPixel(point));
+        
+        if (CoordinateToPixel(point).y *1.6f> m_CoordinateAxisViewRange.height * m_CoordinateAxisRange.size.y)
+        {
+            SetScale(CoordinateToPixel(point).y*2);
+            UpdateGeometry();
+        }
     }
 
     public GameObject AddLine(string name) {

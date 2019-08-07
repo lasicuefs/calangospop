@@ -162,7 +162,7 @@ public class maleCalango : CalangoBehaviour {
 
 		if (this.energy < lowNutritionBoundery*1.1 || Random.value*this.energy < 0.05f) { // In case the individual is close to starving it loses
 			competitor.winChallenge (this.GetComponent<CalangoBehaviour>());
-			closestMate.remove_proposition (this.gameObject);
+			if(closestMate!= null) closestMate.remove_proposition (this.gameObject);
 			closestMate = null;
 			mating = false;
             looser = true;

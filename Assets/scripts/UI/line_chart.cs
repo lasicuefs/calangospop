@@ -10,7 +10,8 @@ public class line_chart : MonoBehaviour {
     private DD_DataDiagram m_DataDiagram;
     registryController registry;
     float counter;
-    public float refreshTime = 1.0f;
+    public float refreshTimeInDays = 0.01f;
+    TemporalManager temporal;
 
     void AddALine(string name, Color colorI)
     {
@@ -37,10 +38,13 @@ public class line_chart : MonoBehaviour {
 
         registry = gameObject.GetComponent<registryController>();
 
+        temporal = gameObject.GetComponent<TemporalManager>();
+
         m_DataDiagram.PreDestroyLineEvent += (s, e) => { lines.Remove(e.line.GetComponent<DD_Lines>().lineName); };
 
         AddALine("Calangos", Color.blue); 
         AddALine("Predadores", Color.red);
+        AddALine("Sapos", Color.yellow);
         AddALine("Vegetação", Color.green);
     }
 
@@ -52,45 +56,24 @@ public class line_chart : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        counter += Time.deltaTime;
-        if(counter > refreshTime)
+        counter += Time.deltaTime/(float)temporal.secondsForADay;
+        if(counter > refreshTimeInDays)
         {
-            updateData(registry.getCalangosList().Count, registry.getPredatorList().Count, registry.getediblePlantsList().Count);
+            updateData(registry.getCalangosList().Count, registry.getPredatorList().Count, registry.getediblePlantsList().Count, registry.getCompetitorList().Count);
             counter = 0.0f;
         }
        
     }
 
-    public void updateData( int qtCalango, int qtPredadores, int qtVegetacao)
+    public void updateData( int qtCalango, int qtPredadores, int qtVegetacao, int qtCompetidores)
     {
         m_DataDiagram.InputPoint(lines["Calangos"], new Vector2(1, qtCalango));
         m_DataDiagram.InputPoint(lines["Predadores"], new Vector2(1, qtPredadores));
-         m_DataDiagram.InputPoint(lines["Vegetação"], new Vector2(1, qtVegetacao));
+         m_DataDiagram.InputPoint(lines["Sapos"], new Vector2(1, qtCompetidores));
+        m_DataDiagram.InputPoint(lines["Vegetação"], new Vector2(1, qtVegetacao));
     }
 
-    private void ContinueInput(float f)
-    {
-
-        if (null == m_DataDiagram)
-            return;
-        
-        foreach (KeyValuePair<string, GameObject> l in lines)
-        {
-            //m_DataDiagram.InputPoint(l.Value, new Vector2(0.1f, 2f));
-        }
-    }
-
-    public void onButton()
-    {
-
-        if (null == m_DataDiagram)
-            return;
-
-        foreach (KeyValuePair<string, GameObject> l in lines)
-        {
-            m_DataDiagram.InputPoint(l.Value, new Vector2(1, 4f));
-        }
-    }
+ 
     
 
 }

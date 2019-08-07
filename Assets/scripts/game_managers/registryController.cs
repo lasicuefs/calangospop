@@ -13,6 +13,7 @@ public class registryController : MonoBehaviour {
 	List<GameObject> animals = new List<GameObject>();
 	List<GameObject> calangos = new List<GameObject>();
     List<GameObject> predators = new List<GameObject>();
+    List<GameObject> competitors = new List<GameObject>();
     List<GameObject> ediblePlants = new List<GameObject>();
 
     int insectCount = 0;
@@ -55,6 +56,18 @@ public class registryController : MonoBehaviour {
         animals.Remove(predator);
     }
 
+    public void registerCompetitor(GameObject competitor)
+    {
+        competitors.Add(competitor);
+        animals.Add(competitor);
+    }
+
+    public void unregisterCompetitor(GameObject competitor)
+    {
+        competitors.Remove(competitor);
+        animals.Remove(competitor);
+    }
+
     public List<GameObject> getCalangosList(){
 		return calangos;
 	}
@@ -66,6 +79,11 @@ public class registryController : MonoBehaviour {
     public List<GameObject> getPredatorList()
     {
         return predators;
+    }
+
+    public List<GameObject> getCompetitorList()
+    {
+        return competitors;
     }
 
     public void registerEdiblePlant(GameObject plant){

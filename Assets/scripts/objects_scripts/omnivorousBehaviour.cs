@@ -119,7 +119,7 @@ public class omnivorousBehaviour : SecondaryAnimalBehaviour {
 	}
 
 	protected void iddle(){
-		animator.SetBool("iddle", true );
+        animator.SetBool("iddle", true);
 	}
 
 	protected override void findClosestEdible(){ // refatorar para procurar por animais também

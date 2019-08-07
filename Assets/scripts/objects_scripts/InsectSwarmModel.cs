@@ -36,8 +36,9 @@ public class InsectSwarmModel : MonoBehaviour {
         registry.registerInsects(newInsects);
     }
 
-    public void Initialize(int initialAmount, int maximun, registryController registry)
+    public void Initialize(int initialAmount, int maximun, float energyWhenConsumed, registryController registry)
     {
+        this.energyWhenConsumed = energyWhenConsumed;
         this.registry = registry;
         InsectCount = initialAmount;
         maximumAmount = maximun;

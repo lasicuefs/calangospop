@@ -318,7 +318,7 @@ abstract public class AnimalModel : MonoBehaviour {
         
         foreach (GameObject predator in predatorList)
         {
-            Vector3 diff = predator.transform.position - position;
+            Vector3 diff = predator != null ? predator.transform.position - position : Vector3.positiveInfinity;
             float curDistance = diff.sqrMagnitude;
                          
             if (curDistance < distance)
@@ -386,10 +386,10 @@ abstract public class AnimalModel : MonoBehaviour {
     {
         focusedShadowProducer = null;
 
-        float distance = lineOfSight;
+        float distance = lineOfSight * 4;
         Vector3 position = transform.position;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, lineOfSight*2f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, distance);
 
         foreach (Collider2D collider in colliders)
         {

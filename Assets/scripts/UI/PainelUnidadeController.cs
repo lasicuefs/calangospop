@@ -98,4 +98,9 @@ public class PainelUnidadeController : MonoBehaviour {
             rect.localPosition = new Vector3(2000, 0, 0);
         }
 	}
+
+    public void disapear()
+    {
+        transform.position = new Vector3(10000,10000,0);
+    }
 }

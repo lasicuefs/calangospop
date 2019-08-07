@@ -15,7 +15,23 @@ public class Resources_Controller : MonoBehaviour {
 	void Start () {
 		biomass = starting_biomass;
 		counter = 0;
-	}
+
+        int difficulty = PlayerPrefs.GetInt(GameConstants.DIFFICULTY, 1);
+        switch (difficulty)
+        {
+            case 0:
+                biomassPerSecond = 15;
+                break;
+            case 1:
+                biomassPerSecond = 10;
+                break;
+            case 2:
+                biomassPerSecond = 8;
+                break;
+        }
+        
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

@@ -229,6 +229,11 @@ abstract public class CalangoBehaviour : AnimalModel
 
     protected void runFromPredator()
     {
+        if(focusedPredator == null)
+        {
+            currState = GameConstants.states.IDDLE;
+            return;
+        }
         //if there is a hideout close run towards it
         if (focusedHideout != null)
         {

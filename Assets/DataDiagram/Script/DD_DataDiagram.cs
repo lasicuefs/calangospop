@@ -391,6 +391,7 @@ public class DD_DataDiagram : MonoBehaviour , IScrollHandler, IDragHandler {
 
         DD_CoordinateAxis coordinate = m_CoordinateAxis.GetComponent<DD_CoordinateAxis>();
         coordinate.InputPoint(line, point);
+        
     }
 
     public GameObject AddLine(string name) {

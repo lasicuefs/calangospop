@@ -20,8 +20,10 @@ public class predator_button : instance_button {
     public override void setText()
     {
         nameText.text = name;
-        AnimalModel script = prefab.GetComponent<AnimalModel>();
+        SecondaryAnimalBehaviour script = prefab.GetComponent<SecondaryAnimalBehaviour>();
         typeText.text = "Predador";
-        descText.text = (desciption =="" ? desciption : desciption + "\n") + "Velocidade de caça: " + script.maxVelocity + "\nGasto basal: " + script.defaultBasalExpense;
+        descText.text = (desciption =="" ? desciption : desciption + "\n") + "Velocidade de caça: " + script.maxVelocity;
+        descText.text += "\nTempo de vida: " + script.maxAge + " anos";
+        descText.text += "\nReprodução: " + (script.chanceOfReproducingPerHour * 24) + " filhos por dia";
     }
 }
