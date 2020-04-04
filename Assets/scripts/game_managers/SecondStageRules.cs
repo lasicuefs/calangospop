@@ -5,7 +5,7 @@ using UnityEngine;
 public class SecondStageRules : GameRules
 {
     int numObjetivo = 300;
-    int numDays = 5;
+    int numDays = 4;
 
     protected override void checkRules()
     {

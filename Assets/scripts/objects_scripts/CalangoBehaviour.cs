@@ -31,7 +31,7 @@ abstract public class CalangoBehaviour : AnimalModel
 
     protected float hideCounter = 0;
     protected float hiddingTimeInSec = 5;
-    public float temperatureTransferInSec = .02f;
+    public float capacidadeTermica = 50f;
     public float maxBodyTemp = 33;
     public float highBodyTempThreshold = 30;
     public float lowBodyTempThreshold = 26;
@@ -63,11 +63,11 @@ abstract public class CalangoBehaviour : AnimalModel
         float EnvTemp = inShadow ? rules.temperatureInShadow : rules.temperatureInSun;
         if (currentTemp > EnvTemp)
         {
-            currentTemp -= (currentTemp - EnvTemp) * temperatureTransferInSec * Time.deltaTime * 5;
+            currentTemp -= (currentTemp - EnvTemp) * (1/ capacidadeTermica) * Time.deltaTime * 5;
         }
         else
         {
-            currentTemp += (EnvTemp - currentTemp) * temperatureTransferInSec * Time.deltaTime;
+            currentTemp += (EnvTemp - currentTemp) * (1 / capacidadeTermica) * Time.deltaTime;
         }
         if (currentTemp > maxBodyTemp)
         {
@@ -101,7 +101,8 @@ abstract public class CalangoBehaviour : AnimalModel
     {
         if (energy <= 0)
         {
-            this.die(Deaths.INANICAO);
+            if(CheckIfInsolated()) this.die(Deaths.INANICAO);
+            else this.die(Deaths.INANICAO);
             return true;
         }
         return false;

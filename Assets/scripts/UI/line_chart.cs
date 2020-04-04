@@ -42,10 +42,10 @@ public class line_chart : MonoBehaviour {
 
         m_DataDiagram.PreDestroyLineEvent += (s, e) => { lines.Remove(e.line.GetComponent<DD_Lines>().lineName); };
 
-        AddALine("Calangos", Color.blue); 
-        AddALine("Predadores", Color.red);
-        AddALine("Sapos", Color.yellow);
-        AddALine("Vegetação", Color.green);
+        AddALine(GameTextController.getText("lizard_name"), Color.blue);
+        AddALine(GameTextController.getText("predator_name"), Color.red);
+        AddALine(GameTextController.getText("competitor_name"), Color.yellow);
+        AddALine(GameTextController.getText("food_name"), Color.green);
     }
 
     // Update is called once per frame
@@ -67,10 +67,10 @@ public class line_chart : MonoBehaviour {
 
     public void updateData( int qtCalango, int qtPredadores, int qtVegetacao, int qtCompetidores)
     {
-        m_DataDiagram.InputPoint(lines["Calangos"], new Vector2(1, qtCalango));
-        m_DataDiagram.InputPoint(lines["Predadores"], new Vector2(1, qtPredadores));
-         m_DataDiagram.InputPoint(lines["Sapos"], new Vector2(1, qtCompetidores));
-        m_DataDiagram.InputPoint(lines["Vegetação"], new Vector2(1, qtVegetacao));
+        m_DataDiagram.InputPoint(lines[GameTextController.getText("lizard_name")], new Vector2(1, qtCalango));
+        m_DataDiagram.InputPoint(lines[GameTextController.getText("predator_name")], new Vector2(1, qtPredadores));
+        m_DataDiagram.InputPoint(lines[GameTextController.getText("competitor_name")], new Vector2(1, qtCompetidores));
+        m_DataDiagram.InputPoint(lines[GameTextController.getText("food_name")], new Vector2(1, qtVegetacao));
     }
 
  

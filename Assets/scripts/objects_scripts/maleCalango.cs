@@ -66,7 +66,7 @@ public class maleCalango : CalangoBehaviour {
 		if (closestMate != null) {	// mate found
 			competitor = closestMate.getCompetitors (this.gameObject); // look for competitors
 			if (competitor != null) {
-                if (Random.value < energy / 100)
+                if (Random.value < energy / maxEnergy)
                 {// In case there are competitors it has a chance of engaging them first
                     currState = GameConstants.states.ENGAGING;
                 }
@@ -160,7 +160,7 @@ public class maleCalango : CalangoBehaviour {
 			atack (competitor);
 		}
 
-		if (this.energy < lowNutritionBoundery*1.1 || Random.value*this.energy < 0.05f) { // In case the individual is close to starving it loses
+		if (this.energy < lowNutritionBoundery*1.1 || Random.value*(this.energy/maxEnergy) < 0.0005f) { // In case the individual is close to starving it loses
 			competitor.winChallenge (this.GetComponent<CalangoBehaviour>());
 			if(closestMate!= null) closestMate.remove_proposition (this.gameObject);
 			closestMate = null;

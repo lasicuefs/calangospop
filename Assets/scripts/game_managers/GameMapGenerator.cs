@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class GameMapGenerator : MapGenerator {
 
+    
     public bool isRandomMap;
-	public int initialPopulationSize = 10;
+	public int initialPopulationAreaSize = 10;
+
+    public bool hasFixedPopulationSize = false;
+    public int initialPopulationSize = 80;
+
     private float waterOffset = .065f;
     int riverSize = 3;
- 
-
-
+    
     // Use this for initialization
     void Start () {
 		registry = GetComponentInParent<registryController> ();
@@ -42,19 +45,55 @@ public class GameMapGenerator : MapGenerator {
 			}
 		}
 		// Lizard loop
-		int initialArea = totalTerrain / 2 - initialPopulationSize / 2;
-		int finalArea = totalTerrain / 2 + initialPopulationSize / 2;
-		for (int i = initialArea; i < finalArea; i++) {
-			for (int j = initialArea; j < finalArea; j++) {
-				int result = Random.Range (1, 101);
+		int initialArea = totalTerrain / 2 - initialPopulationAreaSize / 2;
+		int finalArea = totalTerrain / 2 + initialPopulationAreaSize / 2;
 
-				if (result <= lizardPercentage) {
-					bool isMacho = (Random.value < .5);
-					CalangoBehaviour calango = this.generateCalango (isMacho, new Vector3 ((i - j) * (-tileSize / 2), (i + j) * (-tileSize / 4), 0));	
-					calango.setAge (Random.Range (1, (calango.maxAge-1) * 24)); // generating calangos at different ages
-				}
-			}
-	    }
+        if (hasFixedSize)
+        {
+            float totalSpaces = Mathf.Pow(initialPopulationAreaSize, 2);
+            int interval;
+            if (totalSpaces < initialPopulationSize)
+            {
+                Debug.LogError("Initial population is too big for the initial area. The population must but at most the area raise to power 2. In this case, " + totalSpaces);
+                interval = 1;
+            }
+            else
+            {
+                interval = Mathf.FloorToInt(totalSpaces / initialPopulationSize);
+            }
+
+            int counter = 0;
+            for (int i = initialArea; i < finalArea; i++)
+            {
+                for (int j = initialArea; j < finalArea; j++)
+                {
+                    if (counter++ == interval)
+                    {
+                        bool isMacho = (Random.value < .5);
+                        CalangoBehaviour calango = this.generateCalango(isMacho, new Vector3((i - j) * (-tileSize / 2), (i + j) * (-tileSize / 4), 0));
+                        calango.setAge(Random.Range(1, (calango.maxAge - 1) * 24)); // generating calangos at different ages
+                        counter = 0;
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = initialArea; i < finalArea; i++)
+            {
+                for (int j = initialArea; j < finalArea; j++)
+                {
+                    int result = Random.Range(1, 101);
+
+                    if (result <= lizardPercentage)
+                    {
+                        bool isMacho = (Random.value < .5);
+                        CalangoBehaviour calango = this.generateCalango(isMacho, new Vector3((i - j) * (-tileSize / 2), (i + j) * (-tileSize / 4), 0));
+                        calango.setAge(Random.Range(1, (calango.maxAge - 1) * 24)); // generating calangos at different ages
+                    }
+                }
+            }
+        }
 
     }
 

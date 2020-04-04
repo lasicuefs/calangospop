@@ -389,7 +389,8 @@ abstract public class AnimalModel : MonoBehaviour {
         float distance = lineOfSight * 4;
         Vector3 position = transform.position;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, distance);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, distance
+            );
 
         foreach (Collider2D collider in colliders)
         {

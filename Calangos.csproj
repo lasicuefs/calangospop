@@ -324,6 +324,7 @@
     <Compile Include="Assets\scripts\game_managers\TutorialFase3.cs" />
     <Compile Include="Assets\scripts\game_managers\TutorialFase4.cs" />
     <Compile Include="Assets\scripts\game_managers\TutorialSandBox.cs" />
+    <Compile Include="Assets\scripts\GameTextController.cs" />
     <Compile Include="Assets\scripts\objects_scripts\animalModel.cs" />
     <Compile Include="Assets\scripts\objects_scripts\CalangoBehaviour.cs" />
     <Compile Include="Assets\scripts\objects_scripts\carnivoreBehaviour.cs" />
