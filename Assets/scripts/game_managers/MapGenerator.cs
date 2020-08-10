@@ -20,7 +20,7 @@ public class MapGenerator : MonoBehaviour {
 
 	public bool autoGenerateResources = true;
 
-	protected registryController registry;
+	protected RegistryController registry;
 	protected GameObject calangosParentObject;
 	protected GameObject plantsParentObject;
 	protected GameObject animalsParentObject;
@@ -59,7 +59,7 @@ public class MapGenerator : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		registry = GetComponentInParent<registryController> ();
+		registry = GetComponentInParent<RegistryController> ();
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
 		animalsParentObject = GameObject.Find ("Animals");

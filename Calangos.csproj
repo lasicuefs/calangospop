@@ -312,10 +312,11 @@
     <Compile Include="Assets\scripts\game_managers\LevelManager.cs" />
     <Compile Include="Assets\scripts\game_managers\MapGenerator.cs" />
     <Compile Include="Assets\scripts\game_managers\PlantRegister.cs" />
-    <Compile Include="Assets\scripts\game_managers\registryController.cs" />
+    <Compile Include="Assets\scripts\game_managers\RegistryController.cs" />
     <Compile Include="Assets\scripts\game_managers\Resources_Controller.cs" />
     <Compile Include="Assets\scripts\game_managers\SandBoxRules.cs" />
     <Compile Include="Assets\scripts\game_managers\SecondStageRules.cs" />
+    <Compile Include="Assets\scripts\game_managers\SimulationOutputManager.cs" />
     <Compile Include="Assets\scripts\game_managers\TemporalManager.cs" />
     <Compile Include="Assets\scripts\game_managers\ThirdStageRules.cs" />
     <Compile Include="Assets\scripts\game_managers\Tutorial.cs" />

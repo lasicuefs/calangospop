@@ -19,13 +19,13 @@ public class PlantModel : MonoBehaviour {
 
     public float shadowRadius = .5f;
 
-    protected registryController registry;
+    protected RegistryController registry;
 	protected MapGenerator mapGenerator;
     protected InsectSwarmModel swarm;
     
     public string plantName = "";
 
-	public void initialize(registryController registry, MapGenerator mapGenerator){
+	public void initialize(RegistryController registry, MapGenerator mapGenerator){
 		this.registry = registry;
 		this.mapGenerator = mapGenerator;
 

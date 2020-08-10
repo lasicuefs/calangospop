@@ -8,7 +8,7 @@ static class Deaths
     public const string INSOLACAO = "INSOLACAO";
     public const string NATURAL = "NATURAL";
 }
-public class registryController : MonoBehaviour {
+public class RegistryController : MonoBehaviour {
 
 	List<GameObject> animals = new List<GameObject>();
 	List<GameObject> calangos = new List<GameObject>();

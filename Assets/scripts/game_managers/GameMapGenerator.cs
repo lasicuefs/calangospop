@@ -16,7 +16,7 @@ public class GameMapGenerator : MapGenerator {
     
     // Use this for initialization
     void Start () {
-		registry = GetComponentInParent<registryController> ();
+		registry = GetComponentInParent<RegistryController> ();
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
 		animalsParentObject = GameObject.Find ("Animals");
@@ -48,7 +48,7 @@ public class GameMapGenerator : MapGenerator {
 		int initialArea = totalTerrain / 2 - initialPopulationAreaSize / 2;
 		int finalArea = totalTerrain / 2 + initialPopulationAreaSize / 2;
 
-        if (hasFixedSize)
+        if (hasFixedPopulationSize)
         {
             float totalSpaces = Mathf.Pow(initialPopulationAreaSize, 2);
             int interval;
@@ -63,18 +63,26 @@ public class GameMapGenerator : MapGenerator {
             }
 
             int counter = 0;
+            int popCounter = 0;
             for (int i = initialArea; i < finalArea; i++)
             {
                 for (int j = initialArea; j < finalArea; j++)
                 {
-                    if (counter++ == interval)
+                    if (popCounter < initialPopulationSize && counter++ == interval)
                     {
                         bool isMacho = (Random.value < .5);
                         CalangoBehaviour calango = this.generateCalango(isMacho, new Vector3((i - j) * (-tileSize / 2), (i + j) * (-tileSize / 4), 0));
                         calango.setAge(Random.Range(1, (calango.maxAge - 1) * 24)); // generating calangos at different ages
-                        counter = 0;
+                        popCounter++;
+                        counter = 1;
                     }
                 }
+            }
+            if(popCounter < initialPopulationSize)
+            {
+                bool isMacho = (Random.value < .5);
+                CalangoBehaviour calango = this.generateCalango(isMacho, new Vector3(initialArea * (-tileSize / 2), initialArea * (-tileSize / 4), 0));
+                calango.setAge(Random.Range(1, (calango.maxAge - 1) * 24)); // generating calangos at different ages
             }
         }
         else

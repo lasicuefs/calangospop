@@ -8,7 +8,7 @@ public class line_chart : MonoBehaviour {
     Dictionary<string, GameObject> lines = new Dictionary<string, GameObject>();
 
     private DD_DataDiagram m_DataDiagram;
-    registryController registry;
+    RegistryController registry;
     float counter;
     public float refreshTimeInDays = 0.01f;
     TemporalManager temporal;
@@ -36,7 +36,7 @@ public class line_chart : MonoBehaviour {
         }
         m_DataDiagram = dd.GetComponent<DD_DataDiagram>();
 
-        registry = gameObject.GetComponent<registryController>();
+        registry = gameObject.GetComponent<RegistryController>();
 
         temporal = gameObject.GetComponent<TemporalManager>();
 
@@ -59,7 +59,7 @@ public class line_chart : MonoBehaviour {
         counter += Time.deltaTime/(float)temporal.secondsForADay;
         if(counter > refreshTimeInDays)
         {
-            updateData(registry.getCalangosList().Count, registry.getPredatorList().Count, registry.getediblePlantsList().Count, registry.getCompetitorList().Count);
+            updateData(registry.getCalangosList().Count, registry.getPredatorList().Count, registry.getediblePlantsList().Count + registry.getInsectCount(), registry.getCompetitorList().Count);
             counter = 0.0f;
         }
        

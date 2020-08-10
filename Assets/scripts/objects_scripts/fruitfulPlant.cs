@@ -8,7 +8,7 @@ public class fruitfulPlant : PlantModel {
 	public float fruitRadius = 1;
 	public GameObject fruitPrefab;
 
-	public void initialize(registryController registry, GameMapGenerator mapGenerator){
+	public void initialize(RegistryController registry, GameMapGenerator mapGenerator){
 		this.registry = registry;
 		this.mapGenerator = mapGenerator;
 	}

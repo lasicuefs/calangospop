@@ -10,7 +10,7 @@ public class InsectSwarmModel : MonoBehaviour {
     public float reproductionPercetagePerHour = 25;
     public float migrationAmountPerHour = 1;
 
-    protected registryController registry;
+    protected RegistryController registry;
     int maximumAmount = 0;
 
     int InsectCount = 0;
@@ -36,7 +36,7 @@ public class InsectSwarmModel : MonoBehaviour {
         registry.registerInsects(newInsects);
     }
 
-    public void Initialize(int initialAmount, int maximun, float energyWhenConsumed, registryController registry)
+    public void Initialize(int initialAmount, int maximun, float energyWhenConsumed, RegistryController registry)
     {
         this.energyWhenConsumed = energyWhenConsumed;
         this.registry = registry;

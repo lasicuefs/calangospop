@@ -15,12 +15,12 @@ public class PainelGeralControler : MonoBehaviour {
     public Text textAge;
     public Text textPredation;
     public Text textHeat;
-    registryController registry;
+    RegistryController registry;
 
 	// Use this for initialization
 	void Start () {
 		GameObject mapController = GameObject.Find ("MapController");
-		registry = mapController.GetComponent<registryController> ();
+		registry = mapController.GetComponent<RegistryController> ();
 	}
 	
 	// Update is called once per frame

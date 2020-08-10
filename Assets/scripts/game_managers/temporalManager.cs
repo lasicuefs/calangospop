@@ -20,7 +20,7 @@ public class TemporalManager : MonoBehaviour {
 	public Button speedB3;
 
 	MapGenerator mapGenerator;
-	registryController registry;
+	RegistryController registry;
 	GameObject calangosParentObject;
 	GameObject plantsParentObject;
     GameObject animalsParentObject;
@@ -28,7 +28,7 @@ public class TemporalManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		mapGenerator = GetComponentInParent<MapGenerator> ();
-		registry  = GetComponentInParent<registryController> ();
+		registry  = GetComponentInParent<RegistryController> ();
 		calangosParentObject = GameObject.Find ("Calangos");
 		plantsParentObject = GameObject.Find ("Plants");
         animalsParentObject = GameObject.Find("Animals");

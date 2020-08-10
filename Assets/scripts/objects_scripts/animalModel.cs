@@ -36,7 +36,7 @@ abstract public class AnimalModel : MonoBehaviour {
 	protected int hourTimer = 0;
 
 	protected Animator animator;
-	protected registryController registry;
+	protected RegistryController registry;
 	protected MapGenerator mapGenerator;
 
     [HideInInspector]
@@ -70,7 +70,7 @@ abstract public class AnimalModel : MonoBehaviour {
 		hidration = Random.Range (maxHidration/2, maxHidration);
 
 		animator = GetComponent<Animator> ();
-        registry = GameObject.Find("MapController").GetComponent<registryController>();
+        registry = GameObject.Find("MapController").GetComponent<RegistryController>();
 
     }
 	
@@ -80,7 +80,7 @@ abstract public class AnimalModel : MonoBehaviour {
 		plan_action ();
 	}
 
-	public void setControllerReferences(registryController registry, MapGenerator mapGenerator){
+	public void setControllerReferences(RegistryController registry, MapGenerator mapGenerator){
 		this.registry = registry;
 		this.mapGenerator = mapGenerator;
 	}

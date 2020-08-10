@@ -11,7 +11,7 @@ public abstract class GameRules : MonoBehaviour {
     public bool enableHeat;
     public float temperatureInSun = 40;
     public float temperatureInShadow = 25;
-    protected registryController registry;
+    protected RegistryController registry;
     protected TemporalManager timeManager;
 
     protected bool gameOver = false;
@@ -19,7 +19,7 @@ public abstract class GameRules : MonoBehaviour {
 
     void Start()
     {
-        registry = GetComponent<registryController>();
+        registry = GetComponent<RegistryController>();
         timeManager = GetComponent<TemporalManager>();
     }
 
