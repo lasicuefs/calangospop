@@ -3,3 +3,6 @@ web/
 Temp/
 obj/
 build/
+*.sqlite
+*.suo
+*.ide
