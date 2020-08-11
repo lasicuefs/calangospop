@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameConstants {
     internal static float temperatureInSun;
     internal static string DIFFICULTY = "DIFFICULTY";
+    internal static string LANGUAGE = "LANGUAGE";    
 
     public class states
     {

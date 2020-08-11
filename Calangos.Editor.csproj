@@ -362,6 +362,8 @@
     <Compile Include="Assets\DataDiagram\Editor\DD_Menu.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\languages\english.txt" />
+    <None Include="Assets\languages\portugues.txt" />
     <None Include="C:\Users\mnmat\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />
     <None Include="C:\Users\mnmat\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Light.uss" />
     <None Include="C:\Users\mnmat\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Templates\Alert.uxml" />

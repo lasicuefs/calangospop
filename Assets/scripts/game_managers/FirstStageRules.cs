@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,7 +35,7 @@ public class FirstStageRules : GameRules
         {
             textColorCalangos = "<color=#AD7819>";
         } 
-        objectiveText.text = "1. Aumentar a população de calangos para "+ numObjetivo + " ou mais antes de " + numDays + " anos. Atualmente: " + textColorCalangos  + numCalangos+" </color>/" + numObjetivo;
+        objectiveText.text = string.Format(GameTextController.getText(LanguageConstants.FIRST_PHASE_OBJ), numObjetivo, numDays, textColorCalangos + numCalangos, numObjetivo);
     }
 
     public void finishFirstPhase()
@@ -42,6 +43,6 @@ public class FirstStageRules : GameRules
         gameSuccess();
         int years = timeManager.getDay();
         int months = timeManager.getHour()/2;
-        textoSucesso.text = "Você conseguiu crescer sua população para 100 ou mais em por " + years + " anos e" + months + " meses!";
+        textoSucesso.text = string.Format(GameTextController.getText(LanguageConstants.FIRST_PHASE_OBJ), years, months);
     }
 }

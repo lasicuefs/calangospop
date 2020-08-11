@@ -309,6 +309,7 @@
     <Compile Include="Assets\scripts\game_managers\FourthStageRules.cs" />
     <Compile Include="Assets\scripts\game_managers\GameMapGenerator.cs" />
     <Compile Include="Assets\scripts\game_managers\GameRules.cs" />
+    <Compile Include="Assets\scripts\game_managers\LanguageConstants.cs" />
     <Compile Include="Assets\scripts\game_managers\LevelManager.cs" />
     <Compile Include="Assets\scripts\game_managers\MapGenerator.cs" />
     <Compile Include="Assets\scripts\game_managers\PlantRegister.cs" />
@@ -348,6 +349,7 @@
     <Compile Include="Assets\scripts\UI\instance_button.cs" />
     <Compile Include="Assets\scripts\UI\InstanceGenerator.cs" />
     <Compile Include="Assets\scripts\UI\line_chart.cs" />
+    <Compile Include="Assets\scripts\UI\MainMenu\LanguageSelector.cs" />
     <Compile Include="Assets\scripts\UI\MainMenu\MainMenu.cs" />
     <Compile Include="Assets\scripts\UI\MainMenu\menu_calango.cs" />
     <Compile Include="Assets\scripts\UI\OptionsTab.cs" />
@@ -358,6 +360,8 @@
     <Compile Include="Assets\scripts\UI\TimePanel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\languages\english.txt" />
+    <None Include="Assets\languages\portugues.txt" />
     <None Include="C:\Users\mnmat\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />
     <None Include="C:\Users\mnmat\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Light.uss" />
     <None Include="C:\Users\mnmat\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Templates\Alert.uxml" />

@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TimePanel : MonoBehaviour {
 
-    public Text textDayValue;
+    public Text textYear;
+    public Text textYearValue;
     public Image ponteiro;
     TemporalManager tempManager;
 
@@ -14,11 +16,12 @@ public class TimePanel : MonoBehaviour {
     {
         GameObject mapController = GameObject.Find("MapController");
         tempManager = mapController.GetComponent<TemporalManager>();
+        textYear.text = GameTextController.getText(LanguageConstants.YEARS);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        textDayValue.text = tempManager.getDay().ToString();
+        textYearValue.text = tempManager.getDay().ToString();
         ponteiro.rectTransform.rotation = Quaternion.Euler(0,0,360 - tempManager.getHour() * 15);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,17 +27,17 @@ public class PainelGeralControler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//ebug.Log (registry.getCalangosList());
-		textCalangos.text = "Calangos: " + registry.getCalangosList().Count;
-		textEdiblePlants.text = "Plantas: " + registry.getediblePlantsList().Count;
-        textInsects.text = "Insetos: " + registry.getInsectCount();
-        if (textPredators != null)  textPredators.text = "Predadores: " + registry.getPredatorList().Count;
-        if (textCompetitor != null) textCompetitor.text = "Competidores: " + registry.getCompetitorList().Count;
+		textCalangos.text = GameTextController.getText(LanguageConstants.LIZARD_NAME)+": " + registry.getCalangosList().Count;
+		textEdiblePlants.text = GameTextController.getText(LanguageConstants.PLANT_NAME) + ": " + registry.getediblePlantsList().Count;
+        textInsects.text = GameTextController.getText(LanguageConstants.INSECT_NAME) + ": " + registry.getInsectCount();
+        if (textPredators != null)  textPredators.text = GameTextController.getText(LanguageConstants.PREDATOR_NAME) + ": " + registry.getPredatorList().Count;
+        if (textCompetitor != null) textCompetitor.text = GameTextController.getText(LanguageConstants.COMPETITOR_NAME) + ": " + registry.getCompetitorList().Count;
 
 
-        textStarvation.text = "Fome: " + registry.getDeathsByStarvation();
-        textAge.text = "Idade: " + registry.getDeathsByAge();
-        if(textPredation != null) textPredation.text = "Predação: " + registry.getDeathsByPredation();
-        if(textHeat != null) textHeat.text = "Insolação: " + registry.getDeathsByHeat();
+        textStarvation.text = GameTextController.getText(LanguageConstants.HUNGER)+": " + registry.getDeathsByStarvation();
+        textAge.text = GameTextController.getText(LanguageConstants.AGE) + ": " + registry.getDeathsByAge();
+        if(textPredation != null) textPredation.text = GameTextController.getText(LanguageConstants.PREDATION) + ": " + registry.getDeathsByPredation();
+        if(textHeat != null) textHeat.text = GameTextController.getText(LanguageConstants.INSOLATION) + ": " + registry.getDeathsByHeat();
         
     }
 }

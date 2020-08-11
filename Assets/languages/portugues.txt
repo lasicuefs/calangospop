@@ -1,0 +1,14 @@
+lizard_name=Calangos
+predator_name=Predadores
+competitor_name=Sapos
+food_name=Vegetação
+plant_name=Plantas
+insect_name=Insetos
+hunger=Fome
+age=Idade
+predation=Predação
+insolation=Insolação
+years=Anos
+first_phase_obj=1. Aumentar a população de calangos para {0} ou mais antes de {1} anos. Atualmente: {2} </color>/{3}
+first_phase_end_txt=Você conseguiu crescer sua população para 100 ou mais em por {0} anos e {1} meses!
+second_phase_obj=1. Manter a população de calangos abaixo de {0} indivíduos por {1} anos. Atualmente: {2} </color>/ {0}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,10 +43,10 @@ public class line_chart : MonoBehaviour {
 
         m_DataDiagram.PreDestroyLineEvent += (s, e) => { lines.Remove(e.line.GetComponent<DD_Lines>().lineName); };
 
-        AddALine(GameTextController.getText("lizard_name"), Color.blue);
-        AddALine(GameTextController.getText("predator_name"), Color.red);
-        AddALine(GameTextController.getText("competitor_name"), Color.yellow);
-        AddALine(GameTextController.getText("food_name"), Color.green);
+        AddALine(GameTextController.getText(LanguageConstants.LIZARD_NAME), Color.blue);
+        AddALine(GameTextController.getText(LanguageConstants.PREDATOR_NAME), Color.red);
+        AddALine(GameTextController.getText(LanguageConstants.COMPETITOR_NAME), Color.yellow);
+        AddALine(GameTextController.getText(LanguageConstants.FOOD_NAME), Color.green);
     }
 
     // Update is called once per frame
@@ -67,10 +68,10 @@ public class line_chart : MonoBehaviour {
 
     public void updateData( int qtCalango, int qtPredadores, int qtVegetacao, int qtCompetidores)
     {
-        m_DataDiagram.InputPoint(lines[GameTextController.getText("lizard_name")], new Vector2(1, qtCalango));
-        m_DataDiagram.InputPoint(lines[GameTextController.getText("predator_name")], new Vector2(1, qtPredadores));
-        m_DataDiagram.InputPoint(lines[GameTextController.getText("competitor_name")], new Vector2(1, qtCompetidores));
-        m_DataDiagram.InputPoint(lines[GameTextController.getText("food_name")], new Vector2(1, qtVegetacao));
+        m_DataDiagram.InputPoint(lines[GameTextController.getText(LanguageConstants.LIZARD_NAME)], new Vector2(1, qtCalango));
+        m_DataDiagram.InputPoint(lines[GameTextController.getText(LanguageConstants.PREDATOR_NAME)], new Vector2(1, qtPredadores));
+        m_DataDiagram.InputPoint(lines[GameTextController.getText(LanguageConstants.COMPETITOR_NAME)], new Vector2(1, qtCompetidores));
+        m_DataDiagram.InputPoint(lines[GameTextController.getText(LanguageConstants.FOOD_NAME)], new Vector2(1, qtVegetacao));
     }
 
  
