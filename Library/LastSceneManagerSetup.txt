@@ -1,4 +1,0 @@
-sceneSetups:
-- path: "Assets/Prot\xF3tipo 1.unity"
-  isLoaded: 1
-  isActive: 1
