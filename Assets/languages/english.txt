@@ -1,0 +1,13 @@
+lizard_name=Lizards
+predator_name=Predators
+competitor_name=Competitors
+food_name=Lizard's Food Source
+plant_name=Vegetal food
+insect_name=Insects
+hunger=Hunger
+age=Age
+predation=Predation
+insolation=Insolation
+years=Years
+first_phase_obj=1. Increase your Lizard population to {0} or more before {1} years. Currently: {2} </color>/{3}
+first_phase_end_txt=You grew your population to 100 or more in {0} and {1} months!
