@@ -30,11 +30,23 @@ public class GameTextController : MonoBehaviour {
         return fileContent;
     }
 
+    internal static string getText(object p)
+    {
+        throw new NotImplementedException();
+    }
+
     private static Dictionary<string, string> initializePortugues()
     {
         string[] fileContent = loadFile("portugues.txt");
 
         Dictionary<string, string> portugues = new Dictionary<string, string>();
+
+        foreach (string line in fileContent)
+        {
+            string[] buffer = line.Split('=');
+            if (buffer.Length == 2)
+                portugues.Add(buffer[0], buffer[1]);
+        }
 
         return portugues;
     }
@@ -49,7 +61,7 @@ public class GameTextController : MonoBehaviour {
         {
             string[] buffer = line.Split('=');
             if (buffer.Length == 2)
-                portugues.Add(buffer[0], buffer[1]);
+                english.Add(buffer[0], buffer[1]);
         }
         
         return english;
@@ -57,7 +69,7 @@ public class GameTextController : MonoBehaviour {
 
     static public string getText(string textName)
     {     
-        if (PlayerPrefs.GetInt(GameConstants.LANGUAGE, 1) == 0) return english[textName];
-        else return portugues[textName];
+        if (PlayerPrefs.GetInt(GameConstants.LANGUAGE, 1) == 1) return portugues[textName];
+        else return english[textName]; 
     }
 }

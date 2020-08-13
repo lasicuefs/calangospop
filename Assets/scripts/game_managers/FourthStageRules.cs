@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ public class FourthStageRules : GameRules
         {
             textColorCalangos = "<color=#ffa500ff>";
         }
-        objectiveText.text = "1. Aumentar a população de lagartos acima dos " + numObjetivo+" em até 5 anos. Atualmente: " + textColorCalangos + numCalangos + " </color>/" + numObjetivo;
+        objectiveText.text = string.Format(GameTextController.getText(LanguageConstants.FOURTH_PHASE_OBJ), numObjetivo, textColorCalangos + numCalangos);
     }
 }
 

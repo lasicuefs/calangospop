@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ public class ThirdStageRules : GameRules
         {
             textColorCalangos = "<color=#ffa500ff>";
         }
-        objectiveText.text = "1. Manter a população abaixo de " + numObjetivo + " indivíduos até o " + numDays + "º ano. Atualmente: " + textColorCalangos + numCalangos + " </color>/" + numObjetivo;
+        objectiveText.text =  string.Format(GameTextController.getText(LanguageConstants.THIRD_PHASE_OBJ),numObjetivo, numDays, textColorCalangos + numCalangos);
         //objectiveText.text = "1. Reduzir a população de calangos para 100 ou menos. Atualmente: " + numCalangos + "\n2. Não deixar a população de calangos passar de 700 indivíduos.";
     }
 }

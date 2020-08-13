@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,8 +25,8 @@ public class bush_plant_button : instance_button {
     {
         nameText.text = name;
         PlantModel script = prefab.GetComponent<PlantModel>();
-        typeText.text = "Planta não frutífera";
-        descText.text = (script.hasInsects ? "Contém insetos\n" : "") + (script.isHideout ? "Esconderijo contra predadores\n" : "") + (script.sunProtection ? "Prejeta sombras\n" : "");
-        if (script.hasInsects) descText.text += "Quantidade inicial de insetos"+ script.startingInsectAmount+ "\n Energia por inseto:" + script.insectEnergy;
+        typeText.text = GameTextController.getText(LanguageConstants.BRUSH_BUTTON_TXT_1);
+        descText.text = (script.hasInsects ? GameTextController.getText(LanguageConstants.HAS_INSECTS)+"\n" : "") + (script.isHideout ? GameTextController.getText(LanguageConstants.HAS_HIDEOUT)+"\n" : "") + (script.sunProtection ? GameTextController.getText(LanguageConstants.HAS_SHADOWS)+"\n" : "");
+        if (script.hasInsects) descText.text += GameTextController.getText(LanguageConstants.INITIAL_INSECTS) +": "+ script.startingInsectAmount+ "\n"+ GameTextController.getText(LanguageConstants.ENERGY_BY_INSECTS)+":" + script.insectEnergy;
     }
 }

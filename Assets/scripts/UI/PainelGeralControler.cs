@@ -12,6 +12,8 @@ public class PainelGeralControler : MonoBehaviour {
     public Text textCompetitor;
     public Text textPredators;
 
+    public Text deathCauses;
+
     public Text textStarvation;   
     public Text textAge;
     public Text textPredation;
@@ -22,12 +24,13 @@ public class PainelGeralControler : MonoBehaviour {
 	void Start () {
 		GameObject mapController = GameObject.Find ("MapController");
 		registry = mapController.GetComponent<RegistryController> ();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		//ebug.Log (registry.getCalangosList());
-		textCalangos.text = GameTextController.getText(LanguageConstants.LIZARD_NAME)+": " + registry.getCalangosList().Count;
+        //ebug.Log (registry.getCalangosList());
+        deathCauses.text = GameTextController.getText(LanguageConstants.DEATH_CAUSES);
+        textCalangos.text = GameTextController.getText(LanguageConstants.LIZARD_NAME)+": " + registry.getCalangosList().Count;
 		textEdiblePlants.text = GameTextController.getText(LanguageConstants.PLANT_NAME) + ": " + registry.getediblePlantsList().Count;
         textInsects.text = GameTextController.getText(LanguageConstants.INSECT_NAME) + ": " + registry.getInsectCount();
         if (textPredators != null)  textPredators.text = GameTextController.getText(LanguageConstants.PREDATOR_NAME) + ": " + registry.getPredatorList().Count;

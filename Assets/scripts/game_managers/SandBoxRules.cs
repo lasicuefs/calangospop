@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.scripts.game_managers;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class SandBoxRules : GameRules
@@ -53,7 +54,7 @@ public class SandBoxRules : GameRules
             {
                 textColorCalangos = "<color=#ffa500ff>";
             }
-            objectiveText.text = "1. Mantenha a população sobre controle. Ela não pode passar de " + numLimiarSuperior + " nem reduzir para menos de "+numLimiarInferior+". Atualmente: " + textColorCalangos + numCalangos + " </color>";
+            objectiveText.text = string.Format(GameTextController.getText(LanguageConstants.SAND_BOX_OBJ_1), numLimiarSuperior, numLimiarInferior,textColorCalangos + numCalangos);
         } else
         {
             string textColorCalangos = "<color=#008000ff>";
@@ -65,7 +66,7 @@ public class SandBoxRules : GameRules
             {
                 textColorCalangos = "<color=#ffa500ff>";
             }
-            objectiveText.text = "1. Aumentar a população de calangos para " + numObjetivoPrimario + " ou mais. Atualmente: " + textColorCalangos + numCalangos + " </color>/" + numObjetivoPrimario;
+            objectiveText.text = string.Format(GameTextController.getText(LanguageConstants.SAND_BOX_OBJ_2), numObjetivoPrimario, textColorCalangos + numCalangos);
         }
     }
 
@@ -74,7 +75,7 @@ public class SandBoxRules : GameRules
         gameSuccess();
         int years = Mathf.FloorToInt(counter / timeManager.secondsForADay);
         int months = Mathf.FloorToInt(counter / timeManager.secondsForADay);
-        textoSucesso.text = "Você conseguiu manter uma população estável por "+ years + " anos e"+ months + " meses!";
+        textoSucesso.text = string.Format(GameTextController.getText(LanguageConstants.SAND_BOX_END_TXT), years, months);
     }
 }
 

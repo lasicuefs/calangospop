@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,9 +26,9 @@ public class Competitor_Button : instance_button
     {
         nameText.text = name;
         SecondaryAnimalBehaviour script = prefab.GetComponent<SecondaryAnimalBehaviour>();
-        typeText.text = "Competidor";
-        descText.text = (desciption == "" ? desciption : desciption + "\n");
-        descText.text += "Tempo de vida: " + script.maxAge + " anos";
-        descText.text += "\nReprodução: " + (script.chanceOfReproducingPerHour * 24) + " filhos por dia";
+        typeText.text = GameTextController.getText(LanguageConstants.COMPETITOR_NAME);
+        descText.text = (desciption == "" ? desciption : GameTextController.getText(desciption) + "\n");
+        descText.text += GameTextController.getText(LanguageConstants.TIME_OF_LIFE)+": " + script.maxAge + " "+GameTextController.getText(LanguageConstants.YEARS).ToLower();
+        descText.text += "\n"+ GameTextController.getText(LanguageConstants.REPRODUCTION) + ": " + (script.chanceOfReproducingPerHour * 24) + " "+ GameTextController.getText(LanguageConstants.DESCENDANTS_PER_DAY);
     }
 }
