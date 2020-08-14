@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,8 +18,11 @@ public class TutorialFase4 : Tutorial
     void Start()
     {
         base.Start();
-        
-        string[] initialText = new string[] { "Cuidado! A temperatura está muito alta", "Precisamos gerar sombras para os calangos", "Muita exposição ao sol pode levar os calangos a morte!", "Insira plantas que projetem sombra para evitar que os lagartos morram" };
+        string[] initialText = new string[4];
+        for (int i = 0; i < initialText.Length; i++)
+        {
+            initialText[i] = GameTextController.getText(LanguageConstants.TUTORIAL_4_TEXT + (i + 1));
+        }
 
         PresentText(initialText);
     }

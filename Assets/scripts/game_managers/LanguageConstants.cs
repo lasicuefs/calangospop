@@ -42,5 +42,22 @@ namespace Assets.scripts.game_managers
         internal static string PRODUCTION_RADIUS = "production_radius";
         internal static string FRUIT_ENERGY = "fruit_energy";
         internal static string DEATH_CAUSES = "death_causes";
+
+        internal static string TUTORIAL_1_TEXT = "tutorial_1_text_";
+        internal static string TUTORIAL_2_TEXT = "tutorial_2_text_";
+        internal static string TUTORIAL_3_TEXT = "tutorial_3_text_";
+        internal static string TUTORIAL_4_TEXT = "tutorial_4_text_";
+        internal static string TUTORIAL_SAND_BOX_TEXT = "tutorial_sand_box_text_";
+
+        internal static string GUI_DIFICULTY_TITLE = "gui_dificulty_tittle";
+        internal static string GUI_DIFICULTY_OPTION_1 = "gui_dificulty_option_1";
+        internal static string GUI_DIFICULTY_OPTION_2 = "gui_dificulty_option_2";
+        internal static string GUI_DIFICULTY_OPTION_3 = "gui_dificulty_option_3";
+        internal static string GUI_LANGUAGE_TITLE = "gui_language_tittle";
+        internal static string GUI_BUTTON_TUTORIAL_1 = "gui_tutorial_button_1";
+        internal static string GUI_BUTTON_TUTORIAL_2 = "gui_tutorial_button_2";
+        internal static string GUI_BUTTON_TUTORIAL_3 = "gui_tutorial_button_3";
+        internal static string GUI_BUTTON_TUTORIAL_4 = "gui_tutorial_button_4";
+        internal static string GUI_BUTTON_SAND_BOX = "gui_tutorial_sand_box";
     }
 }

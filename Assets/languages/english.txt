@@ -11,3 +11,15 @@ insolation=Insolation
 years=Years
 first_phase_obj=1. Increase your Lizard population to {0} or more before {1} years. Currently: {2} </color>/{3}
 first_phase_end_txt=You grew your population to 100 or more in {0} and {1} months!
+
+
+gui_dificulty_tittle=Choose the dificulty
+gui_dificulty_option_1=Easy
+gui_dificulty_option_2=Moderate
+gui_dificulty_option_3=Dificult
+gui_language_tittle=Linguagem
+gui_tutorial_button_1=Tutorial 1
+gui_tutorial_button_2=Tutorial 2
+gui_tutorial_button_3=Tutorial 3
+gui_tutorial_button_4=Tutorial 4
+gui_tutorial_sand_box=Sand Box

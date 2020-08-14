@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,11 @@ public class TutorialFase2 : Tutorial
     {
         base.Start();
 
-        string[] initialText = new string[] { "Muito bem! Sua população cresceu.", "Mas, cuidado para ela não crescer demais!", "Alimentos estão sobrando e a população irá crescer de forma desequilibrada!", "Algumas espécies disputam por alimentos e podem manter sua população controlada", "Insira espécies concorrentes para controlar o crescimento de lagartos"};
+        string[] initialText = new string[5];
+        for (int i = 0; i < initialText.Length; i++)
+        {
+             initialText[i] = GameTextController.getText(LanguageConstants.TUTORIAL_2_TEXT + (i + 1));
+        }
 
         PresentText(initialText);
     }

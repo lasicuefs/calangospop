@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LanguageSelector : MonoBehaviour {
 
+    public Text title;
 
     void Start()
     {
@@ -19,10 +21,13 @@ public class LanguageSelector : MonoBehaviour {
         {
             chooseLanguage(dropdown.value);
         });
+
+        title.text = GameTextController.getText(LanguageConstants.GUI_LANGUAGE_TITLE);
     }
 
     public void chooseLanguage(int selected)
     {
         PlayerPrefs.SetInt(GameConstants.LANGUAGE, selected);
+        title.text = GameTextController.getText(LanguageConstants.GUI_LANGUAGE_TITLE);
     }
 }

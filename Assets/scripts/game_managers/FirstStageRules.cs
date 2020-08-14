@@ -10,6 +10,14 @@ public class FirstStageRules : GameRules
     int numObjetivo = 100;
     int numDays = 5;
 
+    public int NumObjetivo
+    {
+        get
+        {
+            return numObjetivo;
+        }
+    }
+
     protected override void checkRules()
     {
         int numCalangos = registry.getCalangosList().Count;

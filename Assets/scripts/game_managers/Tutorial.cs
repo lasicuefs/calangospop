@@ -24,10 +24,11 @@ public class Tutorial : MonoBehaviour {
     float dislocatedXProfessor = -1000;
     float dislocatedXBoard = 2000;
     protected bool overrideBoardPosition = false;
+    protected GameObject mapController;
 
     protected void Start ()
     {
-        GameObject mapController = GameObject.Find("MapController");
+        mapController = GameObject.Find("MapController");
         tempManager = mapController.GetComponent<TemporalManager>();
         background = GetComponent<Image>();
 

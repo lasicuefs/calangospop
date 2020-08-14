@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,13 +22,14 @@ public class TutorialFase1 : Tutorial
     void Start()
     {
         base.Start();
-
-        string[] initialText = new string[] { "Oi, Bem-vido ao Calangos", "Eu sou o professor X e estou aqui para lhe ajudar a aprender!",
-            "Você vai cuidar de uma população de lagartos", "Neste tutorial, devemos garantir que ela aumente de tamanho até atingir 100 indivíduos!",
-            "Mas antes, vamos aprender mais sobre o jogo", "Como já disse, aqui está sua população", "Este é seu contador de Biomassa, ele mostra quanto você tem de Biomassa no momento",
-            "sua biomassa aumenta com o tempo", "Utilizando a Biomassa você pode adicionar novas espécies de plantas ao ambiente", "Aqui voce pode escolher quais espécies adicionar",
-            "Cada espécie apresenta característias próprias e tem um custo de biomassa", "Só poderá inserir uma espécie se tiver a biomassa exigida",  "Insira vegetação para alimentar os seus calangos", ""};
-
+        
+        string[] initialText = new string[15];
+        for (int i=0; i<initialText.Length-1; i++)
+        {
+            if(i==3) initialText[i] = string.Format(GameTextController.getText(LanguageConstants.TUTORIAL_1_TEXT + (i + 1)), mapController.GetComponent<FirstStageRules>().NumObjetivo);
+            else initialText[i] = GameTextController.getText(LanguageConstants.TUTORIAL_1_TEXT + (i+1));
+        }
+        initialText[initialText.Length - 1] = "";
         PresentText(initialText);
     }
 
@@ -68,7 +70,7 @@ public class TutorialFase1 : Tutorial
                 tutorialinstanceButton.setText();
                 painelInstanciasinfo.gameObject.SetActive(true);
                 break;
-            case 13:
+            case 14:
                 controls.gameObject.SetActive(true);
                 break;
         }
@@ -81,28 +83,4 @@ public class TutorialFase1 : Tutorial
         highlight.gameObject.SetActive(false);
         controls.gameObject.SetActive(false);
     }
-
-    /*protected override void Update()
-    {
-        base.Update();
-        switch (curPresentationPosition)
-        {
-            case 6:
-                alternateResourceBar();
-                break;
-
-
-        }
-    }
-
-    void alternateResourceBar()
-    {
-        counter += Time.deltaTime;
-        if (counter > colorSpeed)
-        {
-            painelRecursos.color = isColorChangedPR ? painelRecursosColor : Color.red;
-            isColorChangedPR = !isColorChangedPR;
-            counter = 0;
-        }       
-    }*/
 }

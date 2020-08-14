@@ -1,13 +1,24 @@
-﻿using System.Collections;
+﻿using Assets.scripts.game_managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
 
-    // Use this for initialization
-    void Start() {
-
+    public Text buttonTutorial1;
+    public Text buttonTutorial2;
+    public Text buttonTutorial3;
+    public Text buttonTutorial4;
+    public Text buttonSandBox;
+    
+    void Update() {
+        buttonTutorial1.text = GameTextController.getText(LanguageConstants.GUI_BUTTON_TUTORIAL_1);
+        buttonTutorial2.text = GameTextController.getText(LanguageConstants.GUI_BUTTON_TUTORIAL_2);
+        buttonTutorial3.text = GameTextController.getText(LanguageConstants.GUI_BUTTON_TUTORIAL_3);
+        buttonTutorial4.text = GameTextController.getText(LanguageConstants.GUI_BUTTON_TUTORIAL_4);
+        buttonSandBox.text = GameTextController.getText(LanguageConstants.GUI_BUTTON_SAND_BOX);
     }
 
     public void StartTutorial1()

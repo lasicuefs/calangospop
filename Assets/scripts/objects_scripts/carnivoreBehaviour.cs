@@ -112,7 +112,7 @@ public class carnivoreBehaviour : SecondaryAnimalBehaviour {
                     if (curDistance < distance)
                     {
                         closestEdible = model;
-                        model.getHunted(gameObject);
+                        model.getHunted(this.gameObject);
                         distance = curDistance;
                     }
                 }
