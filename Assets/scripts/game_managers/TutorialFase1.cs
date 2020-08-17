@@ -71,6 +71,7 @@ public class TutorialFase1 : Tutorial
                 painelInstanciasinfo.gameObject.SetActive(true);
                 break;
             case 14:
+                board.gameObject.SetActive(false);
                 controls.gameObject.SetActive(true);
                 break;
         }

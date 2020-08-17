@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.scripts.game_managers;
+using UnityEngine;
 using UnityEngine.UI;
 
 static class SelectionTypes
@@ -61,8 +62,8 @@ public class PainelUnidadeController : MonoBehaviour {
 
                 //textEnergy.text = "Energia: " + (animal.Get_Energy() / animal.maxEnergy * 100).ToString("F0") + " %";
                 energyBar.fillAmount = animal.Get_Energy() /animal.maxEnergy;
-                textState.text = "Estado: " + animal.currState;
-                textAge.text = "Idade: " + animal.getAge() + " anos";
+                textState.text = GameTextController.getText(LanguageConstants.STATE)+": " + animal.currState;
+                textAge.text = GameTextController.getText(LanguageConstants.AGE)+": " + animal.getAge() + " "+ GameTextController.getText(LanguageConstants.YEARS);
 
                 CalangoBehaviour calango = selected.GetComponentInParent<CalangoBehaviour>();
                 if (calango != null) tempBar.fillAmount = Mathf.Clamp((calango.getBodyTemp() - calango.lowBodyTempThreshold) / (calango.maxBodyTemp-calango.lowBodyTempThreshold), 0, 1);
@@ -76,12 +77,12 @@ public class PainelUnidadeController : MonoBehaviour {
                 InsectSwarmModel swarm = plant.getSwarn();
                 followCamera.transform.position = selected.transform.position + new Vector3(0, .1f, -1);
 
-                 textName.text = "Nome: " + plant.plantName;               
-                 textType.text = "Atributos: " + (plant.hasInsects ? "\nContém insetos." : "") + (plant.isHideout ? "\nEsconderijo contra predadores." : "") + (plant.sunProtection ? "\nPrejeta sombras. " : "");
+                 textName.text = GameTextController.getText(LanguageConstants.NAME)+": " + plant.plantName;               
+                 textType.text = (plant.hasInsects ? GameTextController.getText(LanguageConstants.HAS_INSECTS)+"\n" : "") + (plant.isHideout ? GameTextController.getText(LanguageConstants.HAS_HIDEOUT)+"\n" : "") + (plant.sunProtection ? GameTextController.getText(LanguageConstants.HAS_SHADOWS)+"\n" : "");
 
                 if (swarm != null)
                 {
-                    textInsect.text = "Insetos: " + swarm.insectCount;
+                    textInsect.text = GameTextController.getText(LanguageConstants.INSECT_NAME)+": " + swarm.insectCount;
                     textInsect.gameObject.SetActive(true);
                 } else
                 {

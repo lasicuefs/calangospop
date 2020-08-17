@@ -7,13 +7,14 @@ public class OptionsTab : MonoBehaviour {
 
     public GameObject mainMenu;
     public GameObject infoPanel;
-    public GameObject mortalityPanel;
-    public GameObject graphChart; 
+    private GameObject mortalityPanel;
+    private GameObject graphChart; 
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        graphChart = GameObject.Find("PanelLineChart");
+        mortalityPanel = GameObject.Find("PanelMortalidade");
+    }
 	
 	public void togglePainelGeral()
     {

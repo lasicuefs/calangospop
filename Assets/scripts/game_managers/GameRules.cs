@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public abstract class GameRules : MonoBehaviour {
 
-    public GameObject gameOverMessage;
-    public GameObject successMessage;
+    GameObject gameOverMessage;
+    GameObject successMessage;
     public Text objectiveText;
     public bool enableHeat;
     public float temperatureInSun = 40;
     public float temperatureInShadow = 25;
+    protected Text textoSucesso;
     protected RegistryController registry;
     protected TemporalManager timeManager;
 
@@ -21,6 +22,11 @@ public abstract class GameRules : MonoBehaviour {
     {
         registry = GetComponent<RegistryController>();
         timeManager = GetComponent<TemporalManager>();
+        GameObject messagePanel = GameObject.Find("PanelMessages");
+        gameOverMessage = messagePanel.transform.Find("PanelGameOver").gameObject;
+        successMessage = messagePanel.transform.Find("PanelSucesso").gameObject;
+        textoSucesso = successMessage.transform.Find("TextDetails").GetComponent<Text>();
+        textoSucesso.text = "";
     }
 
     void Update()

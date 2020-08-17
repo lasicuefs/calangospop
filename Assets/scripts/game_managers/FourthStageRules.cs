@@ -34,7 +34,7 @@ public class FourthStageRules : GameRules
         {
             textColorCalangos = "<color=#ffa500ff>";
         }
-        objectiveText.text = string.Format(GameTextController.getText(LanguageConstants.FOURTH_PHASE_OBJ), numObjetivo, textColorCalangos + numCalangos);
+        objectiveText.text = string.Format(GameTextController.getText(LanguageConstants.FOURTH_PHASE_OBJ), numObjetivo, numDays, textColorCalangos + numCalangos);
     }
 }
 

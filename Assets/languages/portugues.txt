@@ -10,12 +10,21 @@ age=Idade
 predation=Predação
 insolation=Insolação
 years=Anos
+controls=Controles
+or=ou
+main_menu=Menu principal
+restart=Recomeçar
+next=Próxima Fase
+congratulations=Parabéns!
+game_over=Fim de jogo
+state=Estado
+name=Nome
 
 first_phase_obj=1. Aumentar a população de calangos para {0} ou mais antes de {1} anos. Atualmente: {2} </color>/{3}
-first_phase_end_txt=Você conseguiu crescer sua população para 100 ou mais em por {0} anos e {1} meses!
+first_phase_end_txt=Você conseguiu crescer sua população para {0} ou mais em por {1} anos e {2} meses!
 second_phase_obj=1. Manter a população de calangos abaixo de {0} indivíduos por {1} anos. Atualmente: {2} </color>/ {0}
 third_phase_obj=1. Manter a população abaixo de {0} indivíduos até o {1}º ano. Atualmente: {2} </color>/{0}
-fourth_phase_obj=1. Aumentar a população de lagartos acima dos {0} em até 5 anos. Atualmente: {1} </color>/{0}
+fourth_phase_obj=1. Aumentar a população de lagartos acima dos {0} em até {1} anos. Atualmente: {2} </color>/{0}
 sand_box_obj_1=1. Mantenha a população sobre controle. Ela não pode passar de {0} nem reduzir para menos de {1}. Atualmente: {2} </color>
 sand_box_obj_2=1. Aumentar a população de calangos para {0} ou mais. Atualmente: {1} </color>/{0}
 sand_box_end_txt=Você conseguiu manter uma população estável por {0} anos e {1} meses!
@@ -60,7 +69,7 @@ tutorial_2_text_4=Algumas espécies disputam por alimentos e podem manter sua pop
 tutorial_2_text_5=Insira espécies competidoras para controlar o crescimento de lagartos
 
 tutorial_3_text_1=Atenção! A população de lagartos continua a se expandir...
-tutorial_3_text_2=Precisamo de medidas mais radicais!
+tutorial_3_text_2=Precisamos de medidas mais radicais!
 tutorial_3_text_3=Podemos inserir espécies Predadoras para reduzir sua população
 
 tutorial_4_text_1=Cuidado! A temperatura está muito alta

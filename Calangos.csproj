@@ -305,7 +305,7 @@
     <Compile Include="Assets\DataDiagram\Script\DD_LineButtonsContent.cs" />
     <Compile Include="Assets\DataDiagram\Script\DD_Lines.cs" />
     <Compile Include="Assets\DataDiagram\Script\DD_ZoomButton.cs" />
-    <Compile Include="Assets\DifficultySelector.cs" />
+    <Compile Include="Assets\scripts\ControlsPanel.cs" />
     <Compile Include="Assets\scripts\game_managers\cameraScript.cs" />
     <Compile Include="Assets\scripts\game_managers\ClickableBehaviour.cs" />
     <Compile Include="Assets\scripts\game_managers\FirstStageRules.cs" />
@@ -352,9 +352,11 @@
     <Compile Include="Assets\scripts\UI\instance_button.cs" />
     <Compile Include="Assets\scripts\UI\InstanceGenerator.cs" />
     <Compile Include="Assets\scripts\UI\line_chart.cs" />
+    <Compile Include="Assets\scripts\UI\MainMenu\DifficultySelector.cs" />
     <Compile Include="Assets\scripts\UI\MainMenu\LanguageSelector.cs" />
     <Compile Include="Assets\scripts\UI\MainMenu\MainMenu.cs" />
     <Compile Include="Assets\scripts\UI\MainMenu\menu_calango.cs" />
+    <Compile Include="Assets\scripts\UI\MessagesPanel.cs" />
     <Compile Include="Assets\scripts\UI\OptionsTab.cs" />
     <Compile Include="Assets\scripts\UI\PainelGeralControler.cs" />
     <Compile Include="Assets\scripts\UI\PainelUnidadeController.cs" />

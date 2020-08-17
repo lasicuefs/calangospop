@@ -4,11 +4,9 @@ using UnityEngine.UI;
 
 public class SandBoxRules : GameRules
 {
-    public Text textoSucesso;
     int numObjetivoPrimario = 150;
     int numLimiarInferior = 50;
     int numLimiarSuperior = 300;
-    int numDays = 5;
 
     float counter = 0;
 

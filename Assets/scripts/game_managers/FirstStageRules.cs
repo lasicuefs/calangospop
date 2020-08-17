@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FirstStageRules : GameRules
-{
-    public Text textoSucesso;
+{    
     int numObjetivo = 100;
     int numDays = 5;
 
@@ -51,6 +50,6 @@ public class FirstStageRules : GameRules
         gameSuccess();
         int years = timeManager.getDay();
         int months = timeManager.getHour()/2;
-        textoSucesso.text = string.Format(GameTextController.getText(LanguageConstants.FIRST_PHASE_OBJ), years, months);
+        textoSucesso.text = string.Format(GameTextController.getText(LanguageConstants.FIRST_PHASE_END_TXT), numObjetivo, years, months);
     }
 }
