@@ -18,18 +18,6 @@ public class GameTextController : MonoBehaviour {
         portuguese, english
     }
 
-    private static string[] loadFile(string name)
-    {
-        Directory.CreateDirectory(savedDataPath);
-        string[] fileContent = new string[2];
-        String filePath = savedDataPath + "/" + name;
-        if (File.Exists(filePath))
-        {
-            fileContent = File.ReadAllLines(filePath, System.Text.Encoding.Default);
-        }
-        return fileContent;
-    }
-
     internal static string getText(object p)
     {
         throw new NotImplementedException();
@@ -37,34 +25,17 @@ public class GameTextController : MonoBehaviour {
 
     private static Dictionary<string, string> initializePortugues()
     {
-        string[] fileContent = loadFile("portugues.txt");
+        Portuguese portuguese = new Portuguese();
 
-        Dictionary<string, string> portugues = new Dictionary<string, string>();
-
-        foreach (string line in fileContent)
-        {
-            string[] buffer = line.Split('=');
-            if (buffer.Length == 2)
-                portugues.Add(buffer[0], buffer[1]);
-        }
-
-        return portugues;
+        return portuguese.buildDictionary();
     }
 
 
     private static Dictionary<string, string> initializeEnglish()
     {
-        string[] fileContent = loadFile("english.txt");
-        Dictionary<string, string> english = new Dictionary<string, string>();
+        English english = new English();
 
-        foreach (string line in fileContent)
-        {
-            string[] buffer = line.Split('=');
-            if (buffer.Length == 2)
-                english.Add(buffer[0], buffer[1]);
-        }
-        
-        return english;
+        return english.buildDictionary();
     }
 
     static public string getText(string textName)
