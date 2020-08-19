@@ -19,6 +19,24 @@ congratulations=Parabéns!
 game_over=Fim de jogo
 state=Estado
 name=Nome
+macambira=Macambira
+sapucaia=Sapucaia
+murici=Murici
+sapo=Sapo
+raposa=Raposa
+gato=Gato selvgem
+
+rest=Repouso
+trying_mate=Tentando acasalar
+looking_food=Procurando comida
+trying_eat=Tentando comer
+looking_shadow=Procurando sombra
+running_shadow=Correndo para a sombra
+cooling=Refrescando
+running_predator=Fugindo de predadores
+hiding=Escondendo-se
+running_competitor=Fugindo de competidor
+figthing=Batalhando
 
 first_phase_obj=1. Aumentar a população de calangos para {0} ou mais antes de {1} anos. Atualmente: {2} </color>/{3}
 first_phase_end_txt=Você conseguiu crescer sua população para {0} ou mais em por {1} anos e {2} meses!

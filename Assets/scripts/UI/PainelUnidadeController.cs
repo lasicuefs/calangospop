@@ -62,7 +62,7 @@ public class PainelUnidadeController : MonoBehaviour {
 
                 //textEnergy.text = "Energia: " + (animal.Get_Energy() / animal.maxEnergy * 100).ToString("F0") + " %";
                 energyBar.fillAmount = animal.Get_Energy() /animal.maxEnergy;
-                textState.text = GameTextController.getText(LanguageConstants.STATE)+": " + animal.currState;
+                textState.text = GameTextController.getText(LanguageConstants.STATE)+": " + GameTextController.getText(animal.currState);
                 textAge.text = GameTextController.getText(LanguageConstants.AGE)+": " + animal.getAge() + " "+ GameTextController.getText(LanguageConstants.YEARS);
 
                 CalangoBehaviour calango = selected.GetComponentInParent<CalangoBehaviour>();

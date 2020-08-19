@@ -24,7 +24,7 @@ public class Competitor_Button : instance_button
 
     public override void setText()
     {
-        nameText.text = name;
+        nameText.text = GameTextController.getText(name); 
         SecondaryAnimalBehaviour script = prefab.GetComponent<SecondaryAnimalBehaviour>();
         typeText.text = GameTextController.getText(LanguageConstants.COMPETITOR_NAME);
         descText.text = (desciption == "" ? desciption : GameTextController.getText(desciption) + "\n");

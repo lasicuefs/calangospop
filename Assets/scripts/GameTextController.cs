@@ -69,7 +69,7 @@ public class GameTextController : MonoBehaviour {
 
     static public string getText(string textName)
     {     
-        if (PlayerPrefs.GetInt(GameConstants.LANGUAGE, 1) == 1) return portugues[textName];
-        else return english[textName]; 
+        if (PlayerPrefs.GetInt(GameConstants.LANGUAGE, 1) == 1) return portugues[textName.ToLower()];
+        else return english[textName.ToLower()]; 
     }
 }

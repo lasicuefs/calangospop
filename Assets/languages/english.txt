@@ -19,6 +19,24 @@ congratulations=Congratulations!
 game_over=Game Over!
 state=State
 name=Name
+macambira=Macambira
+sapucaia=Sapucaia
+murici=Murici
+sapo=Frog
+raposa=Fox
+gato=Wild cat
+
+rest=Rest
+trying_mate=Trying to mate
+looking_food=Looking for food
+trying_eat=Trying to eat
+looking_shadow=Looking for shadows
+running_shadow=Runnint to shadow
+cooling=Cooling
+running_predator=Running from predators
+hiding=Hiding
+running_competitor=Running from competitor
+figthing=Figthing
 
 
 first_phase_obj=1. Increase your Lizard population to {0} or more before {1} years. Currently: {2} </color>/{3}

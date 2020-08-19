@@ -9,17 +9,16 @@ public class GameConstants {
 
     public class states
     {
-        public const string IDDLE = "Repouso";
-        public const string TRYTOMATE = "Tentando acasalar";
-        public const string SEARCHINGFOOD = "Procurando comida";
-        public const string TRYTOEAT = "Tentando comer";
-        public const string SEARCHINGSHADOW = "Procurando sombra";
-        public const string RUNNINGTOSHADOW = "Correndo para a sombra";
-        public const string COOLING = "Refrescando";
-        public const string RUNNINGFROMPREDATOR = "Fugindo de predadores";
-        public const string HIDDING = "Escondendo-se";
-        public const string RUNNINGFROMCOMPETITOR = "Fugindo de competidor";
-        public const string ENGAGING = "Batalhando";
+        public const string IDDLE = "rest";
+        public const string TRYTOMATE = "trying_mate";
+        public const string SEARCHINGFOOD = "looking_food";
+        public const string TRYTOEAT = "trying_eat";
+        public const string SEARCHINGSHADOW = "looking_shadow";
+        public const string RUNNINGTOSHADOW = "running_shadow";
+        public const string COOLING = "cooling";
+        public const string RUNNINGFROMPREDATOR = "running_predator";
+        public const string HIDDING = "hiding";
+        public const string RUNNINGFROMCOMPETITOR = "running_competitor";
+        public const string ENGAGING = "figthing";
     }
-    
 }

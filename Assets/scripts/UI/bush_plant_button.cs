@@ -23,7 +23,7 @@ public class bush_plant_button : instance_button {
 
     public override void setText()
     {
-        nameText.text = name;
+        nameText.text = GameTextController.getText(name);
         PlantModel script = prefab.GetComponent<PlantModel>();
         typeText.text = GameTextController.getText(LanguageConstants.BRUSH_BUTTON_TXT_1);
         descText.text = (script.hasInsects ? GameTextController.getText(LanguageConstants.HAS_INSECTS)+"\n" : "") + (script.isHideout ? GameTextController.getText(LanguageConstants.HAS_HIDEOUT)+"\n" : "") + (script.sunProtection ? GameTextController.getText(LanguageConstants.HAS_SHADOWS)+"\n" : "");

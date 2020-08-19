@@ -20,7 +20,7 @@ public class predator_button : instance_button {
     
     public override void setText()
     {
-        nameText.text = name;
+        nameText.text = GameTextController.getText(name);
         SecondaryAnimalBehaviour script = prefab.GetComponent<SecondaryAnimalBehaviour>();
         typeText.text = GameTextController.getText(LanguageConstants.PREDATOR_NAME);
         descText.text = (desciption == "" ? desciption : GameTextController.getText(desciption) + "\n");
