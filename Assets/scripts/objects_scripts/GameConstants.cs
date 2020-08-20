@@ -19,6 +19,6 @@ public class GameConstants {
         public const string RUNNINGFROMPREDATOR = "running_predator";
         public const string HIDDING = "hiding";
         public const string RUNNINGFROMCOMPETITOR = "running_competitor";
-        public const string ENGAGING = "figthing";
+        public const string ENGAGING = "fighting";
     }
 }
